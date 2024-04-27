@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,13 +14,19 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="zwH-ML-LUq">
+                                <rect key="frame" x="257" y="193" width="94" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </stepper>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.95999999999999996" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="369" y="4"/>
+            <point key="canvasLocation" x="368.70229007633588" y="3.5211267605633805"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="Jjx-p0-5bM">
@@ -31,29 +36,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8lq-P0-qhF">
-                                <rect key="frame" x="82" y="382" width="229" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wasteTrackrLogo" translatesAutoresizingMaskIntoConstraints="NO" id="qe8-XQ-5Jn">
+                                <rect key="frame" x="57" y="48" width="279" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="zrN-r8-Me6"/>
+                                </constraints>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8lq-P0-qhF">
+                                <rect key="frame" x="87" y="373" width="219" height="34"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next" textContentType="username"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="io7-20-aze">
-                                <rect key="frame" x="82" y="424" width="229" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="io7-20-aze">
+                                <rect key="frame" x="87" y="412" width="219" height="34"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES" textContentType="password"/>
                             </textField>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="wasteTrackrLogo" translatesAutoresizingMaskIntoConstraints="NO" id="qe8-XQ-5Jn">
-                                <rect key="frame" x="38" y="65" width="316" height="186"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLf-hi-VdX">
-                                <rect key="frame" x="152" y="472" width="89" height="41"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLf-hi-VdX">
+                                <rect key="frame" x="142" y="454" width="109" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="Login" cornerStyle="capsule">
                                     <backgroundConfiguration key="background">
@@ -69,6 +73,22 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="T1G-mA-Pez"/>
                         <color key="backgroundColor" white="0.96027317176870752" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="io7-20-aze" firstAttribute="top" secondItem="8lq-P0-qhF" secondAttribute="bottom" constant="5" id="B7P-af-5dY"/>
+                            <constraint firstItem="T1G-mA-Pez" firstAttribute="trailing" secondItem="qe8-XQ-5Jn" secondAttribute="trailing" constant="57" id="LEi-vP-7gb"/>
+                            <constraint firstItem="qe8-XQ-5Jn" firstAttribute="leading" secondItem="T1G-mA-Pez" secondAttribute="leading" constant="57" id="O48-pr-4kF"/>
+                            <constraint firstItem="LLf-hi-VdX" firstAttribute="top" secondItem="io7-20-aze" secondAttribute="bottom" constant="8" id="SY6-by-mQt"/>
+                            <constraint firstItem="8lq-P0-qhF" firstAttribute="top" secondItem="qe8-XQ-5Jn" secondAttribute="bottom" constant="125" id="SzV-Bg-ZnA"/>
+                            <constraint firstItem="8lq-P0-qhF" firstAttribute="leading" secondItem="T1G-mA-Pez" secondAttribute="leading" constant="87" id="VLY-Y2-HY0"/>
+                            <constraint firstItem="io7-20-aze" firstAttribute="top" secondItem="8lq-P0-qhF" secondAttribute="bottom" constant="5" id="YVh-7Y-MBb"/>
+                            <constraint firstItem="T1G-mA-Pez" firstAttribute="trailing" secondItem="8lq-P0-qhF" secondAttribute="trailing" constant="87" id="Zb4-z1-uJe"/>
+                            <constraint firstItem="io7-20-aze" firstAttribute="leading" secondItem="T1G-mA-Pez" secondAttribute="leading" constant="87" id="bZf-Ni-7Aq"/>
+                            <constraint firstItem="qe8-XQ-5Jn" firstAttribute="top" secondItem="pIy-YA-V8N" secondAttribute="top" constant="48" id="ebG-GH-dPs"/>
+                            <constraint firstItem="LLf-hi-VdX" firstAttribute="top" secondItem="io7-20-aze" secondAttribute="bottom" constant="8" id="laL-Fv-6a7"/>
+                            <constraint firstItem="T1G-mA-Pez" firstAttribute="trailing" secondItem="io7-20-aze" secondAttribute="trailing" constant="87" id="lcR-h5-2fJ"/>
+                            <constraint firstItem="T1G-mA-Pez" firstAttribute="trailing" secondItem="LLf-hi-VdX" secondAttribute="trailing" constant="142" id="xhr-jA-ZUi"/>
+                            <constraint firstItem="LLf-hi-VdX" firstAttribute="leading" secondItem="T1G-mA-Pez" secondAttribute="leading" constant="142" id="zZG-xC-hCN"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="8lq-P0-qhF" id="zb6-Kk-O1B"/>
@@ -78,13 +98,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EBf-OP-3Ma" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-631.29770992366412" y="3.5211267605633805"/>
+            <point key="canvasLocation" x="-632.82442748091603" y="2.8169014084507045"/>
         </scene>
     </scenes>
     <resources>
         <image name="wasteTrackrLogo" width="938" height="313"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
