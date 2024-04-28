@@ -17,10 +17,6 @@ WasteTrackr is aimed at helping Chick-fil-A restaurants manage their food waste 
 
 If you encounter any issues with WasteTrackr or have any questions, please feel free to open an issue on the repository.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ## Acknowledgements
 
 WasteTrackr was created by [Piotr Jandura].
