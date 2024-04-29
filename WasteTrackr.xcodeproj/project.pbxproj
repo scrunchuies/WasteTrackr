@@ -17,6 +17,8 @@
 		CCCD2A3B2BDC40A00036D9DA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCCD2A3A2BDC40A00036D9DA /* GoogleService-Info.plist */; };
 		CCCD2A3E2BDC87A20036D9DA /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CCCD2A3D2BDC87A20036D9DA /* FirebaseAuth */; };
 		CCCD2A402BDC9CF40036D9DA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CCCD2A3F2BDC9CF40036D9DA /* FirebaseFirestore */; };
+		CCD2E9BA2BDF1A5F006C1615 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CCD2E9B92BDF1A5F006C1615 /* FirebaseFirestoreSwift */; };
+		CCE14FAF2BDEE7F1009C1939 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE14FAE2BDEE7F1009C1939 /* RegisterViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,7 @@
 		CCCD2A2F2BDC3A280036D9DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCCD2A352BDC3A5B0036D9DA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CCCD2A3A2BDC40A00036D9DA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CCE14FAE2BDEE7F1009C1939 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +42,7 @@
 			files = (
 				CCCD2A3E2BDC87A20036D9DA /* FirebaseAuth in Frameworks */,
 				CCCD2A402BDC9CF40036D9DA /* FirebaseFirestore in Frameworks */,
+				CCD2E9BA2BDF1A5F006C1615 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +72,7 @@
 				CCCD2A232BDC3A270036D9DA /* SceneDelegate.swift */,
 				CCCD2A272BDC3A270036D9DA /* Main.storyboard */,
 				CC067A7E2BDE342500DB51B2 /* TrackingViewController.swift */,
+				CCE14FAE2BDEE7F1009C1939 /* RegisterViewController.swift */,
 				CCCD2A352BDC3A5B0036D9DA /* LoginViewController.swift */,
 				CCCD2A2A2BDC3A280036D9DA /* Assets.xcassets */,
 				CCCD2A2C2BDC3A280036D9DA /* LaunchScreen.storyboard */,
@@ -96,6 +101,7 @@
 			packageProductDependencies = (
 				CCCD2A3D2BDC87A20036D9DA /* FirebaseAuth */,
 				CCCD2A3F2BDC9CF40036D9DA /* FirebaseFirestore */,
+				CCD2E9B92BDF1A5F006C1615 /* FirebaseFirestoreSwift */,
 			);
 			productName = WasteTrackr;
 			productReference = CCCD2A1E2BDC3A270036D9DA /* WasteTrackr.app */;
@@ -157,6 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCCD2A362BDC3A5B0036D9DA /* LoginViewController.swift in Sources */,
+				CCE14FAF2BDEE7F1009C1939 /* RegisterViewController.swift in Sources */,
 				CCCD2A222BDC3A270036D9DA /* AppDelegate.swift in Sources */,
 				CC067A7F2BDE342500DB51B2 /* TrackingViewController.swift in Sources */,
 				CCCD2A242BDC3A270036D9DA /* SceneDelegate.swift in Sources */,
@@ -320,6 +327,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -349,6 +357,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -406,6 +415,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		CCD2E9B92BDF1A5F006C1615 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

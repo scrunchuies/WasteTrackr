@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="FnJ-g7-kbH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fso-NZ-Yhb">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -39,22 +40,33 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLf-hi-VdX">
                                 <rect key="frame" x="142" y="454" width="109" height="35"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Login" cornerStyle="capsule">
-                                    <backgroundConfiguration key="background">
-                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="strokeColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </backgroundConfiguration>
+                                <buttonConfiguration key="configuration" style="gray" title="Login">
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="loginClicked:" destination="Fso-NZ-Yhb" eventType="touchUpInside" id="Jys-JV-1Q9"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember me?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7G-B6-vEH">
+                                <rect key="frame" x="103" y="508" width="120" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BDd-N7-o7G">
+                                <rect key="frame" x="229" y="503" width="51" height="31"/>
+                                <connections>
+                                    <action selector="rememberMeCheckboxToggled:" destination="Fso-NZ-Yhb" eventType="valueChanged" id="hJY-HN-ro2"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="T1G-mA-Pez"/>
                         <color key="backgroundColor" white="0.96027317176870752" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="BDd-N7-o7G" firstAttribute="top" secondItem="LLf-hi-VdX" secondAttribute="bottom" constant="14" id="5GO-0p-AxL"/>
                             <constraint firstItem="io7-20-aze" firstAttribute="top" secondItem="8lq-P0-qhF" secondAttribute="bottom" constant="5" id="B7P-af-5dY"/>
+                            <constraint firstItem="Z7G-B6-vEH" firstAttribute="leading" secondItem="T1G-mA-Pez" secondAttribute="leading" constant="103" id="ET0-oW-mMe"/>
+                            <constraint firstItem="T1G-mA-Pez" firstAttribute="trailing" secondItem="BDd-N7-o7G" secondAttribute="trailing" constant="115" id="KWc-di-yI0"/>
                             <constraint firstItem="T1G-mA-Pez" firstAttribute="trailing" secondItem="qe8-XQ-5Jn" secondAttribute="trailing" constant="57" id="LEi-vP-7gb"/>
                             <constraint firstItem="qe8-XQ-5Jn" firstAttribute="leading" secondItem="T1G-mA-Pez" secondAttribute="leading" constant="57" id="O48-pr-4kF"/>
                             <constraint firstItem="LLf-hi-VdX" firstAttribute="top" secondItem="io7-20-aze" secondAttribute="bottom" constant="8" id="SY6-by-mQt"/>
@@ -63,6 +75,7 @@
                             <constraint firstItem="io7-20-aze" firstAttribute="top" secondItem="8lq-P0-qhF" secondAttribute="bottom" constant="5" id="YVh-7Y-MBb"/>
                             <constraint firstItem="T1G-mA-Pez" firstAttribute="trailing" secondItem="8lq-P0-qhF" secondAttribute="trailing" constant="87" id="Zb4-z1-uJe"/>
                             <constraint firstItem="io7-20-aze" firstAttribute="leading" secondItem="T1G-mA-Pez" secondAttribute="leading" constant="87" id="bZf-Ni-7Aq"/>
+                            <constraint firstItem="Z7G-B6-vEH" firstAttribute="top" secondItem="LLf-hi-VdX" secondAttribute="bottom" constant="19" id="bg8-Zo-VTy"/>
                             <constraint firstItem="qe8-XQ-5Jn" firstAttribute="top" secondItem="pIy-YA-V8N" secondAttribute="top" constant="48" id="ebG-GH-dPs"/>
                             <constraint firstItem="LLf-hi-VdX" firstAttribute="top" secondItem="io7-20-aze" secondAttribute="bottom" constant="8" id="laL-Fv-6a7"/>
                             <constraint firstItem="T1G-mA-Pez" firstAttribute="trailing" secondItem="io7-20-aze" secondAttribute="trailing" constant="87" id="lcR-h5-2fJ"/>
@@ -73,6 +86,7 @@
                     <connections>
                         <outlet property="emailTextField" destination="8lq-P0-qhF" id="zb6-Kk-O1B"/>
                         <outlet property="passTextField" destination="io7-20-aze" id="czE-7k-8Wr"/>
+                        <outlet property="rememberMeCheckbox" destination="BDd-N7-o7G" id="BKf-1C-6ZM"/>
                         <segue destination="FnJ-g7-kbH" kind="presentation" identifier="loginToHome" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="o7n-us-w7a"/>
                     </connections>
                 </viewController>
@@ -96,25 +110,44 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iRO-ld-M1o">
-                                <rect key="frame" x="159" y="365" width="75" height="35"/>
+                                <rect key="frame" x="169" y="319" width="55" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Add"/>
                                 <connections>
                                     <action selector="incrementButtonTapped:" destination="FnJ-g7-kbH" eventType="touchUpInside" id="VYa-dv-DCX"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="STt-1y-k1D">
+                                <rect key="frame" x="151" y="356" width="90" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Subtract"/>
+                                <connections>
+                                    <action selector="decrementButtonTapped:" destination="FnJ-g7-kbH" eventType="touchUpInside" id="mKV-El-wKS"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kub-tS-Cd0">
+                                <rect key="frame" x="148" y="446" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="nameTextFieldDidChange:" destination="FnJ-g7-kbH" eventType="editingDidEnd" id="ljn-vg-uKL"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="WeF-zS-OQn"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
                         <outlet property="countLabel" destination="btM-os-2dA" id="6h0-2B-XPb"/>
+                        <outlet property="nameTextField" destination="Kub-tS-Cd0" id="YkZ-VA-4Kq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qig-6x-9r4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="258.77862595419845" y="2.8169014084507045"/>
+            <point key="canvasLocation" x="-633" y="729"/>
         </scene>
     </scenes>
     <resources>

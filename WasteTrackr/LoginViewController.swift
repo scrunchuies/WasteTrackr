@@ -11,6 +11,7 @@ import Firebase
 class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passTextField: UITextField!
+    @IBOutlet weak var rememberMeCheckbox: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
+        
+        // Check if "Remember Me" is selected
+        let rememberMe = UserDefaults.standard.bool(forKey: "RememberMe")
+        rememberMeCheckbox.isOn = rememberMe
+        
+        // If "Remember Me" is selected, populate email and password fields with saved values
+        if rememberMe {
+            emailTextField.text = UserDefaults.standard.string(forKey: "SavedEmail")
+            passTextField.text = UserDefaults.standard.string(forKey: "SavedPassword")
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -42,8 +53,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func dismissKeyboard() {
-            view.endEditing(true)
+        view.endEditing(true)
+    }
+    
+    @IBAction func rememberMeCheckboxToggled(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: "RememberMe")
+        
+        if sender.isOn {
+            // If "Remember Me" is selected, save the email and password
+            UserDefaults.standard.set(emailTextField.text, forKey: "SavedEmail")
+            UserDefaults.standard.set(passTextField.text, forKey: "SavedPassword")
+        } else {
+            // If "Remember Me" is deselected, clear saved email and password
+            UserDefaults.standard.removeObject(forKey: "SavedEmail")
+            UserDefaults.standard.removeObject(forKey: "SavedPassword")
         }
+    }
     
     @IBAction func loginClicked(_ sender: Any) {
         guard let email = emailTextField.text, !email.isEmpty else {
@@ -65,17 +90,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             self?.performSegue(withIdentifier: "loginToHome", sender: self)
         }
     }
-
+    
     
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
+
