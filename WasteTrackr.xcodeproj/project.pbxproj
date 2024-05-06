@@ -15,9 +15,10 @@
 		CCCD2A2E2BDC3A280036D9DA /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CCCD2A2D2BDC3A280036D9DA /* Base */; };
 		CCCD2A362BDC3A5B0036D9DA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCD2A352BDC3A5B0036D9DA /* LoginViewController.swift */; };
 		CCCD2A3B2BDC40A00036D9DA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCCD2A3A2BDC40A00036D9DA /* GoogleService-Info.plist */; };
-		CCCD2A3E2BDC87A20036D9DA /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CCCD2A3D2BDC87A20036D9DA /* FirebaseAuth */; };
-		CCCD2A402BDC9CF40036D9DA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CCCD2A3F2BDC9CF40036D9DA /* FirebaseFirestore */; };
-		CCD2E9BA2BDF1A5F006C1615 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CCD2E9B92BDF1A5F006C1615 /* FirebaseFirestoreSwift */; };
+		CCD2E9C22BDF4742006C1615 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CCD2E9C12BDF4742006C1615 /* FirebaseAuth */; };
+		CCD2E9C42BDF4742006C1615 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CCD2E9C32BDF4742006C1615 /* FirebaseFirestore */; };
+		CCD2E9DE2BE0DF8A006C1615 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CCD2E9DD2BE0DF8A006C1615 /* FirebaseFirestoreSwift */; };
+		CCD2E9E02BE1A79E006C1615 /* InventoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD2E9DF2BE1A79E006C1615 /* InventoryViewController.swift */; };
 		CCE14FAF2BDEE7F1009C1939 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE14FAE2BDEE7F1009C1939 /* RegisterViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		CCCD2A2F2BDC3A280036D9DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCCD2A352BDC3A5B0036D9DA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CCCD2A3A2BDC40A00036D9DA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CCD2E9DF2BE1A79E006C1615 /* InventoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryViewController.swift; sourceTree = "<group>"; };
 		CCE14FAE2BDEE7F1009C1939 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -40,9 +42,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCCD2A3E2BDC87A20036D9DA /* FirebaseAuth in Frameworks */,
-				CCCD2A402BDC9CF40036D9DA /* FirebaseFirestore in Frameworks */,
-				CCD2E9BA2BDF1A5F006C1615 /* FirebaseFirestoreSwift in Frameworks */,
+				CCD2E9C22BDF4742006C1615 /* FirebaseAuth in Frameworks */,
+				CCD2E9C42BDF4742006C1615 /* FirebaseFirestore in Frameworks */,
+				CCD2E9DE2BE0DF8A006C1615 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +73,7 @@
 				CCCD2A212BDC3A270036D9DA /* AppDelegate.swift */,
 				CCCD2A232BDC3A270036D9DA /* SceneDelegate.swift */,
 				CCCD2A272BDC3A270036D9DA /* Main.storyboard */,
+				CCD2E9DF2BE1A79E006C1615 /* InventoryViewController.swift */,
 				CC067A7E2BDE342500DB51B2 /* TrackingViewController.swift */,
 				CCE14FAE2BDEE7F1009C1939 /* RegisterViewController.swift */,
 				CCCD2A352BDC3A5B0036D9DA /* LoginViewController.swift */,
@@ -99,9 +102,9 @@
 			);
 			name = WasteTrackr;
 			packageProductDependencies = (
-				CCCD2A3D2BDC87A20036D9DA /* FirebaseAuth */,
-				CCCD2A3F2BDC9CF40036D9DA /* FirebaseFirestore */,
-				CCD2E9B92BDF1A5F006C1615 /* FirebaseFirestoreSwift */,
+				CCD2E9C12BDF4742006C1615 /* FirebaseAuth */,
+				CCD2E9C32BDF4742006C1615 /* FirebaseFirestore */,
+				CCD2E9DD2BE0DF8A006C1615 /* FirebaseFirestoreSwift */,
 			);
 			productName = WasteTrackr;
 			productReference = CCCD2A1E2BDC3A270036D9DA /* WasteTrackr.app */;
@@ -163,6 +166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCCD2A362BDC3A5B0036D9DA /* LoginViewController.swift in Sources */,
+				CCD2E9E02BE1A79E006C1615 /* InventoryViewController.swift in Sources */,
 				CCE14FAF2BDEE7F1009C1939 /* RegisterViewController.swift in Sources */,
 				CCCD2A222BDC3A270036D9DA /* AppDelegate.swift in Sources */,
 				CC067A7F2BDE342500DB51B2 /* TrackingViewController.swift in Sources */,
@@ -244,7 +248,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -301,7 +305,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -335,6 +339,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = piotrjandura.WasteTrackr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -365,6 +373,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = piotrjandura.WasteTrackr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -406,17 +418,17 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		CCCD2A3D2BDC87A20036D9DA /* FirebaseAuth */ = {
+		CCD2E9C12BDF4742006C1615 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
-		CCCD2A3F2BDC9CF40036D9DA /* FirebaseFirestore */ = {
+		CCD2E9C32BDF4742006C1615 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
-		CCD2E9B92BDF1A5F006C1615 /* FirebaseFirestoreSwift */ = {
+		CCD2E9DD2BE0DF8A006C1615 /* FirebaseFirestoreSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;

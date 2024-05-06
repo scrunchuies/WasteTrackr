@@ -1,17 +1,26 @@
 //
-//  ViewController.swift
+//  InventoryViewController.swift
 //  WasteTrackr
 //
-//  Created by Piotr Jandura on 4/28/24.
+//  Created by Piotr Jandura on 4/30/24.
 //
 
 import UIKit
 import FirebaseFirestore
 
-class TrackingViewController: UIViewController {
-    @IBOutlet weak var countLabel: UILabel!
-    @IBOutlet weak var nameTextField: UITextField!
+class InventoryViewController: UIViewController, UITextFieldDelegate {
+    @IBOutlet weak var addItemButton: UIBarButtonItem!
+    @IBOutlet weak var editItemButton: UIBarButtonItem!
+    @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var countLabel: UILabel!
+    @IBOutlet weak var countTextField: UITextField!
+    
+    var previousCount: Int?
+    var errorTimer: Timer?
+    var isEditingEnabled = false
     private var name = "" // Initial value for name
     private var count = 0 // Initial count value
     private let db = Firestore.firestore()
@@ -27,10 +36,22 @@ class TrackingViewController: UIViewController {
         startCountListener()
         startNameListener()
         
+        //User defaults
+        nameTextField.isUserInteractionEnabled = false
+        countTextField.isUserInteractionEnabled = false
+        
         nameTextField.addTarget(self, action: #selector(nameTextFieldDidChange(_:)), for: .editingChanged)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
+        
+        countTextField.delegate = self
+        countTextField.returnKeyType = .done
+        nameTextField.delegate = self
+        nameTextField.returnKeyType = .done
+        
+        overrideUserInterfaceStyle = .light
+
     }
     
     deinit {
@@ -47,8 +68,7 @@ class TrackingViewController: UIViewController {
             }
             if let count = document.data()?["count"] as? Int {
                 self.count = count
-                self.updateCountLabel()
-                self.updateNameTextField()
+                self.updateCount()
             } else {
                 print("Invalid count value")
             }
@@ -64,7 +84,7 @@ class TrackingViewController: UIViewController {
             }
             if let name = document.data()?["name"] as? String {
                 self.name = name
-                self.updateNameTextField()
+                self.updateName()
             } else {
                 print("Invalid name value")
             }
@@ -83,7 +103,7 @@ class TrackingViewController: UIViewController {
             } else {
                 if let document = document, document.exists, let count = document.data()?["count"] as? Int {
                     self.count = count
-                    self.updateNameTextField()
+                    self.updateName()
                 } else {
                     print("Count document does not exist or count value is invalid.")
                     // Provide a default value for count
@@ -91,8 +111,7 @@ class TrackingViewController: UIViewController {
                 }
             }
             
-            self.updateCountLabel()
-            self.updateNameTextField()
+            self.updateCount()
         }
     }
     
@@ -114,7 +133,7 @@ class TrackingViewController: UIViewController {
                 }
             }
             
-            self.updateNameTextField()
+            self.updateName()
         }
     }
     
@@ -130,10 +149,17 @@ class TrackingViewController: UIViewController {
     }
     
     // Update label text with current count value
-    private func updateCountLabel() {
-        countLabel.text = "\(count)"
+    private func updateCount() {
+        countTextField.text = "\(count)"
     }
     
+    @IBAction func countTextFieldDidChange(_ textField: UITextField) {
+        if let newCountString = textField.text, let newCount = Int(newCountString) {
+            count = newCount
+            updateCountInFirestore()
+        }
+    }
+
     // Update name value in Firestore
     private func updateNameInFirestore() {
         collectionRef.document("FTnn41nFjfyLN2ZdQr90").setData(["name": name, "count": count]) { error in
@@ -147,7 +173,7 @@ class TrackingViewController: UIViewController {
     
     
     // Update text field with current name value
-    private func updateNameTextField() {
+    private func updateName() {
         nameTextField.text = name
     }
     
@@ -161,16 +187,76 @@ class TrackingViewController: UIViewController {
     }
     
     
-    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Check if the textField is the countTextField
+        if textField == countTextField {
+            // Allow deleting characters
+            guard !string.isEmpty else { return true }
+            
+            // Check if the replacement string contains only numeric characters
+            let allowedCharacters = CharacterSet.decimalDigits
+            let characterSet = CharacterSet(charactersIn: string)
+            if !allowedCharacters.isSuperset(of: characterSet) {
+                // If not, show error and revert to previous count
+                showError(message: "Only numbers are allowed")
+                return false
+            }
+        }
+        
+        // Otherwise, allow input for other text fields
+        return true
+    }
+
+        
+        // Show error message
+        func showError(message: String) {
+            // Set error message and show error label
+            errorLabel.text = message
+            errorLabel.isHidden = false
+            
+            // Invalidate previous timer if exists
+            errorTimer?.invalidate()
+            
+            // Hide error label after 5 seconds
+            errorTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { [weak self] _ in
+                self?.hideErrorLabel()
+            }
+        }
+        
+        // Hide error label
+        func hideErrorLabel() {
+            errorLabel.isHidden = true
+        }
     
     // ---------------------------------------------------------
     
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        dismissKeyboard()
+        return true
+    }
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
     
+    @IBAction func editItemButtonTapped(_ sender: UIBarButtonItem) {
+        // Toggle editing mode
+        isEditingEnabled.toggle()
+        
+        // Enable or disable text fields based on editing mode
+        nameTextField.isUserInteractionEnabled = isEditingEnabled
+        countTextField.isUserInteractionEnabled = isEditingEnabled
+        
+        // Update button title
+        let title = isEditingEnabled ? "Done" : "Edit"
+        editItemButton.title = title
+        
+        // If editing is disabled, dismiss keyboard
+        if !isEditingEnabled {
+            view.endEditing(true)
+        }
+    }
+
     
     // Action method for button tap
     @IBAction private func incrementButtonTapped(_ sender: UIButton) {
@@ -210,7 +296,7 @@ class TrackingViewController: UIViewController {
                 if let newCount = count as? Int {
                     // Update local count and label
                     self.count = newCount
-                    self.updateCountLabel()
+                    self.updateCount()
                 } else {
                     print("Invalid count value received from transaction")
                 }
@@ -256,24 +342,11 @@ class TrackingViewController: UIViewController {
                 if let newCount = count as? Int {
                     // Update local count and label
                     self.count = newCount
-                    self.updateCountLabel()
+                    self.updateCount()
                 } else {
                     print("Invalid count value received from transaction")
                 }
             }
         }
     }
-    
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
