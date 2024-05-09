@@ -21,6 +21,7 @@
 		CCD2E9E02BE1A79E006C1615 /* InventoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD2E9DF2BE1A79E006C1615 /* InventoryViewController.swift */; };
 		CCD927982BEC9CF300B6822D /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD927972BEC9CF300B6822D /* NavigationViewController.swift */; };
 		CCD9279A2BECA24A00B6822D /* EditableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD927992BECA24A00B6822D /* EditableTableViewCell.swift */; };
+		CCD9279C2BECAA8800B6822D /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD9279B2BECAA8800B6822D /* Item.swift */; };
 		CCE14FAF2BDEE7F1009C1939 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE14FAE2BDEE7F1009C1939 /* RegisterViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 		CCD2E9DF2BE1A79E006C1615 /* InventoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryViewController.swift; sourceTree = "<group>"; };
 		CCD927972BEC9CF300B6822D /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		CCD927992BECA24A00B6822D /* EditableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableTableViewCell.swift; sourceTree = "<group>"; };
+		CCD9279B2BECAA8800B6822D /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		CCE14FAE2BDEE7F1009C1939 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +81,7 @@
 				CCCD2A272BDC3A270036D9DA /* Main.storyboard */,
 				CCD2E9DF2BE1A79E006C1615 /* InventoryViewController.swift */,
 				CCD927972BEC9CF300B6822D /* NavigationViewController.swift */,
+				CCD9279B2BECAA8800B6822D /* Item.swift */,
 				CCD927992BECA24A00B6822D /* EditableTableViewCell.swift */,
 				CC067A7E2BDE342500DB51B2 /* TrackingViewController.swift */,
 				CCE14FAE2BDEE7F1009C1939 /* RegisterViewController.swift */,
@@ -176,6 +179,7 @@
 				CCE14FAF2BDEE7F1009C1939 /* RegisterViewController.swift in Sources */,
 				CCD9279A2BECA24A00B6822D /* EditableTableViewCell.swift in Sources */,
 				CCCD2A222BDC3A270036D9DA /* AppDelegate.swift in Sources */,
+				CCD9279C2BECAA8800B6822D /* Item.swift in Sources */,
 				CC067A7F2BDE342500DB51B2 /* TrackingViewController.swift in Sources */,
 				CCD927982BEC9CF300B6822D /* NavigationViewController.swift in Sources */,
 				CCCD2A242BDC3A270036D9DA /* SceneDelegate.swift in Sources */,

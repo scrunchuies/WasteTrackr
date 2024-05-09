@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class NavigationViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var editItem: UIBarButtonItem!
     @IBOutlet weak var addItem: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     
-    var items = ["Sample Item 1", "Sample Item 2"]
+    var items: [Item] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,12 +23,7 @@ class NavigationViewController: UIViewController, UITableViewDataSource, UITable
         tableView.register(EditableTableViewCell.self, forCellReuseIdentifier: "EditableCell")
         
         setupNavigationItems()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(handleTextChange(_:)), name: NSNotification.Name("LabelDidChange"), object: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+        observeItems()
     }
     
     private func setupNavigationItems() {
@@ -37,29 +33,71 @@ class NavigationViewController: UIViewController, UITableViewDataSource, UITable
         editItem.action = #selector(toggleEditingMode)
     }
     
-    @objc func addNewItem() {
-        let newItem = "New Item \(items.count + 1)"
-        items.append(newItem)
-        let newIndexPath = IndexPath(row: items.count - 1, section: 0)
-        tableView.insertRows(at: [newIndexPath], with: .automatic)
+    @objc func toggleEditingMode() {
+        let isEditing = !tableView.isEditing
+        tableView.setEditing(isEditing, animated: true)
+        editItem.title = isEditing ? "Done" : "Edit"
+
+        // Update all visible cells for editability
+        for case let cell as EditableTableViewCell in tableView.visibleCells {
+            cell.setEditable(isEditing)
+        }
     }
     
-    @objc func toggleEditingMode() {
-        tableView.setEditing(!tableView.isEditing, animated: true)
-        editItem.title = tableView.isEditing ? "Done" : "Edit"
-        tableView.visibleCells.forEach { cell in
-            if let editableCell = cell as? EditableTableViewCell {
-                editableCell.textField.isEnabled = tableView.isEditing
+    
+    func observeItems() {
+        let db = Firestore.firestore()
+        db.collection("items").addSnapshotListener { [weak self] querySnapshot, error in
+            guard let self = self else { return }
+            if let error = error {
+                print("Error fetching snapshots: \(error)")
+                return
+            }
+            
+            self.items = querySnapshot?.documents.map { doc -> Item in
+                let data = doc.data()
+                let id = doc.documentID
+                let name = data["name"] as? String ?? ""
+                let count = data["count"] as? Int ?? 0
+                return Item(id: id, name: name, count: count)
+            } ?? []
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
     }
     
-    @objc func handleTextChange(_ notification: Notification) {
-        if let userInfo = notification.userInfo,
-           let newText = userInfo["newText"] as? String,
-           let cell = userInfo["cell"] as? EditableTableViewCell,
-           let indexPath = tableView.indexPath(for: cell) {
-            items[indexPath.row] = newText
+    @objc func addNewItem() {
+        let db = Firestore.firestore()
+        // Assuming 'name' and 'count' are set by some default or user input before this method
+        let newItem = ["name": "New Item", "count": 1] as [String : Any]  // Example default values
+
+        db.collection("items").addDocument(data: newItem) { [weak self] err in
+            if let err = err {
+                print("Error adding document: \(err)")
+            } else {
+                // Optionally fetch data again or handle UI update directly
+                // For example:
+                self?.fetchData()
+            }
+        }
+    }
+
+    // Fetch and refresh the data
+    func fetchData() {
+        let db = Firestore.firestore()
+        db.collection("items").order(by: "name").getDocuments { [weak self] (snapshot, error) in
+            guard let snapshot = snapshot else {
+                print("Error fetching documents: \(error!)")
+                return
+            }
+            self?.items = snapshot.documents.map { doc in
+                Item(id: doc.documentID,
+                     name: doc["name"] as? String ?? "",
+                     count: doc["count"] as? Int ?? 0)
+            }
+            self?.tableView.reloadData()
         }
     }
     
@@ -69,8 +107,8 @@ class NavigationViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EditableCell", for: indexPath) as! EditableTableViewCell
-        cell.textField.text = items[indexPath.row]
-        cell.textField.isEnabled = tableView.isEditing
+        let item = items[indexPath.row]
+        cell.configure(with: item)
         return cell
     }
     
@@ -80,14 +118,28 @@ class NavigationViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            print("Attempting to delete row at \(indexPath.row)")
-            items.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            deleteItem(at: indexPath)
         }
     }
     
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .delete
+    func deleteItem(at indexPath: IndexPath) {
+        guard indexPath.row < items.count else {
+            print("Index out of range.")
+            return
+        }
+        
+        let documentID = items[indexPath.row].id
+        let db = Firestore.firestore()
+        db.collection("items").document(documentID).delete { [weak self] err in
+            guard let self = self else { return }
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                DispatchQueue.main.async {
+                    self.items.remove(at: indexPath.row)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                }
+            }
+        }
     }
-
 }
