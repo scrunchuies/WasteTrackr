@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         let db = Firestore.firestore()
         print("Firebase connected. \nLoading...")
-        Thread.sleep(forTimeInterval: 3)
+        //Thread.sleep(forTimeInterval: 3)
         return true
     }
 

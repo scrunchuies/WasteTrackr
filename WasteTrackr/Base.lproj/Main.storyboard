@@ -45,7 +45,7 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="loginClicked:" destination="Fso-NZ-Yhb" eventType="touchUpInside" id="Jys-JV-1Q9"/>
-                                    <segue destination="dDh-ye-foe" kind="presentation" identifier="loginToHome" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="FuP-5a-xFw"/>
+                                    <segue destination="ynK-AN-6e2" kind="presentation" identifier="loginToHome" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="LrK-iM-gdj"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember me?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7G-B6-vEH">
@@ -94,6 +94,80 @@
             </objects>
             <point key="canvasLocation" x="-632.82442748091603" y="2.8169014084507045"/>
         </scene>
+        <!--Front of House-->
+        <scene sceneID="8KS-hf-Vap">
+            <objects>
+                <viewController id="gX0-Yr-MNi" customClass="NavigationViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iX6-SP-Ilu">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VeJ-BD-OfL">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                <items>
+                                    <navigationItem title="Title" id="aBw-Bz-Fdu">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="5Co-qG-Y2T"/>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Inv-CU-pej"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="t3e-ev-xJD">
+                                <rect key="frame" x="0.0" y="44" width="393" height="759"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="Zcd-IG-xdB">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Zcd-IG-xdB" id="MIE-lS-eKD">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="G6n-CO-OMY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="VeJ-BD-OfL" firstAttribute="trailing" secondItem="G6n-CO-OMY" secondAttribute="trailing" id="8iO-ca-PJf"/>
+                            <constraint firstItem="G6n-CO-OMY" firstAttribute="bottom" secondItem="t3e-ev-xJD" secondAttribute="bottom" id="8mv-kZ-blM"/>
+                            <constraint firstItem="VeJ-BD-OfL" firstAttribute="top" secondItem="G6n-CO-OMY" secondAttribute="top" id="9Z7-sK-y5l"/>
+                            <constraint firstItem="t3e-ev-xJD" firstAttribute="leading" secondItem="G6n-CO-OMY" secondAttribute="leading" id="Fc3-vl-5Z7"/>
+                            <constraint firstItem="t3e-ev-xJD" firstAttribute="top" secondItem="VeJ-BD-OfL" secondAttribute="bottom" id="FsG-h1-PU7"/>
+                            <constraint firstItem="t3e-ev-xJD" firstAttribute="trailing" secondItem="G6n-CO-OMY" secondAttribute="trailing" id="elV-2g-Gac"/>
+                            <constraint firstItem="VeJ-BD-OfL" firstAttribute="leading" secondItem="G6n-CO-OMY" secondAttribute="leading" id="f8Q-gG-dF5"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Front of House" image="house.lodge" catalog="system" id="aQ6-Pd-enI"/>
+                    <connections>
+                        <outlet property="addItem" destination="Inv-CU-pej" id="n7w-wI-V19"/>
+                        <outlet property="editItem" destination="5Co-qG-Y2T" id="PfS-ko-aSa"/>
+                        <outlet property="tableView" destination="t3e-ev-xJD" id="g8p-5U-Pej"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fna-ca-eYb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="69" y="-1539"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="9ot-VG-5DQ">
+            <objects>
+                <tabBarController id="ynK-AN-6e2" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="x1K-3U-wge">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="gX0-Yr-MNi" kind="relationship" relationship="viewControllers" id="z1n-gn-pgH"/>
+                        <segue destination="oEj-jT-mUi" kind="relationship" relationship="viewControllers" id="9yD-8E-2YG"/>
+                        <segue destination="xDt-KP-fYY" kind="relationship" relationship="viewControllers" id="zII-iE-VnL"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4fa-Is-eIr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="242" y="-768"/>
+        </scene>
         <!--Inventory View Controller-->
         <scene sceneID="Hns-Pz-PVd">
             <objects>
@@ -103,7 +177,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7fm-Nd-qwt">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                                 <items>
                                     <navigationItem title="Front of House" id="TZN-oS-eDe">
                                         <barButtonItem key="leftBarButtonItem" title="Item" image="line.3.horizontal" catalog="system" id="hV0-2o-Aw4"/>
@@ -111,7 +185,7 @@
                                 </items>
                             </navigationBar>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZSr-y6-WOV">
-                                <rect key="frame" x="0.0" y="808" width="393" height="44"/>
+                                <rect key="frame" x="0.0" y="769" width="393" height="49"/>
                                 <items>
                                     <barButtonItem title="Edit" id="vww-wc-V25">
                                         <connections>
@@ -127,7 +201,7 @@
                                 </items>
                             </toolbar>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error: 101" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eom-ZI-w9B">
-                                <rect key="frame" x="60" y="810" width="273" height="35"/>
+                                <rect key="frame" x="60" y="776" width="273" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="r60-Bp-76E"/>
                                 </constraints>
@@ -260,12 +334,125 @@
             </objects>
             <point key="canvasLocation" x="-633" y="729"/>
         </scene>
+        <!--Back of House-->
+        <scene sceneID="7pT-Be-yLQ">
+            <objects>
+                <viewController id="oEj-jT-mUi" customClass="NavigationViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wPN-j4-Qsg">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="djx-KT-Tul">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                <items>
+                                    <navigationItem title="Title" id="2QH-ln-jxF">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="BZc-fs-ACO"/>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="uPe-yg-Fvp"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="iAW-CY-bEu">
+                                <rect key="frame" x="0.0" y="44" width="393" height="759"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="9BL-go-zQY">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9BL-go-zQY" id="9wE-Bt-HSb">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="QUX-j0-lyf"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="iAW-CY-bEu" firstAttribute="top" secondItem="djx-KT-Tul" secondAttribute="bottom" id="56L-eZ-6Mb"/>
+                            <constraint firstItem="QUX-j0-lyf" firstAttribute="bottom" secondItem="iAW-CY-bEu" secondAttribute="bottom" id="7Cz-br-2mZ"/>
+                            <constraint firstItem="djx-KT-Tul" firstAttribute="trailing" secondItem="QUX-j0-lyf" secondAttribute="trailing" id="a4A-Uy-lcv"/>
+                            <constraint firstItem="djx-KT-Tul" firstAttribute="leading" secondItem="QUX-j0-lyf" secondAttribute="leading" id="bae-SQ-uXP"/>
+                            <constraint firstItem="iAW-CY-bEu" firstAttribute="trailing" secondItem="QUX-j0-lyf" secondAttribute="trailing" id="c3g-Ar-QAA"/>
+                            <constraint firstItem="iAW-CY-bEu" firstAttribute="leading" secondItem="QUX-j0-lyf" secondAttribute="leading" id="lfq-bQ-0DQ"/>
+                            <constraint firstItem="djx-KT-Tul" firstAttribute="top" secondItem="QUX-j0-lyf" secondAttribute="top" id="qD0-fh-MWh"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Back of House" image="fork.knife" catalog="system" id="zN5-gz-UjJ"/>
+                    <connections>
+                        <outlet property="addItem" destination="uPe-yg-Fvp" id="ola-mI-7p0"/>
+                        <outlet property="editItem" destination="BZc-fs-ACO" id="8Mn-i6-1zn"/>
+                        <outlet property="tableView" destination="iAW-CY-bEu" id="f0G-u8-wl2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6hx-N1-Cxf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="949" y="-1539"/>
+        </scene>
+        <!--Other-->
+        <scene sceneID="UrA-Nv-rzZ">
+            <objects>
+                <viewController id="xDt-KP-fYY" customClass="NavigationViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tb1-JA-6yc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yXc-hj-uYm">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                <items>
+                                    <navigationItem title="Title" id="7nR-tu-23J">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="04z-eN-Hcl"/>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="JNL-NS-R0l"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="AXM-Vf-If9">
+                                <rect key="frame" x="0.0" y="44" width="393" height="759"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="xAq-ek-kbZ">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xAq-ek-kbZ" id="abw-rD-cFf">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="l8N-Ru-b8y"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="yXc-hj-uYm" firstAttribute="leading" secondItem="l8N-Ru-b8y" secondAttribute="leading" id="7wH-us-gIu"/>
+                            <constraint firstItem="yXc-hj-uYm" firstAttribute="top" secondItem="l8N-Ru-b8y" secondAttribute="top" id="Btv-ke-Z1I"/>
+                            <constraint firstItem="AXM-Vf-If9" firstAttribute="leading" secondItem="l8N-Ru-b8y" secondAttribute="leading" id="FWz-Jl-u4U"/>
+                            <constraint firstItem="l8N-Ru-b8y" firstAttribute="bottom" secondItem="AXM-Vf-If9" secondAttribute="bottom" id="LUK-4n-T1K"/>
+                            <constraint firstItem="yXc-hj-uYm" firstAttribute="trailing" secondItem="l8N-Ru-b8y" secondAttribute="trailing" id="a7U-Fh-C3J"/>
+                            <constraint firstItem="AXM-Vf-If9" firstAttribute="trailing" secondItem="l8N-Ru-b8y" secondAttribute="trailing" id="cV9-3T-ffa"/>
+                            <constraint firstItem="AXM-Vf-If9" firstAttribute="top" secondItem="yXc-hj-uYm" secondAttribute="bottom" id="h6n-9b-9sh"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Other" image="wrench.and.screwdriver" catalog="system" id="fzz-rO-YjD"/>
+                    <connections>
+                        <outlet property="addItem" destination="JNL-NS-R0l" id="M5N-6k-P72"/>
+                        <outlet property="editItem" destination="04z-eN-Hcl" id="oio-Yf-ckT"/>
+                        <outlet property="tableView" destination="AXM-Vf-If9" id="jOi-6f-y2T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3jk-Ja-jHV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1892" y="-1539"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="fork.knife" catalog="system" width="94" height="128"/>
+        <image name="house.lodge" catalog="system" width="128" height="55"/>
         <image name="line.3.horizontal" catalog="system" width="128" height="65"/>
         <image name="minus" catalog="system" width="128" height="26"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="wasteTrackrLogo" width="938" height="313"/>
+        <image name="wrench.and.screwdriver" catalog="system" width="128" height="119"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

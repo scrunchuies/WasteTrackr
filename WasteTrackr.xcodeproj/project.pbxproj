@@ -19,6 +19,8 @@
 		CCD2E9C42BDF4742006C1615 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CCD2E9C32BDF4742006C1615 /* FirebaseFirestore */; };
 		CCD2E9DE2BE0DF8A006C1615 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CCD2E9DD2BE0DF8A006C1615 /* FirebaseFirestoreSwift */; };
 		CCD2E9E02BE1A79E006C1615 /* InventoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD2E9DF2BE1A79E006C1615 /* InventoryViewController.swift */; };
+		CCD927982BEC9CF300B6822D /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD927972BEC9CF300B6822D /* NavigationViewController.swift */; };
+		CCD9279A2BECA24A00B6822D /* EditableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD927992BECA24A00B6822D /* EditableTableViewCell.swift */; };
 		CCE14FAF2BDEE7F1009C1939 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE14FAE2BDEE7F1009C1939 /* RegisterViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +36,8 @@
 		CCCD2A352BDC3A5B0036D9DA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CCCD2A3A2BDC40A00036D9DA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CCD2E9DF2BE1A79E006C1615 /* InventoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryViewController.swift; sourceTree = "<group>"; };
+		CCD927972BEC9CF300B6822D /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
+		CCD927992BECA24A00B6822D /* EditableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableTableViewCell.swift; sourceTree = "<group>"; };
 		CCE14FAE2BDEE7F1009C1939 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -74,6 +78,8 @@
 				CCCD2A232BDC3A270036D9DA /* SceneDelegate.swift */,
 				CCCD2A272BDC3A270036D9DA /* Main.storyboard */,
 				CCD2E9DF2BE1A79E006C1615 /* InventoryViewController.swift */,
+				CCD927972BEC9CF300B6822D /* NavigationViewController.swift */,
+				CCD927992BECA24A00B6822D /* EditableTableViewCell.swift */,
 				CC067A7E2BDE342500DB51B2 /* TrackingViewController.swift */,
 				CCE14FAE2BDEE7F1009C1939 /* RegisterViewController.swift */,
 				CCCD2A352BDC3A5B0036D9DA /* LoginViewController.swift */,
@@ -168,8 +174,10 @@
 				CCCD2A362BDC3A5B0036D9DA /* LoginViewController.swift in Sources */,
 				CCD2E9E02BE1A79E006C1615 /* InventoryViewController.swift in Sources */,
 				CCE14FAF2BDEE7F1009C1939 /* RegisterViewController.swift in Sources */,
+				CCD9279A2BECA24A00B6822D /* EditableTableViewCell.swift in Sources */,
 				CCCD2A222BDC3A270036D9DA /* AppDelegate.swift in Sources */,
 				CC067A7F2BDE342500DB51B2 /* TrackingViewController.swift in Sources */,
+				CCD927982BEC9CF300B6822D /* NavigationViewController.swift in Sources */,
 				CCCD2A242BDC3A270036D9DA /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
