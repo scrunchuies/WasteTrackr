@@ -81,27 +81,74 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         Auth.auth().signIn(withEmail: email, password: pass) { [weak self] (authResult, error) in
+            guard let self = self else { return }
             if let error = error {
                 print("Error signing in:", error.localizedDescription)
                 return
             }
             
-            // Authentication successful, perform segue
-            self?.performSegue(withIdentifier: "loginToHome", sender: self)
+            // Authentication successful, check and ensure user profile
+            self.ensureUserProfile { [weak self] in
+                // Fetch storeId and continue to the main part of the app
+                self?.fetchAndStoreUserStoreId {
+                    self?.performSegue(withIdentifier: "loginToHome", sender: self)
+                }
+            }
         }
     }
     
+    func fetchAndStoreUserStoreId(completion: @escaping () -> Void) {
+        guard let user = Auth.auth().currentUser else {
+            print("No user is currently logged in.")
+            return
+        }
+        
+        let db = Firestore.firestore()
+        let userProfileRef = db.collection("userProfiles").document(user.uid)
+        
+        userProfileRef.getDocument { (document, error) in
+            if let document = document, document.exists, let storeId = document.data()?["storeId"] as? String {
+                UserDefaults.standard.set(storeId, forKey: "UserStoreID")
+                print("Store ID fetched and stored: \(storeId)")
+                completion()
+            } else {
+                print("Error fetching store ID: \(String(describing: error))")
+                completion()
+            }
+        }
+    }
     
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+    func ensureUserProfile(completion: @escaping () -> Void) {
+        guard let user = Auth.auth().currentUser else {
+            print("No logged in user available.")
+            return
+        }
+        
+        let db = Firestore.firestore()
+        let userProfileRef = db.collection("userProfiles").document(user.uid)
+        
+        userProfileRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                print("Document exists, no need to create a new one.")
+                userProfileRef.setData(["loginDate": FieldValue.serverTimestamp()], merge: true)
+                completion()
+            } else {
+                print("Document does not exist, creating a new one.")
+                userProfileRef.setData([
+                    "userID": user.uid,
+                    "email": user.email ?? "",
+                    "creationDate": FieldValue.serverTimestamp(),
+                    "loginDate": FieldValue.serverTimestamp()
+                ]) { err in
+                    if let err = err {
+                        print("Error writing document: \(err)")
+                    } else {
+                        print("Document successfully written!")
+                    }
+                    completion()
+                }
+            }
+        }
+    }
 }
 

@@ -8,7 +8,9 @@
 import UIKit
 import FirebaseFirestore
 
-class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
+class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {    
+    weak var delegate: EditableCellDelegate?
+
     var nameTextField = UITextField()
     var countTextField = UITextField()
     var countStepper = UIStepper()
@@ -68,17 +70,22 @@ class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     @objc private func stepperValueChanged(_ sender: UIStepper) {
-        // Update the countTextField with the new stepper value
+        guard let docID = documentID, let del = delegate else { return }
         countTextField.text = "\(Int(sender.value))"
-
-        // Optionally, update Firestore immediately when stepper changes
-        updateFirestoreCount()
+        del.updateData(forDocumentID: docID, collectionID: del.collectionID(), field: "count", newValue: Int(sender.value))
     }
-
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let docID = documentID, let del = delegate else { return }
+        let field = textField == nameTextField ? "name" : "count"
+        let value: Any = textField == nameTextField ? textField.text ?? "" : Int(textField.text ?? "0") ?? 0
+        del.updateData(forDocumentID: docID, collectionID: del.collectionID(), field: field, newValue: value)
+    }
+    
     private func updateFirestoreCount() {
         guard let docID = documentID, let count = Int(countTextField.text ?? "0") else { return }
         let db = Firestore.firestore()
-        db.collection("items").document(docID).updateData(["count": count]) { err in
+        db.collection("02226-FOH").document(docID).updateData(["count": count]) { err in
             if let err = err {
                 print("Error updating document count: \(err)")
             } else {
@@ -94,22 +101,9 @@ class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
         countStepper.value = Double(item.count)
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let docID = documentID else {
-            print("Document ID is nil")
-            return
-        }
-
-        // Identify which field was edited and prepare data for Firestore update
-        let field = textField == nameTextField ? "name" : "count"
-        let value: Any = textField == nameTextField ? textField.text ?? "" : Int(textField.text ?? "0") ?? 0
-        
-        updateFirestore(documentID: docID, field: field, value: value)
-    }
-    
     private func updateFirestore(documentID: String, field: String, value: Any) {
         let db = Firestore.firestore()
-        db.collection("items").document(documentID).updateData([field: value]) { error in
+        db.collection("02226-FOH").document(documentID).updateData([field: value]) { error in
             if let error = error {
                 print("Error updating document: \(error)")
             } else {
@@ -128,5 +122,4 @@ class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
         nameTextField.isEnabled = isEditable
         countTextField.isEnabled = isEditable
     }
-    
 }

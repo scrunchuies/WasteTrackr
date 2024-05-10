@@ -94,10 +94,44 @@
             </objects>
             <point key="canvasLocation" x="-632.82442748091603" y="2.8169014084507045"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="e4M-nr-1yZ">
+            <objects>
+                <viewController id="JcI-dq-8uf" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="byg-mD-vG7">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CsE-lc-s1e">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                <items>
+                                    <navigationItem title="Settings" id="dfJ-FK-TTp">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" image="chevron.backward" catalog="system" id="nsY-4u-kwN">
+                                            <connections>
+                                                <segue destination="ynK-AN-6e2" kind="presentation" animates="NO" modalPresentationStyle="fullScreen" id="xSN-Ie-eOD"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="AA6-Dm-v5M"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="CsE-lc-s1e" firstAttribute="leading" secondItem="AA6-Dm-v5M" secondAttribute="leading" id="Ica-vV-oCl"/>
+                            <constraint firstItem="CsE-lc-s1e" firstAttribute="trailing" secondItem="AA6-Dm-v5M" secondAttribute="trailing" id="W5M-7a-dG3"/>
+                            <constraint firstItem="CsE-lc-s1e" firstAttribute="top" secondItem="AA6-Dm-v5M" secondAttribute="top" id="hKO-yg-jcX"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9kr-ey-s87" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="563" y="-2325"/>
+        </scene>
         <!--Front of House-->
         <scene sceneID="8KS-hf-Vap">
             <objects>
-                <viewController id="gX0-Yr-MNi" customClass="NavigationViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="gX0-Yr-MNi" customClass="Tab1ViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iX6-SP-Ilu">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -105,8 +139,20 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VeJ-BD-OfL">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
                                 <items>
-                                    <navigationItem title="Title" id="aBw-Bz-Fdu">
+                                    <navigationItem title="Front of House" id="aBw-Bz-Fdu">
                                         <barButtonItem key="leftBarButtonItem" title="Edit" id="5Co-qG-Y2T"/>
+                                        <centerItemGroups>
+                                            <barButtonItemGroup customizationDisposition="fixed" id="dbn-mS-bln">
+                                                <barButtonItems>
+                                                    <barButtonItem title="Settings" image="gear" catalog="system" id="SLj-5f-CSE">
+                                                        <connections>
+                                                            <segue destination="JcI-dq-8uf" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="ozt-ga-9AZ"/>
+                                                        </connections>
+                                                    </barButtonItem>
+                                                    <barButtonItem title="Logout" image="rectangle.portrait.and.arrow.right" catalog="system" id="fez-Td-aNE"/>
+                                                </barButtonItems>
+                                            </barButtonItemGroup>
+                                        </centerItemGroups>
                                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Inv-CU-pej"/>
                                     </navigationItem>
                                 </items>
@@ -142,12 +188,13 @@
                     <connections>
                         <outlet property="addItem" destination="Inv-CU-pej" id="n7w-wI-V19"/>
                         <outlet property="editItem" destination="5Co-qG-Y2T" id="PfS-ko-aSa"/>
+                        <outlet property="logoutItem" destination="fez-Td-aNE" id="vSh-kd-Nbl"/>
                         <outlet property="tableView" destination="t3e-ev-xJD" id="g8p-5U-Pej"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fna-ca-eYb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="69" y="-1539"/>
+            <point key="canvasLocation" x="-76" y="-1539"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="9ot-VG-5DQ">
@@ -160,13 +207,13 @@
                     </tabBar>
                     <connections>
                         <segue destination="gX0-Yr-MNi" kind="relationship" relationship="viewControllers" id="z1n-gn-pgH"/>
-                        <segue destination="oEj-jT-mUi" kind="relationship" relationship="viewControllers" id="9yD-8E-2YG"/>
-                        <segue destination="xDt-KP-fYY" kind="relationship" relationship="viewControllers" id="zII-iE-VnL"/>
+                        <segue destination="qHB-H0-htL" kind="relationship" relationship="viewControllers" id="pIt-Pp-4hE"/>
+                        <segue destination="CZe-7G-obD" kind="relationship" relationship="viewControllers" id="g45-Tv-jtt"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4fa-Is-eIr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="242" y="-768"/>
+            <point key="canvasLocation" x="828" y="-235"/>
         </scene>
         <!--Inventory View Controller-->
         <scene sceneID="Hns-Pz-PVd">
@@ -335,30 +382,42 @@
             <point key="canvasLocation" x="-633" y="729"/>
         </scene>
         <!--Back of House-->
-        <scene sceneID="7pT-Be-yLQ">
+        <scene sceneID="WZe-Nx-w07">
             <objects>
-                <viewController id="oEj-jT-mUi" customClass="NavigationViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="wPN-j4-Qsg">
+                <viewController id="qHB-H0-htL" customClass="Tab2ViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2Eg-Xv-yDh">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="djx-KT-Tul">
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yVV-IC-iwI">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
                                 <items>
-                                    <navigationItem title="Title" id="2QH-ln-jxF">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="BZc-fs-ACO"/>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="uPe-yg-Fvp"/>
+                                    <navigationItem title="Back of House" id="l8S-Lm-Zg2">
+                                        <barButtonItem key="leftBarButtonItem" title="Edit" id="J8u-jH-5SY"/>
+                                        <centerItemGroups>
+                                            <barButtonItemGroup customizationDisposition="fixed" id="9MR-8F-njj">
+                                                <barButtonItems>
+                                                    <barButtonItem title="Settings" image="gear" catalog="system" id="9RE-pS-Crk">
+                                                        <connections>
+                                                            <segue destination="JcI-dq-8uf" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="SpG-MG-esG"/>
+                                                        </connections>
+                                                    </barButtonItem>
+                                                    <barButtonItem title="Logout" image="rectangle.portrait.and.arrow.right" catalog="system" id="OQY-xu-0qg"/>
+                                                </barButtonItems>
+                                            </barButtonItemGroup>
+                                        </centerItemGroups>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="fwZ-jc-erD"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="iAW-CY-bEu">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xQj-vP-ruj">
                                 <rect key="frame" x="0.0" y="44" width="393" height="759"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="9BL-go-zQY">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="Cg3-dm-lzk">
                                         <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9BL-go-zQY" id="9wE-Bt-HSb">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Cg3-dm-lzk" id="JaO-Od-Vgl">
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
@@ -366,54 +425,67 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="QUX-j0-lyf"/>
+                        <viewLayoutGuide key="safeArea" id="xv6-3f-7t4"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="iAW-CY-bEu" firstAttribute="top" secondItem="djx-KT-Tul" secondAttribute="bottom" id="56L-eZ-6Mb"/>
-                            <constraint firstItem="QUX-j0-lyf" firstAttribute="bottom" secondItem="iAW-CY-bEu" secondAttribute="bottom" id="7Cz-br-2mZ"/>
-                            <constraint firstItem="djx-KT-Tul" firstAttribute="trailing" secondItem="QUX-j0-lyf" secondAttribute="trailing" id="a4A-Uy-lcv"/>
-                            <constraint firstItem="djx-KT-Tul" firstAttribute="leading" secondItem="QUX-j0-lyf" secondAttribute="leading" id="bae-SQ-uXP"/>
-                            <constraint firstItem="iAW-CY-bEu" firstAttribute="trailing" secondItem="QUX-j0-lyf" secondAttribute="trailing" id="c3g-Ar-QAA"/>
-                            <constraint firstItem="iAW-CY-bEu" firstAttribute="leading" secondItem="QUX-j0-lyf" secondAttribute="leading" id="lfq-bQ-0DQ"/>
-                            <constraint firstItem="djx-KT-Tul" firstAttribute="top" secondItem="QUX-j0-lyf" secondAttribute="top" id="qD0-fh-MWh"/>
+                            <constraint firstItem="yVV-IC-iwI" firstAttribute="top" secondItem="xv6-3f-7t4" secondAttribute="top" id="AOo-3p-DaH"/>
+                            <constraint firstItem="xQj-vP-ruj" firstAttribute="trailing" secondItem="xv6-3f-7t4" secondAttribute="trailing" id="I3D-xQ-8As"/>
+                            <constraint firstItem="xv6-3f-7t4" firstAttribute="bottom" secondItem="xQj-vP-ruj" secondAttribute="bottom" id="dDv-gC-8cB"/>
+                            <constraint firstItem="yVV-IC-iwI" firstAttribute="leading" secondItem="xv6-3f-7t4" secondAttribute="leading" id="kGT-rX-4Bw"/>
+                            <constraint firstItem="xQj-vP-ruj" firstAttribute="top" secondItem="yVV-IC-iwI" secondAttribute="bottom" id="nvc-5N-Ioe"/>
+                            <constraint firstItem="xQj-vP-ruj" firstAttribute="leading" secondItem="xv6-3f-7t4" secondAttribute="leading" id="w5V-ha-AAv"/>
+                            <constraint firstItem="yVV-IC-iwI" firstAttribute="trailing" secondItem="xv6-3f-7t4" secondAttribute="trailing" id="xca-uD-zhs"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Back of House" image="fork.knife" catalog="system" id="zN5-gz-UjJ"/>
+                    <tabBarItem key="tabBarItem" title="Back of House" image="fork.knife" catalog="system" id="YHI-vW-5sd"/>
                     <connections>
-                        <outlet property="addItem" destination="uPe-yg-Fvp" id="ola-mI-7p0"/>
-                        <outlet property="editItem" destination="BZc-fs-ACO" id="8Mn-i6-1zn"/>
-                        <outlet property="tableView" destination="iAW-CY-bEu" id="f0G-u8-wl2"/>
+                        <outlet property="addItem" destination="fwZ-jc-erD" id="RLS-JQ-AiI"/>
+                        <outlet property="editItem" destination="J8u-jH-5SY" id="09O-cL-q3P"/>
+                        <outlet property="logoutItem" destination="OQY-xu-0qg" id="2sv-7o-sjd"/>
+                        <outlet property="tableView" destination="xQj-vP-ruj" id="Jgb-Si-1ok"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6hx-N1-Cxf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vrW-A2-czj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="949" y="-1539"/>
+            <point key="canvasLocation" x="1143" y="-1525"/>
         </scene>
         <!--Other-->
-        <scene sceneID="UrA-Nv-rzZ">
+        <scene sceneID="TMb-kg-QhQ">
             <objects>
-                <viewController id="xDt-KP-fYY" customClass="NavigationViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="tb1-JA-6yc">
+                <viewController id="CZe-7G-obD" customClass="Tab3ViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Te3-sr-DYc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yXc-hj-uYm">
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vUe-gE-d1P">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
                                 <items>
-                                    <navigationItem title="Title" id="7nR-tu-23J">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="04z-eN-Hcl"/>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="JNL-NS-R0l"/>
+                                    <navigationItem title="Other place" id="4zW-Yh-Jjr">
+                                        <barButtonItem key="leftBarButtonItem" title="Edit" id="agZ-FZ-oOf"/>
+                                        <centerItemGroups>
+                                            <barButtonItemGroup customizationDisposition="fixed" id="eSB-yw-pae">
+                                                <barButtonItems>
+                                                    <barButtonItem title="Settings" image="gear" catalog="system" id="mLQ-CT-ifn">
+                                                        <connections>
+                                                            <segue destination="JcI-dq-8uf" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="fYS-h2-9B3"/>
+                                                        </connections>
+                                                    </barButtonItem>
+                                                    <barButtonItem title="Logout" image="rectangle.portrait.and.arrow.right" catalog="system" id="28x-2R-Dsw"/>
+                                                </barButtonItems>
+                                            </barButtonItemGroup>
+                                        </centerItemGroups>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Vf8-zd-a7s"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="AXM-Vf-If9">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="4Lp-6C-ZLc">
                                 <rect key="frame" x="0.0" y="44" width="393" height="759"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="xAq-ek-kbZ">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="ndh-ed-X50">
                                         <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xAq-ek-kbZ" id="abw-rD-cFf">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ndh-ed-X50" id="heX-oq-nzQ">
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
@@ -421,38 +493,46 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="l8N-Ru-b8y"/>
+                        <viewLayoutGuide key="safeArea" id="aKh-09-gkA"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="yXc-hj-uYm" firstAttribute="leading" secondItem="l8N-Ru-b8y" secondAttribute="leading" id="7wH-us-gIu"/>
-                            <constraint firstItem="yXc-hj-uYm" firstAttribute="top" secondItem="l8N-Ru-b8y" secondAttribute="top" id="Btv-ke-Z1I"/>
-                            <constraint firstItem="AXM-Vf-If9" firstAttribute="leading" secondItem="l8N-Ru-b8y" secondAttribute="leading" id="FWz-Jl-u4U"/>
-                            <constraint firstItem="l8N-Ru-b8y" firstAttribute="bottom" secondItem="AXM-Vf-If9" secondAttribute="bottom" id="LUK-4n-T1K"/>
-                            <constraint firstItem="yXc-hj-uYm" firstAttribute="trailing" secondItem="l8N-Ru-b8y" secondAttribute="trailing" id="a7U-Fh-C3J"/>
-                            <constraint firstItem="AXM-Vf-If9" firstAttribute="trailing" secondItem="l8N-Ru-b8y" secondAttribute="trailing" id="cV9-3T-ffa"/>
-                            <constraint firstItem="AXM-Vf-If9" firstAttribute="top" secondItem="yXc-hj-uYm" secondAttribute="bottom" id="h6n-9b-9sh"/>
+                            <constraint firstItem="4Lp-6C-ZLc" firstAttribute="trailing" secondItem="aKh-09-gkA" secondAttribute="trailing" id="39Q-Vj-xzM"/>
+                            <constraint firstItem="vUe-gE-d1P" firstAttribute="leading" secondItem="aKh-09-gkA" secondAttribute="leading" id="92N-c0-zus"/>
+                            <constraint firstItem="4Lp-6C-ZLc" firstAttribute="leading" secondItem="aKh-09-gkA" secondAttribute="leading" id="Bvd-5I-6DA"/>
+                            <constraint firstItem="vUe-gE-d1P" firstAttribute="top" secondItem="aKh-09-gkA" secondAttribute="top" id="Gp3-gW-aCf"/>
+                            <constraint firstItem="vUe-gE-d1P" firstAttribute="trailing" secondItem="aKh-09-gkA" secondAttribute="trailing" id="keI-fB-amI"/>
+                            <constraint firstItem="4Lp-6C-ZLc" firstAttribute="top" secondItem="vUe-gE-d1P" secondAttribute="bottom" id="nAr-PZ-0Lx"/>
+                            <constraint firstItem="aKh-09-gkA" firstAttribute="bottom" secondItem="4Lp-6C-ZLc" secondAttribute="bottom" id="qcy-sx-YGO"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Other" image="wrench.and.screwdriver" catalog="system" id="fzz-rO-YjD"/>
+                    <tabBarItem key="tabBarItem" title="Other" image="tray" catalog="system" id="2ov-D7-4kN"/>
                     <connections>
-                        <outlet property="addItem" destination="JNL-NS-R0l" id="M5N-6k-P72"/>
-                        <outlet property="editItem" destination="04z-eN-Hcl" id="oio-Yf-ckT"/>
-                        <outlet property="tableView" destination="AXM-Vf-If9" id="jOi-6f-y2T"/>
+                        <outlet property="addItem" destination="Vf8-zd-a7s" id="uTT-h6-2Qf"/>
+                        <outlet property="editItem" destination="agZ-FZ-oOf" id="L7v-dU-dQV"/>
+                        <outlet property="logoutItem" destination="28x-2R-Dsw" id="Ktd-fT-ojs"/>
+                        <outlet property="tableView" destination="4Lp-6C-ZLc" id="DDS-zq-wcL"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3jk-Ja-jHV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T08-1c-TFP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1892" y="-1539"/>
+            <point key="canvasLocation" x="2173" y="-1525"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="LrK-iM-gdj"/>
+        <segue reference="SpG-MG-esG"/>
+    </inferredMetricsTieBreakers>
     <resources>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="fork.knife" catalog="system" width="94" height="128"/>
+        <image name="gear" catalog="system" width="128" height="122"/>
         <image name="house.lodge" catalog="system" width="128" height="55"/>
         <image name="line.3.horizontal" catalog="system" width="128" height="65"/>
         <image name="minus" catalog="system" width="128" height="26"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="rectangle.portrait.and.arrow.right" catalog="system" width="128" height="108"/>
+        <image name="tray" catalog="system" width="128" height="88"/>
         <image name="wasteTrackrLogo" width="938" height="313"/>
-        <image name="wrench.and.screwdriver" catalog="system" width="128" height="119"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
