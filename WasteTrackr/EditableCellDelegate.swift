@@ -9,6 +9,7 @@ import UIKit
 
 protocol EditableCellDelegate: AnyObject {
     func updateData(forDocumentID docID: String, collectionID: String, field: String, newValue: Any)
-    func shouldEnableEditing() -> Bool
     func collectionID() -> String
+    func shouldEnableEditing() -> Bool
+    func updateItem(at indexPath: IndexPath, with newValue: Int)
 }

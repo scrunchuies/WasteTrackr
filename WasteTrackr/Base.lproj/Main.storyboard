@@ -149,7 +149,12 @@
                                                             <segue destination="JcI-dq-8uf" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="ozt-ga-9AZ"/>
                                                         </connections>
                                                     </barButtonItem>
-                                                    <barButtonItem title="Logout" image="rectangle.portrait.and.arrow.right" catalog="system" id="fez-Td-aNE"/>
+                                                    <barButtonItem title="Logout" image="rectangle.portrait.and.arrow.right" catalog="system" id="fez-Td-aNE">
+                                                        <connections>
+                                                            <action selector="logoutClicked:" destination="gX0-Yr-MNi" id="Pck-lL-3d1"/>
+                                                            <segue destination="Fso-NZ-Yhb" kind="presentation" modalPresentationStyle="fullScreen" id="oAo-9E-NmU"/>
+                                                        </connections>
+                                                    </barButtonItem>
                                                 </barButtonItems>
                                             </barButtonItemGroup>
                                         </centerItemGroups>
@@ -402,7 +407,12 @@
                                                             <segue destination="JcI-dq-8uf" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="SpG-MG-esG"/>
                                                         </connections>
                                                     </barButtonItem>
-                                                    <barButtonItem title="Logout" image="rectangle.portrait.and.arrow.right" catalog="system" id="OQY-xu-0qg"/>
+                                                    <barButtonItem title="Logout" image="rectangle.portrait.and.arrow.right" catalog="system" id="OQY-xu-0qg">
+                                                        <connections>
+                                                            <action selector="logoutClicked:" destination="qHB-H0-htL" id="61d-OV-W0K"/>
+                                                            <segue destination="Fso-NZ-Yhb" kind="presentation" modalPresentationStyle="fullScreen" id="UgJ-74-7b2"/>
+                                                        </connections>
+                                                    </barButtonItem>
                                                 </barButtonItems>
                                             </barButtonItemGroup>
                                         </centerItemGroups>
@@ -470,7 +480,12 @@
                                                             <segue destination="JcI-dq-8uf" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="fYS-h2-9B3"/>
                                                         </connections>
                                                     </barButtonItem>
-                                                    <barButtonItem title="Logout" image="rectangle.portrait.and.arrow.right" catalog="system" id="28x-2R-Dsw"/>
+                                                    <barButtonItem title="Logout" image="rectangle.portrait.and.arrow.right" catalog="system" id="28x-2R-Dsw">
+                                                        <connections>
+                                                            <action selector="logoutClicked:" destination="CZe-7G-obD" id="Wbr-7b-Lf5"/>
+                                                            <segue destination="Fso-NZ-Yhb" kind="presentation" modalPresentationStyle="fullScreen" id="rIW-uK-ABV"/>
+                                                        </connections>
+                                                    </barButtonItem>
                                                 </barButtonItems>
                                             </barButtonItemGroup>
                                         </centerItemGroups>
@@ -520,7 +535,8 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="LrK-iM-gdj"/>
-        <segue reference="SpG-MG-esG"/>
+        <segue reference="ozt-ga-9AZ"/>
+        <segue reference="oAo-9E-NmU"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>

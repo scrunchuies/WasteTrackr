@@ -14,7 +14,6 @@
 		CCCD2A2B2BDC3A280036D9DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCCD2A2A2BDC3A280036D9DA /* Assets.xcassets */; };
 		CCCD2A2E2BDC3A280036D9DA /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CCCD2A2D2BDC3A280036D9DA /* Base */; };
 		CCCD2A362BDC3A5B0036D9DA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCD2A352BDC3A5B0036D9DA /* LoginViewController.swift */; };
-		CCCD2A3B2BDC40A00036D9DA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCCD2A3A2BDC40A00036D9DA /* GoogleService-Info.plist */; };
 		CCD2E9C22BDF4742006C1615 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CCD2E9C12BDF4742006C1615 /* FirebaseAuth */; };
 		CCD2E9C42BDF4742006C1615 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CCD2E9C32BDF4742006C1615 /* FirebaseFirestore */; };
 		CCD2E9DE2BE0DF8A006C1615 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CCD2E9DD2BE0DF8A006C1615 /* FirebaseFirestoreSwift */; };
@@ -25,10 +24,14 @@
 		CCD927A22BEDE3F500B6822D /* Tab2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD927A12BEDE3F500B6822D /* Tab2ViewController.swift */; };
 		CCD927A42BEDE41300B6822D /* Tab3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD927A32BEDE41300B6822D /* Tab3ViewController.swift */; };
 		CCD927A62BEDE7A600B6822D /* EditableCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD927A52BEDE7A600B6822D /* EditableCellDelegate.swift */; };
+		CCD927AA2BEEC21700B6822D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = CCD927A92BEEC21700B6822D /* FirebaseMessaging */; };
+		CCD927AC2BEEC3D700B6822D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = CCD927AB2BEEC3D700B6822D /* FirebaseAnalytics */; };
+		CCDEBAE92BEED7E9003D3C39 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCDEBAE82BEED7E9003D3C39 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CC067A7E2BDE342500DB51B2 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
+		CCC1DB7F2BEF4CB800C090A4 /* WasteTrackr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WasteTrackr.entitlements; sourceTree = "<group>"; };
 		CCCD2A1E2BDC3A270036D9DA /* WasteTrackr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WasteTrackr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCCD2A212BDC3A270036D9DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CCCD2A232BDC3A270036D9DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -37,7 +40,6 @@
 		CCCD2A2D2BDC3A280036D9DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CCCD2A2F2BDC3A280036D9DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCCD2A352BDC3A5B0036D9DA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		CCCD2A3A2BDC40A00036D9DA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CCD2E9DF2BE1A79E006C1615 /* InventoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryViewController.swift; sourceTree = "<group>"; };
 		CCD927972BEC9CF300B6822D /* Tab1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab1ViewController.swift; sourceTree = "<group>"; };
 		CCD927992BECA24A00B6822D /* EditableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableTableViewCell.swift; sourceTree = "<group>"; };
@@ -45,6 +47,7 @@
 		CCD927A12BEDE3F500B6822D /* Tab2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab2ViewController.swift; sourceTree = "<group>"; };
 		CCD927A32BEDE41300B6822D /* Tab3ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab3ViewController.swift; sourceTree = "<group>"; };
 		CCD927A52BEDE7A600B6822D /* EditableCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableCellDelegate.swift; sourceTree = "<group>"; };
+		CCDEBAE82BEED7E9003D3C39 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +57,8 @@
 			files = (
 				CCD2E9C22BDF4742006C1615 /* FirebaseAuth in Frameworks */,
 				CCD2E9C42BDF4742006C1615 /* FirebaseFirestore in Frameworks */,
+				CCD927AA2BEEC21700B6822D /* FirebaseMessaging in Frameworks */,
+				CCD927AC2BEEC3D700B6822D /* FirebaseAnalytics in Frameworks */,
 				CCD2E9DE2BE0DF8A006C1615 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,6 +85,7 @@
 		CCCD2A202BDC3A270036D9DA /* WasteTrackr */ = {
 			isa = PBXGroup;
 			children = (
+				CCC1DB7F2BEF4CB800C090A4 /* WasteTrackr.entitlements */,
 				CCCD2A212BDC3A270036D9DA /* AppDelegate.swift */,
 				CCCD2A232BDC3A270036D9DA /* SceneDelegate.swift */,
 				CCCD2A272BDC3A270036D9DA /* Main.storyboard */,
@@ -95,7 +101,7 @@
 				CCCD2A2A2BDC3A280036D9DA /* Assets.xcassets */,
 				CCCD2A2C2BDC3A280036D9DA /* LaunchScreen.storyboard */,
 				CCCD2A2F2BDC3A280036D9DA /* Info.plist */,
-				CCCD2A3A2BDC40A00036D9DA /* GoogleService-Info.plist */,
+				CCDEBAE82BEED7E9003D3C39 /* GoogleService-Info.plist */,
 			);
 			path = WasteTrackr;
 			sourceTree = "<group>";
@@ -120,6 +126,8 @@
 				CCD2E9C12BDF4742006C1615 /* FirebaseAuth */,
 				CCD2E9C32BDF4742006C1615 /* FirebaseFirestore */,
 				CCD2E9DD2BE0DF8A006C1615 /* FirebaseFirestoreSwift */,
+				CCD927A92BEEC21700B6822D /* FirebaseMessaging */,
+				CCD927AB2BEEC3D700B6822D /* FirebaseAnalytics */,
 			);
 			productName = WasteTrackr;
 			productReference = CCCD2A1E2BDC3A270036D9DA /* WasteTrackr.app */;
@@ -167,9 +175,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCCD2A2B2BDC3A280036D9DA /* Assets.xcassets in Resources */,
-				CCCD2A3B2BDC40A00036D9DA /* GoogleService-Info.plist in Resources */,
 				CCCD2A2E2BDC3A280036D9DA /* Base in Resources */,
 				CCCD2A292BDC3A270036D9DA /* Base in Resources */,
+				CCDEBAE92BEED7E9003D3C39 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,8 +348,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WasteTrackr/WasteTrackr.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = 9MS87GW626;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WasteTrackr/Info.plist;
@@ -356,9 +366,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = piotrjandura.WasteTrackr;
+				MARKETING_VERSION = 1.6.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.piotrjandura.WasteTrackr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -374,8 +385,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WasteTrackr/WasteTrackr.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = 9MS87GW626;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WasteTrackr/Info.plist;
@@ -390,9 +403,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = piotrjandura.WasteTrackr;
+				MARKETING_VERSION = 1.6.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.piotrjandura.WasteTrackr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -452,6 +466,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
+		};
+		CCD927A92BEEC21700B6822D /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		CCD927AB2BEEC3D700B6822D /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

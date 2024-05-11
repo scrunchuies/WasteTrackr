@@ -8,14 +8,16 @@
 import UIKit
 import FirebaseFirestore
 
-class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {    
+class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
     weak var delegate: EditableCellDelegate?
-
+    
     var nameTextField = UITextField()
     var countTextField = UITextField()
     var countStepper = UIStepper()
+    var indexPath: IndexPath?
     
     var documentID: String?
+    var collectionSuffix: String?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -41,6 +43,9 @@ class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
         nameTextField.delegate = self
         countTextField.delegate = self
         
+        nameTextField.font = UIFont.systemFont(ofSize: 20)
+        countTextField.font = UIFont.systemFont(ofSize: 20)
+        
         // Lock textfields on startup
         nameTextField.isEnabled = false
         countTextField.isEnabled = false
@@ -58,21 +63,29 @@ class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
                                     width: stepperWidth,
                                     height: stepperHeight)
         countStepper.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin]
-
+        
         // Set properties for the stepper
         countStepper.wraps = false
         countStepper.autorepeat = true
         countStepper.minimumValue = 0
         countStepper.maximumValue = 250  // Increase the maximum value to 250
         countStepper.addTarget(self, action: #selector(stepperValueChanged(_:)), for: .valueChanged)
-
+        
         contentView.addSubview(countStepper)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        countStepper.value = 0
+        countTextField.text = "0"
+        countStepper.removeTarget(nil, action: nil, for: .allEvents)
+    }
+    
     @objc private func stepperValueChanged(_ sender: UIStepper) {
-        guard let docID = documentID, let del = delegate else { return }
         countTextField.text = "\(Int(sender.value))"
-        del.updateData(forDocumentID: docID, collectionID: del.collectionID(), field: "count", newValue: Int(sender.value))
+        if let indexPath = indexPath, let del = delegate {
+            del.updateItem(at: indexPath, with: Int(sender.value))
+        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -83,9 +96,10 @@ class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     private func updateFirestoreCount() {
-        guard let docID = documentID, let count = Int(countTextField.text ?? "0") else { return }
+        guard let docID = documentID, let count = Int(countTextField.text ?? "0"), let storeId = UserDefaults.standard.string(forKey: "UserStoreID") else { return }
         let db = Firestore.firestore()
-        db.collection("02226-FOH").document(docID).updateData(["count": count]) { err in
+        let collectionName = "\(storeId)-\(String(describing: collectionSuffix))"  // Use the dynamic suffix
+        db.collection(collectionName).document(docID).updateData(["count": count]) { err in
             if let err = err {
                 print("Error updating document count: \(err)")
             } else {
@@ -94,16 +108,23 @@ class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
     }
     
-    func configure(with item: Item) {
+    func configure(with item: Item, collectionSuffix: String) {
         documentID = item.id
         nameTextField.text = item.name
         countTextField.text = String(item.count)
         countStepper.value = Double(item.count)
+        self.collectionSuffix = collectionSuffix  // Store it in the cell if needed
+
+        countStepper.addTarget(self, action: #selector(stepperValueChanged(_:)), for: .valueChanged)
     }
+
+
     
     private func updateFirestore(documentID: String, field: String, value: Any) {
+        guard let storeId = UserDefaults.standard.string(forKey: "UserStoreID") else { return }
         let db = Firestore.firestore()
-        db.collection("02226-FOH").document(documentID).updateData([field: value]) { error in
+        let collectionName = "\(storeId)-FOH"  // Dynamic collection name
+        db.collection(collectionName).document(documentID).updateData([field: value]) { error in
             if let error = error {
                 print("Error updating document: \(error)")
             } else {
