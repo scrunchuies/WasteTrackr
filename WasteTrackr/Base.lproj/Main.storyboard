@@ -205,10 +205,11 @@
         <scene sceneID="9ot-VG-5DQ">
             <objects>
                 <tabBarController id="ynK-AN-6e2" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="x1K-3U-wge">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" itemPositioning="centered" id="x1K-3U-wge">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="0.95999999999999996" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="gX0-Yr-MNi" kind="relationship" relationship="viewControllers" id="z1n-gn-pgH"/>
@@ -534,9 +535,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="xSN-Ie-eOD"/>
-        <segue reference="fYS-h2-9B3"/>
-        <segue reference="rIW-uK-ABV"/>
+        <segue reference="LrK-iM-gdj"/>
+        <segue reference="ozt-ga-9AZ"/>
+        <segue reference="oAo-9E-NmU"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="cube.box.fill" catalog="system" width="128" height="123"/>
@@ -552,7 +553,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

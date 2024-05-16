@@ -31,27 +31,7 @@ class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupCustomCountTextField() {
-        contentView.addSubview(customCountTextField)
-
-        customCountTextField.delegate = self
-        customCountTextField.placeholder = "Custom #"
-        customCountTextField.keyboardType = .numberPad
-        customCountTextField.borderStyle = .roundedRect
-        customCountTextField.returnKeyType = .done
-        customCountTextField.isEnabled = true
-
-        customCountTextField.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            customCountTextField.leadingAnchor.constraint(equalTo: countTextField.trailingAnchor, constant: 10),
-            customCountTextField.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            customCountTextField.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.2)
-        ])
-    }
-    
     private func setupTextFields() {
-        let textFieldHeight: CGFloat = 30
-        
         // Add subviews first
         contentView.addSubview(nameTextField)
         contentView.addSubview(countTextField)
@@ -59,6 +39,9 @@ class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
         // Set properties
         nameTextField.borderStyle = .roundedRect
         countTextField.borderStyle = .roundedRect
+        
+        nameTextField.returnKeyType = .done
+        countTextField.returnKeyType = .done
         
         nameTextField.delegate = self
         countTextField.delegate = self
@@ -78,42 +61,49 @@ class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
             // NameTextField
             nameTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             nameTextField.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            nameTextField.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.4),
+            nameTextField.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.3),
             
             // CountTextField
             countTextField.leadingAnchor.constraint(equalTo: nameTextField.trailingAnchor, constant: 10),
             countTextField.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            countTextField.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.2),
+            countTextField.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.15) // Adjusted relative width
         ])
         
         // Now setup customCountTextField after setting up other text fields
         setupCustomCountTextField()
     }
     
-    private func setupStepper() {
-        // Adjust the stepper's position and size
-        let stepperWidth: CGFloat = 94
-        let stepperHeight: CGFloat = 30
-        countStepper.frame = CGRect(x: contentView.bounds.width - stepperWidth - 15,
-                                    y: (contentView.bounds.height - stepperHeight) / 2,
-                                    width: stepperWidth,
-                                    height: stepperHeight)
-        countStepper.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin]
+    private func setupCustomCountTextField() {
+        contentView.addSubview(customCountTextField)
         
-        // Set properties for the stepper
+        customCountTextField.delegate = self
+        customCountTextField.placeholder = "Custom #"
+        customCountTextField.borderStyle = .roundedRect
+        customCountTextField.returnKeyType = .done
+        customCountTextField.isEnabled = true
+        
+        customCountTextField.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            customCountTextField.leadingAnchor.constraint(equalTo: countTextField.trailingAnchor, constant: 10),
+            customCountTextField.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+            customCountTextField.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.15) // Adjusted relative width
+        ])
+    }
+    
+    private func setupStepper() {
+        contentView.addSubview(countStepper)
+        
         countStepper.wraps = false
         countStepper.autorepeat = true
         countStepper.minimumValue = 0
         countStepper.maximumValue = 1000
         countStepper.addTarget(self, action: #selector(stepperValueChanged(_:)), for: .valueChanged)
         
-        contentView.addSubview(countStepper)
-
         countStepper.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            countStepper.leadingAnchor.constraint(equalTo: customCountTextField.trailingAnchor, constant: 10),
-            countStepper.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            countStepper.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.15),
+            countStepper.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            countStepper.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            countStepper.widthAnchor.constraint(equalToConstant: 94),
             countStepper.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
@@ -136,8 +126,8 @@ class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
         super.awakeFromNib()
         customCountTextField.delegate = self
     }
-
-     func textFieldDidEndEditing(_ textField: UITextField) {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
         guard let docID = documentID, let del = delegate else { return }
         
         // Determine the field and value to update based on which textField is being edited
@@ -161,18 +151,18 @@ class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
         default:
             return
         }
-
+        
         // Update Firestore
         del.updateData(forDocumentID: docID, collectionID: del.collectionID(), field: field, newValue: value)
     }
-
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()  // Dismiss the keyboard
-
+        
         if textField == customCountTextField {
             processCustomCountInput()
         }
-
+        
         return true
     }
     
@@ -183,20 +173,20 @@ class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
             print("Failed to retrieve necessary data for operation.")
             return
         }
-
+        
         let updatedCount = currentCount + newCount
         print("Adding \(newCount) to \(currentCount) gives a new count of \(updatedCount)")
         
         countTextField.text = "\(updatedCount)"  // Update the countTextField display
         customCountTextField.text = ""  // Optionally clear the customCountTextField
-
+        
         // Simulate Firestore update (Debugging print instead of actual update for now)
         print("Would update Firestore: Document ID \(docID), New Count \(updatedCount)")
         // Uncomment the next line when ready to actually update Firestore
         // del.updateData(forDocumentID: docID, collectionID: del.collectionID(), field: "count", newValue: updatedCount)
     }
-
-
+    
+    
     
     private func updateFirestoreCount() {
         guard let docID = documentID, let count = Int(countTextField.text ?? "0"), let storeId = UserDefaults.standard.string(forKey: "UserStoreID") else { return }
@@ -217,11 +207,11 @@ class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
         countTextField.text = String(item.count)
         countStepper.value = Double(item.count)
         self.collectionSuffix = collectionSuffix  // Store it in the cell if needed
-
+        
         countStepper.addTarget(self, action: #selector(stepperValueChanged(_:)), for: .valueChanged)
     }
-
-
+    
+    
     
     private func updateFirestore(documentID: String, field: String, value: Any) {
         guard let storeId = UserDefaults.standard.string(forKey: "UserStoreID") else { return }

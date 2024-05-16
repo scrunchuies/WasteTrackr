@@ -22,6 +22,7 @@ class Tab3ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        overrideUserInterfaceStyle = .light
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -31,6 +32,10 @@ class Tab3ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         setupNavigationItems()
         setupRefreshControl()
         observeItems()
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     func setupRefreshControl() {

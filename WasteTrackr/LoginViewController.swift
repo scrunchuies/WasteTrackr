@@ -33,6 +33,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        overrideUserInterfaceStyle = .light
         
         NotificationCenter.default.addObserver(self, selector: #selector(resetLoginUI), name: NSNotification.Name("UserDidLogout"), object: nil)
         
@@ -60,6 +61,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             emailTextField.text = UserDefaults.standard.string(forKey: "SavedEmail")
             passTextField.text = UserDefaults.standard.string(forKey: "SavedPassword")
         }
+    }
+    
+    // Only allow portrait mode
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
+    // Make sure the view controller is presented in portrait mode initially
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
+    
+    // If the device is rotated, this will help in keeping the UI in portrait
+    override var shouldAutorotate: Bool {
+        return true
     }
     
     @objc func resetLoginUI() {
@@ -151,70 +167,73 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             print("No logged-in user available or email is missing.")
             return
         }
-        
+
         let db = Firestore.firestore()
         let userProfileRef = db.collection("userProfiles").document(user.uid)
-        
+
         // Fetch device details
         let deviceName = UIDevice.current.name
         let systemVersion = UIDevice.current.systemVersion
         let uniqueID = UIDevice.current.identifierForVendor?.uuidString ?? UUID().uuidString
-        
+
         userProfileRef.getDocument { (document, error) in
+            // Check for an existing document
             if let document = document, document.exists {
-                // Fetch FCM token from UserDefaults
-                if let fcmToken = UserDefaults.standard.string(forKey: "FCMToken") {
-                    // Update the existing document with latest login details, device details, and add the FCM token to allFCMTokens
-                    let updateData: [String: Any] = [
-                        "email": userEmail, // Ensure email is always up-to-date
-                        "loginDate": FieldValue.serverTimestamp(),
-                        "allFCMTokens": FieldValue.arrayUnion([fcmToken]),
-                        "devices": FieldValue.arrayUnion([deviceName]),
-                        "iOSVersions": FieldValue.arrayUnion([systemVersion]),
-                        "userIdentifiers": FieldValue.arrayUnion([uniqueID])
-                    ]
-                    userProfileRef.updateData(updateData) { err in
-                        if let err = err {
-                            print("Error updating document: \(err)")
-                        } else {
-                            print("Existing user profile updated with latest details, device info, and FCM token.")
-                        }
-                        completion()
-                    }
-                } else {
-                    print("FCM token not found in UserDefaults.")
-                    completion()
-                }
+                self.updateUserProfile(with: userProfileRef, user: user, userEmail: userEmail, deviceName: deviceName, systemVersion: systemVersion, uniqueID: uniqueID, completion: completion)
             } else {
-                // Fetch FCM token from UserDefaults
-                if let fcmToken = UserDefaults.standard.string(forKey: "FCMToken") {
-                    // Create a new profile with essential fields including creationDate, device details, and FCM token
-                    let newData: [String: Any] = [
-                        "userID": user.uid,
-                        "email": userEmail,
-                        "creationDate": FieldValue.serverTimestamp(),
-                        "loginDate": FieldValue.serverTimestamp(),
-                        "storeId": "00000", // Default StoreID
-                        "allFCMTokens": [fcmToken], // Initialize with current FCM token
-                        "devices": [deviceName],
-                        "iOSVersions": [systemVersion],
-                        "userIdentifiers": [uniqueID]
-                    ]
-                    userProfileRef.setData(newData) { err in
-                        if let err = err {
-                            print("Error creating new user profile: \(err)")
-                        } else {
-                            print("New user profile and default store ID created successfully with device info and FCM token!")
-                        }
-                        completion()
-                    }
-                } else {
-                    print("FCM token not found in UserDefaults.")
-                    completion()
-                }
+                self.createUserProfile(with: userProfileRef, user: user, userEmail: userEmail, deviceName: deviceName, systemVersion: systemVersion, uniqueID: uniqueID, completion: completion)
             }
         }
     }
-    
-}
 
+    func updateUserProfile(with ref: DocumentReference, user: User, userEmail: String, deviceName: String, systemVersion: String, uniqueID: String, completion: @escaping () -> Void) {
+        // Attempt to fetch the FCM token
+        let fcmToken = UserDefaults.standard.string(forKey: "FCMToken") ?? "defaultToken" // Consider handling the default token more appropriately
+
+        let updateData: [String: Any] = [
+            "email": FieldValue.arrayUnion([userEmail]),
+            "latestFCMToken": fcmToken,
+            "allFCMTokens": FieldValue.arrayUnion([fcmToken]),
+            "loginDate": FieldValue.serverTimestamp(),
+            "devices": FieldValue.arrayUnion([deviceName]),
+            "iOSVersions": FieldValue.arrayUnion([systemVersion]),
+            "userIdentifiers": FieldValue.arrayUnion([uniqueID])
+        ]
+
+        ref.updateData(updateData) { error in
+            if let error = error {
+                print("Error updating user profile: \(error)")
+            } else {
+                print("User profile updated with FCM token details.")
+            }
+            completion()
+        }
+    }
+
+    func createUserProfile(with ref: DocumentReference, user: User, userEmail: String, deviceName: String, systemVersion: String, uniqueID: String, completion: @escaping () -> Void) {
+        // Attempt to fetch the FCM token
+        let fcmToken = UserDefaults.standard.string(forKey: "FCMToken") ?? "defaultToken" // Consider handling the default token more appropriately
+
+        let newData: [String: Any] = [
+            "userID": user.uid,
+            "email": [userEmail],
+            "latestFCMToken": fcmToken,
+            "allFCMTokens": [fcmToken],
+            "creationDate": FieldValue.serverTimestamp(),
+            "loginDate": FieldValue.serverTimestamp(),
+            "storeId": "00000", // Default Store ID
+            "devices": [deviceName],
+            "iOSVersions": [systemVersion],
+            "userIdentifiers": [uniqueID]
+        ]
+
+        ref.setData(newData) { error in
+            if let error = error {
+                print("Error creating user profile: \(error)")
+            } else {
+                print("New user profile created with FCM token details.")
+            }
+            completion()
+        }
+    }
+}

@@ -16,7 +16,6 @@
 		CCCD2A362BDC3A5B0036D9DA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCD2A352BDC3A5B0036D9DA /* LoginViewController.swift */; };
 		CCD2E9C22BDF4742006C1615 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CCD2E9C12BDF4742006C1615 /* FirebaseAuth */; };
 		CCD2E9C42BDF4742006C1615 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CCD2E9C32BDF4742006C1615 /* FirebaseFirestore */; };
-		CCD2E9DE2BE0DF8A006C1615 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CCD2E9DD2BE0DF8A006C1615 /* FirebaseFirestoreSwift */; };
 		CCD2E9E02BE1A79E006C1615 /* InventoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD2E9DF2BE1A79E006C1615 /* InventoryViewController.swift */; };
 		CCD927982BEC9CF300B6822D /* Tab1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD927972BEC9CF300B6822D /* Tab1ViewController.swift */; };
 		CCD9279A2BECA24A00B6822D /* EditableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD927992BECA24A00B6822D /* EditableTableViewCell.swift */; };
@@ -59,7 +58,6 @@
 				CCD2E9C42BDF4742006C1615 /* FirebaseFirestore in Frameworks */,
 				CCD927AA2BEEC21700B6822D /* FirebaseMessaging in Frameworks */,
 				CCD927AC2BEEC3D700B6822D /* FirebaseAnalytics in Frameworks */,
-				CCD2E9DE2BE0DF8A006C1615 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +123,6 @@
 			packageProductDependencies = (
 				CCD2E9C12BDF4742006C1615 /* FirebaseAuth */,
 				CCD2E9C32BDF4742006C1615 /* FirebaseFirestore */,
-				CCD2E9DD2BE0DF8A006C1615 /* FirebaseFirestoreSwift */,
 				CCD927A92BEEC21700B6822D /* FirebaseMessaging */,
 				CCD927AB2BEEC3D700B6822D /* FirebaseAnalytics */,
 			);
@@ -359,14 +356,14 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.1;
+				MARKETING_VERSION = 1.8.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.piotrjandura.WasteTrackr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -396,14 +393,14 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.1;
+				MARKETING_VERSION = 1.8.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.piotrjandura.WasteTrackr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -461,11 +458,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
-		};
-		CCD2E9DD2BE0DF8A006C1615 /* FirebaseFirestoreSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestoreSwift;
 		};
 		CCD927A92BEEC21700B6822D /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;

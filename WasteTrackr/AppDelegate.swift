@@ -18,10 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
-        
-        // [START set_messaging_delegate]
         Messaging.messaging().delegate = self
-        // [END set_messaging_delegate]
         
         // Register for remote notifications. This shows a permission dialog on first run, to
         // show the dialog at a more appropriate time move this registration accordingly.
@@ -116,21 +113,26 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        guard let token = fcmToken else { return }
-        updateFirestoreWithToken(token)
-    }
-
-    private func updateFirestoreWithToken(_ token: String) {
-        guard let userId = Auth.auth().currentUser?.uid else {
-            print("User is not logged in; can't save FCM token.")
+        guard let token = fcmToken else {
+            print("FCM token is nil.")
             return
         }
+        print("Received FCM token: \(token)")
+        UserDefaults.standard.set(token, forKey: "FCMToken")
         
+        // Optionally, update Firestore here if user is logged in
+        if let userId = Auth.auth().currentUser?.uid {
+            updateFirestoreWithToken(token, userId: userId)
+        }
+    }
+
+    private func updateFirestoreWithToken(_ token: String, userId: String) {
         let db = Firestore.firestore()
         let userRef = db.collection("userProfiles").document(userId)
+        let data = ["latestFCMToken": token, "allFCMTokens": FieldValue.arrayUnion([token])] as [String : Any]
 
-        userRef.setData(["fcmToken": token], merge: true) { error in
-            UserDefaults.standard.set(token, forKey: "FCMToken")
+        // Using setData with merge
+        userRef.setData(data, merge: true) { error in
             if let error = error {
                 print("Unable to save FCM token to Firestore: \(error.localizedDescription)")
             } else {
