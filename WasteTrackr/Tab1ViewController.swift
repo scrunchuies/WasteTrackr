@@ -179,12 +179,12 @@ class Tab1ViewController: UIViewController, UITableViewDataSource, UITableViewDe
             fatalError("Error: Unexpected cell type")
         }
         let item = items[indexPath.row]
-        cell.indexPath = indexPath  // Set the indexPath
-        cell.delegate = self
         cell.configure(with: item, collectionSuffix: collectionSuffix)
+        cell.delegate = self
+        cell.indexPath = indexPath  // This helps track which cell is being edited
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -233,7 +233,7 @@ extension Tab1ViewController: EditableCellDelegate {
         
         // Update Firestore
         let documentID = item.id
-        updateData(forDocumentID: documentID, collectionID: collectionID(forSuffix: "ETC"), field: "count", newValue: newValue)
+        updateData(forDocumentID: documentID, collectionID: collectionID(forSuffix: "FOH"), field: "count", newValue: newValue)
     }
     
     func collectionID() -> String {

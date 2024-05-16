@@ -39,6 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // [END register_for_notifications]
         
+        Thread.sleep(forTimeInterval: 2)
+        
         return true
     }
     
@@ -128,6 +130,7 @@ extension AppDelegate: MessagingDelegate {
         let userRef = db.collection("userProfiles").document(userId)
 
         userRef.setData(["fcmToken": token], merge: true) { error in
+            UserDefaults.standard.set(token, forKey: "FCMToken")
             if let error = error {
                 print("Unable to save FCM token to Firestore: \(error.localizedDescription)")
             } else {

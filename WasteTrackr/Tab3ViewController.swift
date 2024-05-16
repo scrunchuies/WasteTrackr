@@ -1,20 +1,15 @@
 //
-//  Tab3ViewController.swift
+//  NavigationViewController.swift
 //  WasteTrackr
 //
-//  Created by Piotr Jandura on 5/9/24.
+//  Created by Piotr Jandura on 5/8/24.
 //
 
 import UIKit
 import FirebaseFirestore
 import FirebaseAuth
-import FirebaseMessaging
 
 class Tab3ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    // Notification for storage area
-    @IBOutlet var fcmTokenMessage: UILabel!
-    @IBOutlet var remoteFCMTokenMessage: UILabel!
-    
     @IBOutlet weak var editItem: UIBarButtonItem!
     @IBOutlet weak var addItem: UIBarButtonItem!
     @IBOutlet weak var logoutItem: UIBarButtonItem!
@@ -28,64 +23,14 @@ class Tab3ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(displayFCMToken(notification:)),
-            name: Notification.Name("FCMToken"),
-            object: nil
-        )
-        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(EditableTableViewCell.self, forCellReuseIdentifier: "EditableCell")
         
+        
         setupNavigationItems()
         setupRefreshControl()
         observeItems()
-    }
-    
-    func subscribeToItemCountChanges() {
-        Messaging.messaging().subscribe(toTopic: "itemCountChanges") { error in
-            if let error = error {
-                print("Error subscribing to topic: \(error.localizedDescription)")
-            } else {
-                print("Subscribed to itemCountChanges topic")
-            }
-        }
-    }
-    
-    @IBAction func handleLogTokenTouch(_ sender: UIButton) {
-        // [START log_fcm_reg_token]
-        let token = Messaging.messaging().fcmToken
-        print("FCM token: \(token ?? "")")
-        // [END log_fcm_reg_token]
-        fcmTokenMessage.text = "Logged FCM token: \(token ?? "")"
-        
-        // [START log_iid_reg_token]
-        Messaging.messaging().token { token, error in
-            if let error = error {
-                print("Error fetching remote FCM registration token: \(error)")
-            } else if let token = token {
-                print("Remote instance ID token: \(token)")
-                self.remoteFCMTokenMessage.text = "Remote FCM registration token: \(token)"
-            }
-        }
-        // [END log_iid_reg_token]
-    }
-    
-    @IBAction func handleSubscribeTouch(_ sender: UIButton) {
-        // [START subscribe_topic]
-        Messaging.messaging().subscribe(toTopic: "weather") { error in
-            print("Subscribed to weather topic")
-        }
-        // [END subscribe_topic]
-    }
-    
-    @objc func displayFCMToken(notification: NSNotification) {
-        guard let userInfo = notification.userInfo else { return }
-        if let fcmToken = userInfo["token"] as? String {
-            fcmTokenMessage.text = "Received FCM token: \(fcmToken)"
-        }
     }
     
     func setupRefreshControl() {
@@ -133,10 +78,13 @@ class Tab3ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func collectionID(forSuffix suffix: String) -> String {
-        guard let storeId = UserDefaults.standard.string(forKey: "UserStoreID") else {
-            fatalError("Store ID not set")
+        if let storeId = UserDefaults.standard.string(forKey: "UserStoreID") {
+            return "\(storeId)-\(suffix)"
+        } else {
+            // Handle the case where store ID is not yet set
+            print("Store ID not set, defaulting to a temporary value")
+            return "defaultStoreID-\(suffix)"  // Temporary value, adjust according to your app's needs
         }
-        return "\(storeId)-\(suffix)"
     }
     
     func observeItems() {
@@ -222,6 +170,7 @@ class Tab3ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("Total items: \(items.count)")
         return items.count
     }
     
@@ -230,12 +179,12 @@ class Tab3ViewController: UIViewController, UITableViewDataSource, UITableViewDe
             fatalError("Error: Unexpected cell type")
         }
         let item = items[indexPath.row]
-        cell.indexPath = indexPath  // Set the indexPath
-        cell.delegate = self
         cell.configure(with: item, collectionSuffix: collectionSuffix)
+        cell.delegate = self
+        cell.indexPath = indexPath  // This helps track which cell is being edited
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }

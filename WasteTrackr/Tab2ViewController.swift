@@ -1,8 +1,8 @@
 //
-//  Tab2ViewController.swift
+//  NavigationViewController.swift
 //  WasteTrackr
 //
-//  Created by Piotr Jandura on 5/9/24.
+//  Created by Piotr Jandura on 5/8/24.
 //
 
 import UIKit
@@ -27,6 +27,7 @@ class Tab2ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.delegate = self
         tableView.register(EditableTableViewCell.self, forCellReuseIdentifier: "EditableCell")
         
+        
         setupNavigationItems()
         setupRefreshControl()
         observeItems()
@@ -48,6 +49,7 @@ class Tab2ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         editItem.target = self
         editItem.action = #selector(toggleEditingMode)
     }
+    
     @IBAction func logoutClicked(_ sender: Any) {
         do {
             try Auth.auth().signOut()
@@ -76,10 +78,13 @@ class Tab2ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func collectionID(forSuffix suffix: String) -> String {
-        guard let storeId = UserDefaults.standard.string(forKey: "UserStoreID") else {
-            fatalError("Store ID not set")
+        if let storeId = UserDefaults.standard.string(forKey: "UserStoreID") {
+            return "\(storeId)-\(suffix)"
+        } else {
+            // Handle the case where store ID is not yet set
+            print("Store ID not set, defaulting to a temporary value")
+            return "defaultStoreID-\(suffix)"  // Temporary value, adjust according to your app's needs
         }
-        return "\(storeId)-\(suffix)"
     }
     
     func observeItems() {
@@ -165,6 +170,7 @@ class Tab2ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("Total items: \(items.count)")
         return items.count
     }
     
@@ -173,12 +179,12 @@ class Tab2ViewController: UIViewController, UITableViewDataSource, UITableViewDe
             fatalError("Error: Unexpected cell type")
         }
         let item = items[indexPath.row]
-        cell.indexPath = indexPath  // Set the indexPath
-        cell.delegate = self
         cell.configure(with: item, collectionSuffix: collectionSuffix)
+        cell.delegate = self
+        cell.indexPath = indexPath  // This helps track which cell is being edited
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -217,7 +223,6 @@ class Tab2ViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
     }
-    
 }
 
 extension Tab2ViewController: EditableCellDelegate {
@@ -228,7 +233,7 @@ extension Tab2ViewController: EditableCellDelegate {
         
         // Update Firestore
         let documentID = item.id
-        updateData(forDocumentID: documentID, collectionID: collectionID(forSuffix: "ETC"), field: "count", newValue: newValue)
+        updateData(forDocumentID: documentID, collectionID: collectionID(forSuffix: "BOH"), field: "count", newValue: newValue)
     }
     
     func collectionID() -> String {

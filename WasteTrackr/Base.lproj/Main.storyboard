@@ -3,7 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -106,7 +106,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
                                 <items>
                                     <navigationItem title="Settings" id="dfJ-FK-TTp">
-                                        <barButtonItem key="leftBarButtonItem" title="Back" image="chevron.backward" catalog="system" id="nsY-4u-kwN">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="nsY-4u-kwN">
                                             <connections>
                                                 <segue destination="ynK-AN-6e2" kind="presentation" animates="NO" modalPresentationStyle="fullScreen" id="xSN-Ie-eOD"/>
                                             </connections>
@@ -404,7 +404,7 @@
                                                 <barButtonItems>
                                                     <barButtonItem title="Settings" image="gear" catalog="system" id="9RE-pS-Crk">
                                                         <connections>
-                                                            <segue destination="JcI-dq-8uf" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="SpG-MG-esG"/>
+                                                            <segue destination="JcI-dq-8uf" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="SpG-MG-esG"/>
                                                         </connections>
                                                     </barButtonItem>
                                                     <barButtonItem title="Logout" image="rectangle.portrait.and.arrow.right" catalog="system" id="OQY-xu-0qg">
@@ -459,7 +459,7 @@
             </objects>
             <point key="canvasLocation" x="1143" y="-1525"/>
         </scene>
-        <!--Other-->
+        <!--Bulk Waste-->
         <scene sceneID="TMb-kg-QhQ">
             <objects>
                 <viewController id="CZe-7G-obD" customClass="Tab3ViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
@@ -470,14 +470,14 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vUe-gE-d1P">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
                                 <items>
-                                    <navigationItem title="Other place" id="4zW-Yh-Jjr">
+                                    <navigationItem title="Bulk Waste" id="4zW-Yh-Jjr">
                                         <barButtonItem key="leftBarButtonItem" title="Edit" id="agZ-FZ-oOf"/>
                                         <centerItemGroups>
                                             <barButtonItemGroup customizationDisposition="fixed" id="eSB-yw-pae">
                                                 <barButtonItems>
                                                     <barButtonItem title="Settings" image="gear" catalog="system" id="mLQ-CT-ifn">
                                                         <connections>
-                                                            <segue destination="JcI-dq-8uf" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="fYS-h2-9B3"/>
+                                                            <segue destination="JcI-dq-8uf" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="fYS-h2-9B3"/>
                                                         </connections>
                                                     </barButtonItem>
                                                     <barButtonItem title="Logout" image="rectangle.portrait.and.arrow.right" catalog="system" id="28x-2R-Dsw">
@@ -520,7 +520,7 @@
                             <constraint firstItem="aKh-09-gkA" firstAttribute="bottom" secondItem="4Lp-6C-ZLc" secondAttribute="bottom" id="qcy-sx-YGO"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Other" image="tray" catalog="system" id="2ov-D7-4kN"/>
+                    <tabBarItem key="tabBarItem" title="Bulk Waste" image="cube.box.fill" catalog="system" id="2ov-D7-4kN"/>
                     <connections>
                         <outlet property="addItem" destination="Vf8-zd-a7s" id="uTT-h6-2Qf"/>
                         <outlet property="editItem" destination="agZ-FZ-oOf" id="L7v-dU-dQV"/>
@@ -534,12 +534,12 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="LrK-iM-gdj"/>
-        <segue reference="ozt-ga-9AZ"/>
-        <segue reference="oAo-9E-NmU"/>
+        <segue reference="xSN-Ie-eOD"/>
+        <segue reference="fYS-h2-9B3"/>
+        <segue reference="rIW-uK-ABV"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="chevron.backward" catalog="system" width="97" height="128"/>
+        <image name="cube.box.fill" catalog="system" width="128" height="123"/>
         <image name="fork.knife" catalog="system" width="94" height="128"/>
         <image name="gear" catalog="system" width="128" height="122"/>
         <image name="house.lodge" catalog="system" width="128" height="55"/>
@@ -547,13 +547,12 @@
         <image name="minus" catalog="system" width="128" height="26"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="rectangle.portrait.and.arrow.right" catalog="system" width="128" height="108"/>
-        <image name="tray" catalog="system" width="128" height="88"/>
         <image name="wasteTrackrLogo" width="938" height="313"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
