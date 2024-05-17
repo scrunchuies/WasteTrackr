@@ -45,7 +45,6 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="loginClicked:" destination="Fso-NZ-Yhb" eventType="touchUpInside" id="Jys-JV-1Q9"/>
-                                    <segue destination="ynK-AN-6e2" kind="presentation" identifier="loginToHome" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="LrK-iM-gdj"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember me?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7G-B6-vEH">
@@ -88,6 +87,7 @@
                         <outlet property="emailTextField" destination="8lq-P0-qhF" id="zb6-Kk-O1B"/>
                         <outlet property="passTextField" destination="io7-20-aze" id="czE-7k-8Wr"/>
                         <outlet property="rememberMeCheckbox" destination="BDd-N7-o7G" id="BKf-1C-6ZM"/>
+                        <segue destination="ynK-AN-6e2" kind="presentation" identifier="loginToHome" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="ahL-v9-nRY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EBf-OP-3Ma" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -535,7 +535,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="LrK-iM-gdj"/>
+        <segue reference="ahL-v9-nRY"/>
         <segue reference="ozt-ga-9AZ"/>
         <segue reference="oAo-9E-NmU"/>
     </inferredMetricsTieBreakers>
@@ -553,7 +553,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

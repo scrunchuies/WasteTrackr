@@ -15,24 +15,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // Check if "Remember Me" is selected
-        let rememberMe = UserDefaults.standard.bool(forKey: "RememberMe")
-        rememberMeCheckbox.isOn = rememberMe
-        
-        if rememberMe {
-            // Populate the text fields
-            emailTextField.text = UserDefaults.standard.string(forKey: "SavedEmail") ?? ""
-            passTextField.text = UserDefaults.standard.string(forKey: "SavedPassword") ?? ""
-        } else {
-            // Clear the text fields
-            emailTextField.text = ""
-            passTextField.text = ""
-        }
+        setupInitialUI()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupInitialUI()
+        setupTextFieldStyles()
+        setupGestureRecognizers()
+        
         overrideUserInterfaceStyle = .light
         
         NotificationCenter.default.addObserver(self, selector: #selector(resetLoginUI), name: NSNotification.Name("UserDidLogout"), object: nil)
@@ -61,6 +52,36 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             emailTextField.text = UserDefaults.standard.string(forKey: "SavedEmail")
             passTextField.text = UserDefaults.standard.string(forKey: "SavedPassword")
         }
+    }
+    
+    func setupInitialUI() {
+        overrideUserInterfaceStyle = .light
+        let rememberMe = UserDefaults.standard.bool(forKey: "RememberMe")
+        rememberMeCheckbox.isOn = rememberMe
+        if rememberMe {
+            emailTextField.text = UserDefaults.standard.string(forKey: "SavedEmail")
+            passTextField.text = UserDefaults.standard.string(forKey: "SavedPassword")
+        } else {
+            emailTextField.text = ""
+            passTextField.text = ""
+        }
+    }
+
+    func setupTextFieldStyles() {
+        let fields = [emailTextField, passTextField]
+        let placeholderAttributes = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+        for field in fields {
+            field?.delegate = self
+            field?.layer.borderWidth = 1
+            field?.layer.cornerRadius = 8
+            let placeholderText = field == emailTextField ? "Email" : "Password"
+            field?.attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: placeholderAttributes)
+        }
+    }
+
+    func setupGestureRecognizers() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     // Only allow portrait mode
@@ -113,32 +134,55 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginClicked(_ sender: Any) {
+        // Ensure the email field is not empty
         guard let email = emailTextField.text, !email.isEmpty else {
             print("Email is empty")
             return
         }
+        
+        // Ensure the password field is not empty
         guard let pass = passTextField.text, !pass.isEmpty else {
             print("Password is empty")
             return
         }
         
+        // Sign in with the provided email and password
         Auth.auth().signIn(withEmail: email, password: pass) { [weak self] (authResult, error) in
             guard let self = self else { return }
+            
+            // Handle potential errors during sign-in
             if let error = error {
                 print("Error signing in:", error.localizedDescription)
+                // Optionally update the UI to inform the user of the error
+                DispatchQueue.main.async {
+                    // You might want to show an alert or a label to the user here
+                    self.showError("Failed to log in: \(error.localizedDescription)")
+                }
                 return
             }
             
-            // Authentication successful, check and ensure user profile
+            // Authentication was successful, now ensure the user profile exists
             self.ensureUserProfile { [weak self] in
-                // Fetch storeId and continue to the main part of the app
+                // Assuming the method fetchAndStoreUserStoreId also uses completion handlers
                 self?.fetchAndStoreUserStoreId {
-                    self?.performSegue(withIdentifier: "loginToHome", sender: self)
+                    // Navigate to the main part of the app on successful fetch
+                    DispatchQueue.main.async {
+                        self?.performSegue(withIdentifier: "loginToHome", sender: self)
+                    }
                 }
             }
         }
     }
-    
+
+    // Utility method to show error messages to the user, enhancing UX
+    func showError(_ message: String) {
+        // Implementation depends on how you wish to show error messages
+        // E.g., using a UIAlertController to display alerts
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true)
+    }
+
     func fetchAndStoreUserStoreId(completion: @escaping () -> Void) {
         guard let user = Auth.auth().currentUser else {
             print("No user is currently logged in.")
