@@ -13,6 +13,7 @@ class Tab2ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var editItem: UIBarButtonItem!
     @IBOutlet weak var addItem: UIBarButtonItem!
     @IBOutlet weak var logoutItem: UIBarButtonItem!
+    @IBOutlet weak var demoLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     var collectionSuffix = "BOH"

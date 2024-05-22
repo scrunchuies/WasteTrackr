@@ -134,6 +134,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginClicked(_ sender: Any) {
+        print(Array(UserDefaults.standard.dictionaryRepresentation()))
         // Ensure the email field is not empty
         guard let email = emailTextField.text, !email.isEmpty else {
             print("Email is empty")

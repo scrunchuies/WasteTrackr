@@ -163,7 +163,7 @@
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="t3e-ev-xJD">
-                                <rect key="frame" x="0.0" y="44" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="133" width="393" height="670"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="Zcd-IG-xdB">
@@ -176,6 +176,12 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A table of values for Front of House that is editable by stepping values by 1 or entering a custom amount" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DQZ-oj-LTc">
+                                <rect key="frame" x="5" y="49" width="383" height="79"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="G6n-CO-OMY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -184,14 +190,18 @@
                             <constraint firstItem="G6n-CO-OMY" firstAttribute="bottom" secondItem="t3e-ev-xJD" secondAttribute="bottom" id="8mv-kZ-blM"/>
                             <constraint firstItem="VeJ-BD-OfL" firstAttribute="top" secondItem="G6n-CO-OMY" secondAttribute="top" id="9Z7-sK-y5l"/>
                             <constraint firstItem="t3e-ev-xJD" firstAttribute="leading" secondItem="G6n-CO-OMY" secondAttribute="leading" id="Fc3-vl-5Z7"/>
-                            <constraint firstItem="t3e-ev-xJD" firstAttribute="top" secondItem="VeJ-BD-OfL" secondAttribute="bottom" id="FsG-h1-PU7"/>
+                            <constraint firstItem="DQZ-oj-LTc" firstAttribute="leading" secondItem="G6n-CO-OMY" secondAttribute="leading" constant="5" id="Fxo-pe-0Uk"/>
+                            <constraint firstItem="t3e-ev-xJD" firstAttribute="top" secondItem="DQZ-oj-LTc" secondAttribute="bottom" constant="5" id="ILO-Sk-Hnb"/>
                             <constraint firstItem="t3e-ev-xJD" firstAttribute="trailing" secondItem="G6n-CO-OMY" secondAttribute="trailing" id="elV-2g-Gac"/>
                             <constraint firstItem="VeJ-BD-OfL" firstAttribute="leading" secondItem="G6n-CO-OMY" secondAttribute="leading" id="f8Q-gG-dF5"/>
+                            <constraint firstItem="G6n-CO-OMY" firstAttribute="trailing" secondItem="DQZ-oj-LTc" secondAttribute="trailing" constant="5" id="pwL-zG-McV"/>
+                            <constraint firstItem="DQZ-oj-LTc" firstAttribute="top" secondItem="VeJ-BD-OfL" secondAttribute="bottom" constant="5" id="xDo-HQ-ghW"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Front of House" image="house.lodge" catalog="system" id="aQ6-Pd-enI"/>
                     <connections>
                         <outlet property="addItem" destination="Inv-CU-pej" id="n7w-wI-V19"/>
+                        <outlet property="demoLabel" destination="DQZ-oj-LTc" id="TG4-zn-HlI"/>
                         <outlet property="editItem" destination="5Co-qG-Y2T" id="PfS-ko-aSa"/>
                         <outlet property="logoutItem" destination="fez-Td-aNE" id="vSh-kd-Nbl"/>
                         <outlet property="tableView" destination="t3e-ev-xJD" id="g8p-5U-Pej"/>
@@ -199,7 +209,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fna-ca-eYb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-76" y="-1539"/>
+            <point key="canvasLocation" x="-77.099236641221367" y="-1539.4366197183099"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="9ot-VG-5DQ">
@@ -422,7 +432,7 @@
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xQj-vP-ruj">
-                                <rect key="frame" x="0.0" y="44" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="133" width="393" height="670"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="Cg3-dm-lzk">
@@ -435,15 +445,24 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A table of values for Back of House that is editable by stepping values by 1 or entering a custom amount" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="842-gZ-VFi">
+                                <rect key="frame" x="5" y="49" width="383" height="79"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xv6-3f-7t4"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="yVV-IC-iwI" firstAttribute="top" secondItem="xv6-3f-7t4" secondAttribute="top" id="AOo-3p-DaH"/>
                             <constraint firstItem="xQj-vP-ruj" firstAttribute="trailing" secondItem="xv6-3f-7t4" secondAttribute="trailing" id="I3D-xQ-8As"/>
+                            <constraint firstItem="xQj-vP-ruj" firstAttribute="top" secondItem="842-gZ-VFi" secondAttribute="bottom" constant="5" id="NTY-YD-pxX"/>
+                            <constraint firstItem="842-gZ-VFi" firstAttribute="top" secondItem="yVV-IC-iwI" secondAttribute="bottom" constant="5" id="WQO-gS-KEL"/>
                             <constraint firstItem="xv6-3f-7t4" firstAttribute="bottom" secondItem="xQj-vP-ruj" secondAttribute="bottom" id="dDv-gC-8cB"/>
+                            <constraint firstItem="xv6-3f-7t4" firstAttribute="trailing" secondItem="842-gZ-VFi" secondAttribute="trailing" constant="5" id="fs3-xl-Yph"/>
                             <constraint firstItem="yVV-IC-iwI" firstAttribute="leading" secondItem="xv6-3f-7t4" secondAttribute="leading" id="kGT-rX-4Bw"/>
-                            <constraint firstItem="xQj-vP-ruj" firstAttribute="top" secondItem="yVV-IC-iwI" secondAttribute="bottom" id="nvc-5N-Ioe"/>
+                            <constraint firstItem="842-gZ-VFi" firstAttribute="leading" secondItem="xv6-3f-7t4" secondAttribute="leading" constant="5" id="thM-Ti-RGo"/>
                             <constraint firstItem="xQj-vP-ruj" firstAttribute="leading" secondItem="xv6-3f-7t4" secondAttribute="leading" id="w5V-ha-AAv"/>
                             <constraint firstItem="yVV-IC-iwI" firstAttribute="trailing" secondItem="xv6-3f-7t4" secondAttribute="trailing" id="xca-uD-zhs"/>
                         </constraints>
@@ -451,6 +470,7 @@
                     <tabBarItem key="tabBarItem" title="Back of House" image="fork.knife" catalog="system" id="YHI-vW-5sd"/>
                     <connections>
                         <outlet property="addItem" destination="fwZ-jc-erD" id="RLS-JQ-AiI"/>
+                        <outlet property="demoLabel" destination="842-gZ-VFi" id="Qel-Oy-Khi"/>
                         <outlet property="editItem" destination="J8u-jH-5SY" id="09O-cL-q3P"/>
                         <outlet property="logoutItem" destination="OQY-xu-0qg" id="2sv-7o-sjd"/>
                         <outlet property="tableView" destination="xQj-vP-ruj" id="Jgb-Si-1ok"/>
@@ -458,7 +478,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vrW-A2-czj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1143" y="-1525"/>
+            <point key="canvasLocation" x="1142.7480916030534" y="-1525.3521126760563"/>
         </scene>
         <!--Bulk Waste-->
         <scene sceneID="TMb-kg-QhQ">
@@ -495,7 +515,7 @@
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="4Lp-6C-ZLc">
-                                <rect key="frame" x="0.0" y="44" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="133" width="393" height="670"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="ndh-ed-X50">
@@ -508,22 +528,32 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Same as first two reguarding editing values. Used to track bulk item waste (Nugget Box, Fry Box, etc.)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mN6-FL-huP">
+                                <rect key="frame" x="5" y="49" width="383" height="79"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="aKh-09-gkA"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="4Lp-6C-ZLc" firstAttribute="trailing" secondItem="aKh-09-gkA" secondAttribute="trailing" id="39Q-Vj-xzM"/>
+                            <constraint firstItem="4Lp-6C-ZLc" firstAttribute="top" secondItem="mN6-FL-huP" secondAttribute="bottom" constant="5" id="7LL-oX-9Oq"/>
                             <constraint firstItem="vUe-gE-d1P" firstAttribute="leading" secondItem="aKh-09-gkA" secondAttribute="leading" id="92N-c0-zus"/>
                             <constraint firstItem="4Lp-6C-ZLc" firstAttribute="leading" secondItem="aKh-09-gkA" secondAttribute="leading" id="Bvd-5I-6DA"/>
                             <constraint firstItem="vUe-gE-d1P" firstAttribute="top" secondItem="aKh-09-gkA" secondAttribute="top" id="Gp3-gW-aCf"/>
+                            <constraint firstItem="aKh-09-gkA" firstAttribute="trailing" secondItem="mN6-FL-huP" secondAttribute="trailing" constant="5" id="Sm5-dz-CB1"/>
                             <constraint firstItem="vUe-gE-d1P" firstAttribute="trailing" secondItem="aKh-09-gkA" secondAttribute="trailing" id="keI-fB-amI"/>
-                            <constraint firstItem="4Lp-6C-ZLc" firstAttribute="top" secondItem="vUe-gE-d1P" secondAttribute="bottom" id="nAr-PZ-0Lx"/>
+                            <constraint firstItem="mN6-FL-huP" firstAttribute="top" secondItem="vUe-gE-d1P" secondAttribute="bottom" constant="5" id="m2m-Cj-TfY"/>
+                            <constraint firstItem="mN6-FL-huP" firstAttribute="leading" secondItem="aKh-09-gkA" secondAttribute="leading" constant="5" id="nhF-1b-WnV"/>
                             <constraint firstItem="aKh-09-gkA" firstAttribute="bottom" secondItem="4Lp-6C-ZLc" secondAttribute="bottom" id="qcy-sx-YGO"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Bulk Waste" image="cube.box.fill" catalog="system" id="2ov-D7-4kN"/>
                     <connections>
                         <outlet property="addItem" destination="Vf8-zd-a7s" id="uTT-h6-2Qf"/>
+                        <outlet property="demoLabel" destination="mN6-FL-huP" id="vxb-Yr-HJD"/>
                         <outlet property="editItem" destination="agZ-FZ-oOf" id="L7v-dU-dQV"/>
                         <outlet property="logoutItem" destination="28x-2R-Dsw" id="Ktd-fT-ojs"/>
                         <outlet property="tableView" destination="4Lp-6C-ZLc" id="DDS-zq-wcL"/>
@@ -531,7 +561,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T08-1c-TFP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2173" y="-1525"/>
+            <point key="canvasLocation" x="2171.7557251908397" y="-1525.3521126760563"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

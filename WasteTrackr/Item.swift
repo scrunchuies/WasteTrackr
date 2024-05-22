@@ -1,5 +1,5 @@
 //
-//  User.swift
+//  Item.swift
 //  WasteTrackr
 //
 //  Created by Piotr Jandura on 5/8/24.
