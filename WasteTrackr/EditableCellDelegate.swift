@@ -12,4 +12,5 @@ protocol EditableCellDelegate: AnyObject {
     func collectionID() -> String
     func shouldEnableEditing() -> Bool
     func updateItem(at indexPath: IndexPath, with newValue: Int)
+    func deleteItem(at indexPath: IndexPath)
 }

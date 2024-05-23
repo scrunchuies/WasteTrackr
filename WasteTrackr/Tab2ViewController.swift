@@ -1,5 +1,5 @@
 //
-//  NavigationViewController.swift
+//  Tab2ViewController.swift
 //  WasteTrackr
 //
 //  Created by Piotr Jandura on 5/8/24.
@@ -9,26 +9,33 @@ import UIKit
 import FirebaseFirestore
 import FirebaseAuth
 
-class Tab2ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    @IBOutlet weak var editItem: UIBarButtonItem!
-    @IBOutlet weak var addItem: UIBarButtonItem!
-    @IBOutlet weak var logoutItem: UIBarButtonItem!
-    @IBOutlet weak var demoLabel: UILabel!
-    @IBOutlet weak var tableView: UITableView!
+class Tab2ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, EditableCellDelegate {
+    @IBOutlet weak var selectButton: UIBarButtonItem!
+    @IBOutlet weak var addButton: UIBarButtonItem!
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var deleteButton: UIBarButtonItem!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     var collectionSuffix = "BOH"
     var refreshControl = UIRefreshControl()
     var listener: ListenerRegistration?
-    var items: [Item] = []
+    
+    var isSelectionMode = false
+    var selectedItems: Set<IndexPath> = []
+    
+    var items: [Item] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(EditableTableViewCell.self, forCellReuseIdentifier: "EditableCell")
-        
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(EditableCollectionViewCell.self, forCellWithReuseIdentifier: "EditableCell")
         
         setupNavigationItems()
         setupRefreshControl()
@@ -42,7 +49,7 @@ class Tab2ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func setupRefreshControl() {
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        tableView.refreshControl = refreshControl
+        collectionView.refreshControl = refreshControl
     }
     
     @objc func refreshData() {
@@ -50,54 +57,109 @@ class Tab2ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     private func setupNavigationItems() {
-        addItem.target = self
-        addItem.action = #selector(addNewItem)
-        editItem.target = self
-        editItem.action = #selector(toggleEditingMode)
+        selectButton.target = self
+        selectButton.action = #selector(toggleSelectionMode)
+        addButton.target = self
+        addButton.action = #selector(addNewItem)
+        editButton.target = self
+        editButton.action = #selector(toggleEditingMode)
+        deleteButton.target = self
+        deleteButton.action = #selector(deleteSelectedItems)
+        deleteButton.isEnabled = false
+    }
+    
+    @objc func toggleEditingMode() {
+        let isEditing = !collectionView.isEditing
+        collectionView.isEditing = isEditing
+        editButton.title = isEditing ? "Done" : "Edit"
+        
+        for case let cell as EditableCollectionViewCell in collectionView.visibleCells {
+            cell.setEditable(isEditing)
+        }
+    }
+    
+    @objc func toggleSelectionMode() {
+        isSelectionMode.toggle()
+        collectionView.allowsMultipleSelection = isSelectionMode
+        selectButton.title = isSelectionMode ? "Done" : "Select"
+        deleteButton.isHidden = !isSelectionMode
+        deleteButton.isEnabled = isSelectionMode
+        selectedItems.removeAll()
+        
+        for case let cell as EditableCollectionViewCell in collectionView.visibleCells {
+            cell.setSelectable(isSelectionMode)
+            cell.isSelected = false
+        }
+    }
+    
+    @objc func deleteSelectedItems() {
+        guard !selectedItems.isEmpty else { return }
+        
+        let itemsToDelete = selectedItems.map { items[$0.row] }
+        let db = Firestore.firestore()
+        let collectionId = collectionID(forSuffix: collectionSuffix)
+        
+        let batch = db.batch()
+        
+        for item in itemsToDelete {
+            let docRef = db.collection(collectionId).document(item.id)
+            batch.deleteDocument(docRef)
+        }
+        
+        batch.commit { [weak self] error in
+            guard let self = self else { return }
+            if let error = error {
+                print("Error deleting documents: \(error)")
+            } else {
+                print("Successfully deleted selected documents")
+                self.items.removeAll { item in
+                    itemsToDelete.contains(where: { $0.id == item.id })
+                }
+                self.selectedItems.removeAll()
+                self.toggleSelectionMode()
+            }
+        }
     }
     
     @IBAction func logoutClicked(_ sender: Any) {
         do {
             try Auth.auth().signOut()
             
-            // Clear user-specific data
             UserDefaults.standard.removeObject(forKey: "UserStoreID")
             UserDefaults.standard.synchronize()
             
-            // Navigate back to Login View or update UI to reflect logged out state
             performSegue(withIdentifier: "returnToLogin", sender: self)
         } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
-        }
-        
-    }
-    
-    @objc func toggleEditingMode() {
-        let isEditing = !tableView.isEditing
-        tableView.setEditing(isEditing, animated: true)
-        editItem.title = isEditing ? "Done" : "Edit"
-        
-        // Update all visible cells for editability
-        for case let cell as EditableTableViewCell in tableView.visibleCells {
-            cell.setEditable(isEditing)
+            print("Error signing out: \(signOutError)")
         }
     }
     
-    func collectionID(forSuffix suffix: String) -> String {
-        if let storeId = UserDefaults.standard.string(forKey: "UserStoreID") {
-            return "\(storeId)-\(suffix)"
-        } else {
-            // Handle the case where store ID is not yet set
-            print("Store ID not set, defaulting to a temporary value")
-            return "defaultStoreID-\(suffix)"  // Temporary value, adjust according to your app's needs
+    @objc func addNewItem() {
+        let db = Firestore.firestore()
+        let collectionId = collectionID(forSuffix: "BOH")
+        let newItem = Item(
+            id: UUID().uuidString,
+            name: "New Item",
+            count: 1,
+            color: UIColor.random(),
+            timestamp: Timestamp(),
+            imageName: "default_background"
+        )
+        
+        db.collection(collectionId).document(newItem.id).setData(newItem.dictionary) { err in
+            if let err = err {
+                print("Error adding document: \(err)")
+            } else {
+                print("Successfully added document: \(newItem.id)")
+            }
         }
     }
     
     func observeItems() {
-        let collectionId = collectionID(forSuffix: "BOH")  // Adjust as needed for dynamic collection names
+        let collectionId = collectionID(forSuffix: "BOH")
+        print("Using collection ID: \(collectionId)")
         let db = Firestore.firestore()
         
-        // Remove any existing listener before creating a new one
         listener?.remove()
         
         listener = db.collection(collectionId).order(by: "timestamp", descending: false).addSnapshotListener { [weak self] querySnapshot, error in
@@ -111,7 +173,7 @@ class Tab2ViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return
             }
             
-            guard let snapshot = querySnapshot, !snapshot.documents.isEmpty else {
+            guard let snapshot = querySnapshot else {
                 print("No data found in collection: \(collectionId)")
                 DispatchQueue.main.async {
                     self.refreshControl.endRefreshing()
@@ -119,16 +181,18 @@ class Tab2ViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return
             }
             
-            self.items = snapshot.documents.map { doc -> Item in
-                let data = doc.data()
-                let id = doc.documentID
-                let name = data["name"] as? String ?? "No name"
-                let count = data["count"] as? Int ?? 0
-                return Item(id: id, name: name, count: count)
+            print("Fetched \(snapshot.documents.count) documents")
+            self.items = snapshot.documents.compactMap { doc -> Item? in
+                let item = Item(document: doc)
+                if item == nil {
+                    print("Failed to parse document: \(doc.documentID)")
+                }
+                return item
             }
             
+            print("Parsed items: \(self.items)")
+            
             DispatchQueue.main.async {
-                self.tableView.reloadData()
                 self.refreshControl.endRefreshing()
             }
         }
@@ -136,110 +200,70 @@ class Tab2ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        // Detach the listener when the view disappears
         listener?.remove()
     }
     
-    @objc func addNewItem() {
-        let db = Firestore.firestore()
-        let collectionId = collectionID(forSuffix: "BOH")  // Use the dynamically determined collection ID
-        let newItem = [
-            "name": "New Item",
-            "count": 1,
-            "timestamp": FieldValue.serverTimestamp()
-        ] as [String : Any]
-        
-        db.collection(collectionId).addDocument(data: newItem) { err in
-            if let err = err {
-                print("Error adding document: \(err)")
-            }
+    func collectionID(forSuffix suffix: String) -> String {
+        if let storeId = UserDefaults.standard.string(forKey: "UserStoreID") {
+            return "\(storeId)-\(suffix)"
+        } else {
+            print("Store ID not set, defaulting to a temporary value")
+            return "defaultStoreID-\(suffix)"
         }
     }
     
-    func fetchData() {
-        let db = Firestore.firestore()
-        let collectionId = collectionID(forSuffix: "BOH")  // Use the dynamically determined collection ID
-        db.collection(collectionId).order(by: "timestamp", descending: false).getDocuments { [weak self] (snapshot, error) in
-            guard let self = self, let snapshot = snapshot else {
-                print("Error fetching documents: \(String(describing: error))")
-                return
-            }
-            self.items = snapshot.documents.map { doc in
-                Item(id: doc.documentID,
-                     name: doc["name"] as? String ?? "",
-                     count: doc["count"] as? Int ?? 0)
-            }
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print("Total items: \(items.count)")
         return items.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "EditableCell", for: indexPath) as? EditableTableViewCell else {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EditableCell", for: indexPath) as? EditableCollectionViewCell else {
             fatalError("Error: Unexpected cell type")
         }
         let item = items[indexPath.row]
         cell.configure(with: item, collectionSuffix: collectionSuffix)
         cell.delegate = self
-        cell.indexPath = indexPath  // This helps track which cell is being edited
+        cell.indexPath = indexPath
         return cell
     }
-
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cellsPerRow: CGFloat = 3
+        let spacing: CGFloat = 10
+        let totalSpacing = (cellsPerRow - 1) * spacing
+        let width = (collectionView.bounds.width - totalSpacing - 20) / cellsPerRow
+        return CGSize(width: width, height: width)
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            deleteItem(at: indexPath)
-        }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
     }
     
-    func deleteItem(at indexPath: IndexPath) {
-        guard indexPath.row < items.count else {
-            print("Index out of range.")
-            return
-        }
-        
-        let documentID = items[indexPath.row].id
-        let db = Firestore.firestore()
-        let collectionId = collectionID(forSuffix: "BOH")  // Use the dynamically determined collection ID
-        db.collection(collectionId).document(documentID).delete { [weak self] err in
-            guard let self = self else { return }
-            self.fetchData()  // Ensure to fetch data after deletion
-            if let err = err {
-                print("Error removing document: \(err)")
-            } else {
-                DispatchQueue.main.async {
-                    // Additional safety check before removing the item
-                    if indexPath.row < self.items.count {
-                        self.items.remove(at: indexPath.row)
-                        self.tableView.deleteRows(at: [indexPath], with: .fade)
-                    } else {
-                        print("Index out of range after document deletion.")
-                    }
-                }
-                self.fetchData()
-            }
-        }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
     }
-}
-
-extension Tab2ViewController: EditableCellDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+    
     func updateItem(at indexPath: IndexPath, with newValue: Int) {
         var item = items[indexPath.row]
-        item.count = newValue  // Update the local model
-        tableView.reloadRows(at: [indexPath], with: .none)  // Refresh the row
+        item.count = newValue
+        items[indexPath.row] = item
         
-        // Update Firestore
         let documentID = item.id
-        updateData(forDocumentID: documentID, collectionID: collectionID(forSuffix: "BOH"), field: "count", newValue: newValue)
+        let collectionId = collectionID(forSuffix: collectionSuffix)
+        let db = Firestore.firestore()
+        
+        db.collection(collectionId).document(documentID).updateData(["count": newValue]) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+            } else {
+                print("Successfully updated count to \(newValue) in document \(documentID)")
+            }
+        }
     }
     
     func collectionID() -> String {
@@ -259,5 +283,50 @@ extension Tab2ViewController: EditableCellDelegate {
     
     func shouldEnableEditing() -> Bool {
         return true
+    }
+    
+    func deleteItem(at indexPath: IndexPath) {
+        guard indexPath.row < items.count else { return } // Prevent index out of range
+        
+        let item = items[indexPath.row]
+        let documentID = item.id
+        let collectionId = collectionID(forSuffix: collectionSuffix)
+        let db = Firestore.firestore()
+        
+        db.collection(collectionId).document(documentID).delete { [weak self] error in
+            guard let self = self else { return }
+            if let error = error {
+                print("Error deleting document: \(error)")
+            } else {
+                print("Successfully deleted document \(documentID)")
+                
+                // Ensure the index is still valid before removing the item
+                if indexPath.row < self.items.count {
+                    self.items.remove(at: indexPath.row)
+                    self.collectionView.deleteItems(at: [indexPath])
+                } else {
+                    print("Index out of range after document deletion.")
+                }
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if isSelectionMode {
+            selectedItems.insert(indexPath)
+            if let cell = collectionView.cellForItem(at: indexPath) as? EditableCollectionViewCell {
+                cell.layer.borderWidth = 2.0
+                cell.layer.borderColor = UIColor.red.cgColor
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if isSelectionMode {
+            selectedItems.remove(indexPath)
+            if let cell = collectionView.cellForItem(at: indexPath) as? EditableCollectionViewCell {
+                cell.layer.borderWidth = 0.0
+            }
+        }
     }
 }

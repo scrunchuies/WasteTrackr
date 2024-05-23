@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		CC067A7F2BDE342500DB51B2 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC067A7E2BDE342500DB51B2 /* TrackingViewController.swift */; };
+		CC1240D32BFEE09300E71687 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1240D22BFEE09300E71687 /* SettingsViewController.swift */; };
+		CCB3BC592BFE92CA00ADD545 /* EditableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB3BC582BFE92CA00ADD545 /* EditableCollectionViewCell.swift */; };
+		CCB3BC5B2BFEA38700ADD545 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB3BC5A2BFEA38700ADD545 /* UIColorExtensions.swift */; };
 		CCCD2A222BDC3A270036D9DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCD2A212BDC3A270036D9DA /* AppDelegate.swift */; };
 		CCCD2A242BDC3A270036D9DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCD2A232BDC3A270036D9DA /* SceneDelegate.swift */; };
 		CCCD2A292BDC3A270036D9DA /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CCCD2A282BDC3A270036D9DA /* Base */; };
@@ -30,6 +33,9 @@
 
 /* Begin PBXFileReference section */
 		CC067A7E2BDE342500DB51B2 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
+		CC1240D22BFEE09300E71687 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		CCB3BC582BFE92CA00ADD545 /* EditableCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableCollectionViewCell.swift; sourceTree = "<group>"; };
+		CCB3BC5A2BFEA38700ADD545 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		CCC1DB7F2BEF4CB800C090A4 /* WasteTrackr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WasteTrackr.entitlements; sourceTree = "<group>"; };
 		CCCD2A1E2BDC3A270036D9DA /* WasteTrackr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WasteTrackr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCCD2A212BDC3A270036D9DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -87,11 +93,14 @@
 				CCCD2A212BDC3A270036D9DA /* AppDelegate.swift */,
 				CCCD2A232BDC3A270036D9DA /* SceneDelegate.swift */,
 				CCCD2A272BDC3A270036D9DA /* Main.storyboard */,
+				CC1240D22BFEE09300E71687 /* SettingsViewController.swift */,
 				CCD2E9DF2BE1A79E006C1615 /* InventoryViewController.swift */,
 				CCD927972BEC9CF300B6822D /* Tab1ViewController.swift */,
+				CCB3BC582BFE92CA00ADD545 /* EditableCollectionViewCell.swift */,
 				CCD927A12BEDE3F500B6822D /* Tab2ViewController.swift */,
 				CCD927A32BEDE41300B6822D /* Tab3ViewController.swift */,
 				CCD9279B2BECAA8800B6822D /* Item.swift */,
+				CCB3BC5A2BFEA38700ADD545 /* UIColorExtensions.swift */,
 				CCD927992BECA24A00B6822D /* EditableTableViewCell.swift */,
 				CCD927A52BEDE7A600B6822D /* EditableCellDelegate.swift */,
 				CC067A7E2BDE342500DB51B2 /* TrackingViewController.swift */,
@@ -185,13 +194,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCB3BC592BFE92CA00ADD545 /* EditableCollectionViewCell.swift in Sources */,
 				CCCD2A362BDC3A5B0036D9DA /* LoginViewController.swift in Sources */,
+				CCB3BC5B2BFEA38700ADD545 /* UIColorExtensions.swift in Sources */,
 				CCD2E9E02BE1A79E006C1615 /* InventoryViewController.swift in Sources */,
 				CCD927A62BEDE7A600B6822D /* EditableCellDelegate.swift in Sources */,
 				CCD927A42BEDE41300B6822D /* Tab3ViewController.swift in Sources */,
 				CCD927A22BEDE3F500B6822D /* Tab2ViewController.swift in Sources */,
 				CCD9279A2BECA24A00B6822D /* EditableTableViewCell.swift in Sources */,
 				CCCD2A222BDC3A270036D9DA /* AppDelegate.swift in Sources */,
+				CC1240D32BFEE09300E71687 /* SettingsViewController.swift in Sources */,
 				CCD9279C2BECAA8800B6822D /* Item.swift in Sources */,
 				CC067A7F2BDE342500DB51B2 /* TrackingViewController.swift in Sources */,
 				CCD927982BEC9CF300B6822D /* Tab1ViewController.swift in Sources */,
@@ -358,7 +370,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -395,7 +407,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
