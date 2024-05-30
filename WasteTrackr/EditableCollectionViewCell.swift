@@ -1,3 +1,10 @@
+//
+//  EditableCollectionViewCell.swift
+//  WasteTrackr
+//
+//  Created by Piotr Jandura on 5/8/24.
+//
+
 import UIKit
 
 class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
@@ -10,16 +17,22 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     var countTextField = UITextField()
     var countStepper = UIStepper()
     var selectionIndicator = UIView()
+    var editButton = UIButton(type: .system) // Edit button with ellipsis icon
     var indexPath: IndexPath?
     
     var documentID: String?
     var collectionSuffix: String?
     
+    var nameBarView = UIView() // New white bar for holding the nameTextField
+    var isSelectionModeEnabled = false
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
-        self.layer.cornerRadius = 10 // Rounded corners
+        self.layer.cornerRadius = 30
         self.layer.masksToBounds = true
+        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderWidth = 2.0
     }
     
     required init?(coder: NSCoder) {
@@ -39,47 +52,48 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         contentView.addSubview(overlayView)
         
         // Add selectionIndicator
-        selectionIndicator.backgroundColor = UIColor.red.withAlphaComponent(0.5)
+        selectionIndicator.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         selectionIndicator.translatesAutoresizingMaskIntoConstraints = false
         selectionIndicator.isHidden = true
         contentView.addSubview(selectionIndicator)
         
-        // Add nameTextField
-        nameTextField.borderStyle = .roundedRect
+        // Add nameBarView
+        nameBarView.backgroundColor = .white
+        nameBarView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(nameBarView)
+        
+        // Add nameTextField to nameBarView
+        nameTextField.layer.borderWidth = 0
         nameTextField.placeholder = "Enter name"
         nameTextField.textAlignment = .center
         nameTextField.returnKeyType = .done
         nameTextField.delegate = self
-        nameTextField.font = UIFont.systemFont(ofSize: 16)
+        nameTextField.font = UIFont.systemFont(ofSize: 22)
         nameTextField.isEnabled = false
-        nameTextField.backgroundColor = .white
-        nameTextField.alpha = 0.95
+        nameTextField.backgroundColor = .clear
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(nameTextField)
+        nameBarView.addSubview(nameTextField)
         
         // Add countTextField
-        countTextField.borderStyle = .roundedRect
+        countTextField.font = .systemFont(ofSize: 40)
         countTextField.placeholder = "Enter #"
         countTextField.textAlignment = .center
         countTextField.returnKeyType = .done
         countTextField.delegate = self
-        countTextField.font = UIFont.systemFont(ofSize: 16)
         countTextField.isEnabled = false
-        countTextField.backgroundColor = .white
-        countTextField.alpha = 0.95
+        countTextField.backgroundColor = .clear
         countTextField.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(countTextField)
         
         // Add customCountTextField
-        customCountTextField.borderStyle = .roundedRect
         customCountTextField.placeholder = "Custom #"
         customCountTextField.textAlignment = .center
         customCountTextField.returnKeyType = .done
         customCountTextField.delegate = self
-        customCountTextField.font = UIFont.systemFont(ofSize: 16)
+        customCountTextField.font = UIFont.systemFont(ofSize: 22)
         customCountTextField.isEnabled = true
         customCountTextField.backgroundColor = .white
-        customCountTextField.alpha = 0.95
+        customCountTextField.alpha = 0.4
         customCountTextField.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(customCountTextField)
         
@@ -87,7 +101,6 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         countStepper.wraps = false
         countStepper.layer.cornerRadius = 8
         countStepper.backgroundColor = .white
-        countStepper.alpha = 0.95
         countStepper.autorepeat = true
         countStepper.minimumValue = 0
         countStepper.maximumValue = 1000
@@ -95,6 +108,15 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         countStepper.translatesAutoresizingMaskIntoConstraints = false
         countStepper.tintColor = .white // Set the tint color to white
         contentView.addSubview(countStepper)
+        
+        // Add editButton with system icon
+        let editIcon = UIImage(systemName: "ellipsis.circle")
+        editButton.setImage(editIcon, for: .normal)
+        editButton.tintColor = .black
+        editButton.translatesAutoresizingMaskIntoConstraints = false
+        editButton.isHidden = true // Initially hidden
+        editButton.addTarget(self, action: #selector(showEditMenu), for: .touchUpInside)
+        contentView.addSubview(editButton)
         
         // Setup constraints
         NSLayoutConstraint.activate([
@@ -113,11 +135,17 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
             selectionIndicator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             selectionIndicator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
-            nameTextField.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            nameTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
-            nameTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
+            nameBarView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            nameBarView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            nameBarView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            nameBarView.heightAnchor.constraint(equalToConstant: 50), // Height of the white bar
             
-            countTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
+            nameTextField.topAnchor.constraint(equalTo: nameBarView.topAnchor, constant: 5),
+            nameTextField.leadingAnchor.constraint(equalTo: nameBarView.leadingAnchor, constant: 5),
+            nameTextField.trailingAnchor.constraint(equalTo: nameBarView.trailingAnchor, constant: -5),
+            nameTextField.bottomAnchor.constraint(equalTo: nameBarView.bottomAnchor, constant: -5),
+            
+            countTextField.topAnchor.constraint(equalTo: nameBarView.bottomAnchor, constant: 5),
             countTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
             countTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
             
@@ -127,7 +155,11 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
             
             countStepper.topAnchor.constraint(equalTo: customCountTextField.bottomAnchor, constant: 5),
             countStepper.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            countStepper.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5)
+            countStepper.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            
+            // Edit button constraints
+            editButton.centerYAnchor.constraint(equalTo: countStepper.centerYAnchor),
+            editButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
         ])
         
         // Ensure the cell is square
@@ -144,7 +176,10 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         backgroundImageView.image = nil
         overlayView.backgroundColor = UIColor(white: 0, alpha: 0.5)
         selectionIndicator.isHidden = true
-        self.layer.borderWidth = 0.0 // Reset the border width
+        self.layer.borderWidth = 2.0 // Reset the border width
+        self.layer.borderColor = UIColor.black.cgColor // Reset the border color
+        isSelected = false // Reset the selection state
+        editButton.isHidden = true // Reset edit button visibility
     }
     
     @objc private func stepperValueChanged(_ sender: UIStepper) {
@@ -241,17 +276,44 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     func setEditable(_ isEditable: Bool) {
         nameTextField.isEnabled = isEditable
         countTextField.isEnabled = isEditable
+        editButton.isHidden = !isEditable
+        
+        if isEditable {
+            let editTapGesture = UITapGestureRecognizer(target: self, action: #selector(showEditMenu))
+            contentView.addGestureRecognizer(editTapGesture)
+        } else {
+            contentView.gestureRecognizers?.forEach(contentView.removeGestureRecognizer)
+        }
+    }
+    
+    @objc private func showEditMenu() {
+        guard let indexPath = indexPath, let delegate = delegate as? Tab1ViewController else { return }
+        delegate.presentEditMenu(for: self, at: indexPath)
     }
     
     func setSelectable(_ isSelectable: Bool) {
-        self.layer.borderWidth = isSelectable ? 2.0 : 0.0
-        self.layer.borderColor = isSelectable ? UIColor.red.cgColor : nil
-        selectionIndicator.isHidden = !isSelectable
+        isSelectionModeEnabled = isSelectable
+        updateSelectionMode()
+    }
+    
+    private func updateSelectionMode() {
+        if isSelectionModeEnabled {
+            self.layer.borderWidth = 2.0
+            self.layer.borderColor = UIColor.red.cgColor
+            selectionIndicator.isHidden = !isSelected
+        } else {
+            self.layer.borderWidth = 2.0
+            self.layer.borderColor = UIColor.black.cgColor
+            selectionIndicator.isHidden = true
+        }
     }
     
     override var isSelected: Bool {
         didSet {
-            selectionIndicator.isHidden = !isSelected
+            if isSelectionModeEnabled {
+                selectionIndicator.isHidden = !isSelected
+                self.layer.borderColor = isSelected ? UIColor.red.cgColor : UIColor.black.cgColor
+            }
         }
     }
 }

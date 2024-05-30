@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CC067A7F2BDE342500DB51B2 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC067A7E2BDE342500DB51B2 /* TrackingViewController.swift */; };
 		CC1240D32BFEE09300E71687 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1240D22BFEE09300E71687 /* SettingsViewController.swift */; };
 		CCB3BC592BFE92CA00ADD545 /* EditableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB3BC582BFE92CA00ADD545 /* EditableCollectionViewCell.swift */; };
 		CCB3BC5B2BFEA38700ADD545 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB3BC5A2BFEA38700ADD545 /* UIColorExtensions.swift */; };
@@ -19,7 +18,6 @@
 		CCCD2A362BDC3A5B0036D9DA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCD2A352BDC3A5B0036D9DA /* LoginViewController.swift */; };
 		CCD2E9C22BDF4742006C1615 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CCD2E9C12BDF4742006C1615 /* FirebaseAuth */; };
 		CCD2E9C42BDF4742006C1615 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CCD2E9C32BDF4742006C1615 /* FirebaseFirestore */; };
-		CCD2E9E02BE1A79E006C1615 /* InventoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD2E9DF2BE1A79E006C1615 /* InventoryViewController.swift */; };
 		CCD927982BEC9CF300B6822D /* Tab1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD927972BEC9CF300B6822D /* Tab1ViewController.swift */; };
 		CCD9279A2BECA24A00B6822D /* EditableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD927992BECA24A00B6822D /* EditableTableViewCell.swift */; };
 		CCD9279C2BECAA8800B6822D /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD9279B2BECAA8800B6822D /* Item.swift */; };
@@ -32,7 +30,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CC067A7E2BDE342500DB51B2 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
 		CC1240D22BFEE09300E71687 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		CCB3BC582BFE92CA00ADD545 /* EditableCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableCollectionViewCell.swift; sourceTree = "<group>"; };
 		CCB3BC5A2BFEA38700ADD545 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
@@ -45,7 +42,6 @@
 		CCCD2A2D2BDC3A280036D9DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CCCD2A2F2BDC3A280036D9DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCCD2A352BDC3A5B0036D9DA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		CCD2E9DF2BE1A79E006C1615 /* InventoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryViewController.swift; sourceTree = "<group>"; };
 		CCD927972BEC9CF300B6822D /* Tab1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab1ViewController.swift; sourceTree = "<group>"; };
 		CCD927992BECA24A00B6822D /* EditableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableTableViewCell.swift; sourceTree = "<group>"; };
 		CCD9279B2BECAA8800B6822D /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -94,7 +90,6 @@
 				CCCD2A232BDC3A270036D9DA /* SceneDelegate.swift */,
 				CCCD2A272BDC3A270036D9DA /* Main.storyboard */,
 				CC1240D22BFEE09300E71687 /* SettingsViewController.swift */,
-				CCD2E9DF2BE1A79E006C1615 /* InventoryViewController.swift */,
 				CCD927972BEC9CF300B6822D /* Tab1ViewController.swift */,
 				CCB3BC582BFE92CA00ADD545 /* EditableCollectionViewCell.swift */,
 				CCD927A12BEDE3F500B6822D /* Tab2ViewController.swift */,
@@ -103,7 +98,6 @@
 				CCB3BC5A2BFEA38700ADD545 /* UIColorExtensions.swift */,
 				CCD927992BECA24A00B6822D /* EditableTableViewCell.swift */,
 				CCD927A52BEDE7A600B6822D /* EditableCellDelegate.swift */,
-				CC067A7E2BDE342500DB51B2 /* TrackingViewController.swift */,
 				CCCD2A352BDC3A5B0036D9DA /* LoginViewController.swift */,
 				CCCD2A2A2BDC3A280036D9DA /* Assets.xcassets */,
 				CCCD2A2C2BDC3A280036D9DA /* LaunchScreen.storyboard */,
@@ -197,7 +191,6 @@
 				CCB3BC592BFE92CA00ADD545 /* EditableCollectionViewCell.swift in Sources */,
 				CCCD2A362BDC3A5B0036D9DA /* LoginViewController.swift in Sources */,
 				CCB3BC5B2BFEA38700ADD545 /* UIColorExtensions.swift in Sources */,
-				CCD2E9E02BE1A79E006C1615 /* InventoryViewController.swift in Sources */,
 				CCD927A62BEDE7A600B6822D /* EditableCellDelegate.swift in Sources */,
 				CCD927A42BEDE41300B6822D /* Tab3ViewController.swift in Sources */,
 				CCD927A22BEDE3F500B6822D /* Tab2ViewController.swift in Sources */,
@@ -205,7 +198,6 @@
 				CCCD2A222BDC3A270036D9DA /* AppDelegate.swift in Sources */,
 				CC1240D32BFEE09300E71687 /* SettingsViewController.swift in Sources */,
 				CCD9279C2BECAA8800B6822D /* Item.swift in Sources */,
-				CC067A7F2BDE342500DB51B2 /* TrackingViewController.swift in Sources */,
 				CCD927982BEC9CF300B6822D /* Tab1ViewController.swift in Sources */,
 				CCCD2A242BDC3A270036D9DA /* SceneDelegate.swift in Sources */,
 			);

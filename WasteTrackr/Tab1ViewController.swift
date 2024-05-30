@@ -240,7 +240,7 @@ class Tab1ViewController: UIViewController, UICollectionViewDataSource, UICollec
         return 10
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
     
@@ -328,5 +328,126 @@ class Tab1ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 cell.layer.borderWidth = 0.0
             }
         }
+    }
+    
+    func presentEditMenu(for cell: EditableCollectionViewCell, at indexPath: IndexPath) {
+        let alert = UIAlertController(title: "Edit Item", message: "Choose an action", preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Change Color", style: .default, handler: { _ in
+            self.presentColorPicker(for: cell, at: indexPath)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Change Image", style: .default, handler: { _ in
+            self.presentImagePicker(for: cell, at: indexPath)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = cell
+            popoverController.sourceRect = cell.bounds
+        }
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func presentColorPicker(for cell: EditableCollectionViewCell, at indexPath: IndexPath) {
+        // Implement color picker logic here
+        // For example:
+        let colors: [UIColor] = [.red, .green, .blue, .yellow, .purple, .black, .orange, .brown]
+        let alert = UIAlertController(title: "Choose Color", message: nil, preferredStyle: .actionSheet)
+        
+        for color in colors {
+            alert.addAction(UIAlertAction(title: color.accessibilityName.capitalized, style: .default, handler: { _ in
+                cell.overlayView.backgroundColor = color.withAlphaComponent(0.9)
+                self.updateItemColor(at: indexPath, color: color)
+            }))
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = cell
+            popoverController.sourceRect = cell.bounds
+        }
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func presentImagePicker(for cell: EditableCollectionViewCell, at indexPath: IndexPath) {
+        // Implement image picker logic here
+        // For example:
+        let images: [String] = ["filet", "spicy_fileta", "grilled_filet", "nuggets", "grilled_nuggets", "strips"]
+        let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
+        
+        for imageName in images {
+            alert.addAction(UIAlertAction(title: imageName.capitalized, style: .default, handler: { _ in
+                if let image = UIImage(named: imageName) {
+                    cell.backgroundImageView.image = image
+                    self.updateItemImage(at: indexPath, imageName: imageName)
+                }
+            }))
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = cell
+            popoverController.sourceRect = cell.bounds
+        }
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func updateItemColor(at indexPath: IndexPath, color: UIColor) {
+        var item = items[indexPath.row]
+        item.color = color
+        items[indexPath.row] = item
+        
+        let documentID = item.id
+        let collectionId = collectionID(forSuffix: collectionSuffix)
+        let db = Firestore.firestore()
+        
+        db.collection(collectionId).document(documentID).updateData(["color": color.toHexString()]) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+            } else {
+                print("Successfully updated color in document \(documentID)")
+            }
+        }
+    }
+    
+    func updateItemImage(at indexPath: IndexPath, imageName: String) {
+        var item = items[indexPath.row]
+        item.imageName = imageName
+        items[indexPath.row] = item
+        
+        let documentID = item.id
+        let collectionId = collectionID(forSuffix: collectionSuffix)
+        let db = Firestore.firestore()
+        
+        db.collection(collectionId).document(documentID).updateData(["imageName": imageName]) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+            } else {
+                print("Successfully updated image in document \(documentID)")
+            }
+        }
+    }
+}
+
+// Extension to convert UIColor to Hex String
+extension UIColor {
+    func toHexString() -> String {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+        
+        let rgb: Int = (Int)(r * 255) << 16 | (Int)(g * 255) << 8 | (Int)(b * 255) << 0
+        
+        return String(format: "#%06x", rgb)
     }
 }
