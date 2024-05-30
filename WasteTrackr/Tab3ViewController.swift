@@ -143,7 +143,7 @@ class Tab3ViewController: UIViewController, UICollectionViewDataSource, UICollec
             count: 1,
             color: UIColor.random(),
             timestamp: Timestamp(),
-            imageName: "default_background"
+            imageName: "default background"
         )
         
         db.collection(collectionId).document(newItem.id).setData(newItem.dictionary) { err in
@@ -377,7 +377,7 @@ class Tab3ViewController: UIViewController, UICollectionViewDataSource, UICollec
     func presentImagePicker(for cell: EditableCollectionViewCell, at indexPath: IndexPath) {
         // Implement image picker logic here
         // For example:
-        let images: [String] = ["filet", "spicy_fileta", "grilled_filet", "nuggets", "grilled_nuggets", "strips"]
+        let images: [String] = ["filet", "spicy filet", "grilled filet", "nuggets", "grilled nuggets", "strips"]
         let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
         
         for imageName in images {
@@ -408,7 +408,11 @@ class Tab3ViewController: UIViewController, UICollectionViewDataSource, UICollec
         let collectionId = collectionID(forSuffix: collectionSuffix)
         let db = Firestore.firestore()
         
-        db.collection(collectionId).document(documentID).updateData(["color": color.toHexString()]) { error in
+        // Convert UIColor to hex string
+        let colorHexString = color.toHexString()
+        
+        // Update the Firestore document
+        db.collection(collectionId).document(documentID).updateData(["color": colorHexString]) { error in
             if let error = error {
                 print("Error updating document: \(error)")
             } else {
@@ -433,5 +437,20 @@ class Tab3ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 print("Successfully updated image in document \(documentID)")
             }
         }
+    }
+}
+
+private extension UIColor {
+    func toHexString() -> String {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        
+        self.getRed(&r, green: &g, blue: &b, alpha: &a)
+        
+        let rgb: Int = (Int)(r * 255) << 16 | (Int)(g * 255) << 8 | (Int)(b * 255) << 0
+        
+        return String(format: "#%06x", rgb)
     }
 }

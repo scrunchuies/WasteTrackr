@@ -278,17 +278,16 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         countTextField.isEnabled = isEditable
         editButton.isHidden = !isEditable
         
+        contentView.gestureRecognizers?.forEach(contentView.removeGestureRecognizer) // Remove all gestures before adding new
         if isEditable {
             let editTapGesture = UITapGestureRecognizer(target: self, action: #selector(showEditMenu))
             contentView.addGestureRecognizer(editTapGesture)
-        } else {
-            contentView.gestureRecognizers?.forEach(contentView.removeGestureRecognizer)
         }
     }
     
     @objc private func showEditMenu() {
-        guard let indexPath = indexPath, let delegate = delegate as? Tab1ViewController else { return }
-        delegate.presentEditMenu(for: self, at: indexPath)
+        guard let indexPath = indexPath else { return }
+        delegate?.presentEditMenu(for: self, at: indexPath)
     }
     
     func setSelectable(_ isSelectable: Bool) {
