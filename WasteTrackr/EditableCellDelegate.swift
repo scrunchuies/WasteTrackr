@@ -14,4 +14,5 @@ protocol EditableCellDelegate: AnyObject {
     func updateItem(at indexPath: IndexPath, with newValue: Int)
     func deleteItem(at indexPath: IndexPath)
     func presentEditMenu(for cell: EditableCollectionViewCell, at indexPath: IndexPath)
+    func didEditCell(at indexPath: IndexPath, newValue: Int)
 }

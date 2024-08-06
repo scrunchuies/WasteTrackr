@@ -87,13 +87,14 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         
         // Add customCountTextField
         customCountTextField.placeholder = "Custom #"
+        customCountTextField.layer.cornerRadius = 10
         customCountTextField.textAlignment = .center
         customCountTextField.returnKeyType = .done
         customCountTextField.delegate = self
         customCountTextField.font = UIFont.systemFont(ofSize: 22)
         customCountTextField.isEnabled = true
         customCountTextField.backgroundColor = .white
-        customCountTextField.alpha = 0.4
+        customCountTextField.alpha = 0.8
         customCountTextField.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(customCountTextField)
         

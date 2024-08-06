@@ -16,7 +16,7 @@ class Tab3ViewController: UIViewController, UICollectionViewDataSource, UICollec
     @IBOutlet weak var deleteButton: UIBarButtonItem!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var collectionSuffix = "ETC"
+    var collectionSuffix = "BLK"
     var refreshControl = UIRefreshControl()
     var listener: ListenerRegistration?
     
@@ -31,7 +31,7 @@ class Tab3ViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        overrideUserInterfaceStyle = .light
+        loadTheme()
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -40,6 +40,36 @@ class Tab3ViewController: UIViewController, UICollectionViewDataSource, UICollec
         setupNavigationItems()
         setupRefreshControl()
         observeItems()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        loadTheme()
+    }
+    
+    func loadTheme() {
+        guard let user = Auth.auth().currentUser else { return }
+        let db = Firestore.firestore()
+        let docRef = db.collection("userProfiles").document(user.uid)
+
+        docRef.getDocument { [weak self] (document, error) in
+            guard let self = self else { return }
+            if let document = document, document.exists {
+                let data = document.data()
+                let themeIndex = data?["theme"] as? Int ?? 0 // Default to light theme
+                self.applyTheme(themeIndex: themeIndex)
+            }
+        }
+    }
+
+    func applyTheme(themeIndex: Int) {
+        switch themeIndex {
+        case 0:
+            self.overrideUserInterfaceStyle = .light
+        case 1:
+            self.overrideUserInterfaceStyle = .dark
+        default:
+            self.overrideUserInterfaceStyle = .light
+        }
     }
     
     @objc func dismissKeyboard() {
@@ -136,7 +166,7 @@ class Tab3ViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     @objc func addNewItem() {
         let db = Firestore.firestore()
-        let collectionId = collectionID(forSuffix: "ETC")
+        let collectionId = collectionID(forSuffix: collectionSuffix)
         let newItem = Item(
             id: UUID().uuidString,
             name: "New Item",
@@ -151,12 +181,13 @@ class Tab3ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 print("Error adding document: \(err)")
             } else {
                 print("Successfully added document: \(newItem.id)")
+                self.logChange(for: newItem, changeAmount: 1)
             }
         }
     }
     
     func observeItems() {
-        let collectionId = collectionID(forSuffix: "ETC")
+        let collectionId = collectionID(forSuffix: collectionSuffix)
         print("Using collection ID: \(collectionId)")
         let db = Firestore.firestore()
         
@@ -240,16 +271,17 @@ class Tab3ViewController: UIViewController, UICollectionViewDataSource, UICollec
         return 10
     }
     
-    func collectionView(_ collectionView: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
     func updateItem(at indexPath: IndexPath, with newValue: Int) {
         var item = items[indexPath.row]
+        let changeAmount = newValue - item.count
         item.count = newValue
         items[indexPath.row] = item
         
@@ -262,12 +294,13 @@ class Tab3ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 print("Error updating document: \(error)")
             } else {
                 print("Successfully updated count to \(newValue) in document \(documentID)")
+                self.logChange(for: item, changeAmount: changeAmount)
             }
         }
     }
     
     func collectionID() -> String {
-        return collectionID(forSuffix: "ETC")
+        return collectionID(forSuffix: collectionSuffix)
     }
     
     func updateData(forDocumentID docID: String, collectionID: String, field: String, newValue: Any) {
@@ -417,6 +450,7 @@ class Tab3ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 print("Error updating document: \(error)")
             } else {
                 print("Successfully updated color in document \(documentID)")
+                self.logChange(for: item, changeAmount: 0) // Log the change with no change in count
             }
         }
     }
@@ -435,6 +469,35 @@ class Tab3ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 print("Error updating document: \(error)")
             } else {
                 print("Successfully updated image in document \(documentID)")
+                self.logChange(for: item, changeAmount: 0) // Log the change with no change in count
+            }
+        }
+    }
+    
+    func didEditCell(at indexPath: IndexPath, newValue: Int) {
+        updateItem(at: indexPath, with: newValue)
+    }
+
+    private func logChange(for item: Item, changeAmount: Int) {
+        let db = Firestore.firestore()
+        let collectionId = collectionID(forSuffix: collectionSuffix)
+        let documentID = item.id
+        
+        // Create a new log entry
+        let logEntry: [String: Any] = [
+            "timestamp": Timestamp(),
+            "changeAmount": changeAmount,
+            "newCount": item.count
+        ]
+        
+        // Append the log entry to the changeLog array
+        db.collection(collectionId).document(documentID).updateData([
+            "changeLog": FieldValue.arrayUnion([logEntry])
+        ]) { error in
+            if let error = error {
+                print("Error logging change: \(error)")
+            } else {
+                print("Successfully logged change in document \(documentID)")
             }
         }
     }
@@ -452,5 +515,14 @@ private extension UIColor {
         let rgb: Int = (Int)(r * 255) << 16 | (Int)(g * 255) << 8 | (Int)(b * 255) << 0
         
         return String(format: "#%06x", rgb)
+    }
+
+    static func random() -> UIColor {
+        return UIColor(
+            red: .random(in: 0...1),
+            green: .random(in: 0...1),
+            blue: .random(in: 0...1),
+            alpha: 1.0
+        )
     }
 }

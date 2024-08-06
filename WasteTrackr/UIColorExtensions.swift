@@ -4,7 +4,7 @@
 //
 //  Created by Piotr Jandura on 5/22/24.
 //
-
+/*
 import UIKit
 
 extension UIColor {
@@ -49,3 +49,4 @@ extension UIColor {
         self.init(red: r, green: g, blue: b, alpha: 1.0)
     }
 }
+*/

@@ -4,9 +4,7 @@
 <dict>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<true/>
-	<key>ITSAppUsesNonExemptEncryption
-ITSAppUsesNonExemptEncryption
-ITSAppUsesNonExemptEncryption</key>
+	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
@@ -27,5 +25,9 @@ ITSAppUsesNonExemptEncryption</key>
 			</array>
 		</dict>
 	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>

@@ -13,6 +13,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passTextField: UITextField!
     @IBOutlet weak var rememberMeCheckbox: UISwitch!
     
+    var showHidePasswordButton: UIButton!
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupInitialUI()
@@ -23,6 +25,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         setupInitialUI()
         setupTextFieldStyles()
         setupGestureRecognizers()
+        setupShowHidePasswordButton()
         
         overrideUserInterfaceStyle = .light
         
@@ -82,6 +85,29 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func setupGestureRecognizers() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
+    }
+    
+    func setupShowHidePasswordButton() {
+        showHidePasswordButton = UIButton(type: .custom)
+        showHidePasswordButton.tintColor = .black
+        showHidePasswordButton.setImage(UIImage(systemName: "eye"), for: .normal)
+        showHidePasswordButton.setImage(UIImage(systemName: "eye.slash"), for: .selected)
+        showHidePasswordButton.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
+        
+        view.addSubview(showHidePasswordButton)
+        
+        showHidePasswordButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            showHidePasswordButton.centerYAnchor.constraint(equalTo: passTextField.centerYAnchor),
+            showHidePasswordButton.trailingAnchor.constraint(equalTo: passTextField.trailingAnchor, constant: -10),
+            showHidePasswordButton.widthAnchor.constraint(equalToConstant: 30),
+            showHidePasswordButton.heightAnchor.constraint(equalToConstant: 30)
+        ])
+    }
+
+    @objc func togglePasswordVisibility() {
+        passTextField.isSecureTextEntry.toggle()
+        showHidePasswordButton.isSelected.toggle()
     }
     
     // Only allow portrait mode

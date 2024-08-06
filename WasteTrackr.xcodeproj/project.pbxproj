@@ -8,8 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		CC1240D32BFEE09300E71687 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1240D22BFEE09300E71687 /* SettingsViewController.swift */; };
+		CC50A96F2C121FA600C37A3F /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC50A96E2C121FA600C37A3F /* ChartsViewController.swift */; };
+		CC55A5B82C0D8FD200235C1E /* Tab4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC55A5B72C0D8FD200235C1E /* Tab4ViewController.swift */; };
 		CCB3BC592BFE92CA00ADD545 /* EditableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB3BC582BFE92CA00ADD545 /* EditableCollectionViewCell.swift */; };
 		CCB3BC5B2BFEA38700ADD545 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB3BC5A2BFEA38700ADD545 /* UIColorExtensions.swift */; };
+		CCC15A602C61706F002884CF /* NSDirectionalEdgeInsetsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC15A5F2C61706F002884CF /* NSDirectionalEdgeInsetsExtensions.swift */; };
 		CCCD2A222BDC3A270036D9DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCD2A212BDC3A270036D9DA /* AppDelegate.swift */; };
 		CCCD2A242BDC3A270036D9DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCD2A232BDC3A270036D9DA /* SceneDelegate.swift */; };
 		CCCD2A292BDC3A270036D9DA /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CCCD2A282BDC3A270036D9DA /* Base */; };
@@ -31,8 +34,11 @@
 
 /* Begin PBXFileReference section */
 		CC1240D22BFEE09300E71687 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		CC50A96E2C121FA600C37A3F /* ChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsViewController.swift; sourceTree = "<group>"; };
+		CC55A5B72C0D8FD200235C1E /* Tab4ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab4ViewController.swift; sourceTree = "<group>"; };
 		CCB3BC582BFE92CA00ADD545 /* EditableCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableCollectionViewCell.swift; sourceTree = "<group>"; };
 		CCB3BC5A2BFEA38700ADD545 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
+		CCC15A5F2C61706F002884CF /* NSDirectionalEdgeInsetsExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDirectionalEdgeInsetsExtensions.swift; sourceTree = "<group>"; };
 		CCC1DB7F2BEF4CB800C090A4 /* WasteTrackr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WasteTrackr.entitlements; sourceTree = "<group>"; };
 		CCCD2A1E2BDC3A270036D9DA /* WasteTrackr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WasteTrackr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCCD2A212BDC3A270036D9DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -89,11 +95,14 @@
 				CCCD2A212BDC3A270036D9DA /* AppDelegate.swift */,
 				CCCD2A232BDC3A270036D9DA /* SceneDelegate.swift */,
 				CCCD2A272BDC3A270036D9DA /* Main.storyboard */,
+				CC50A96E2C121FA600C37A3F /* ChartsViewController.swift */,
 				CC1240D22BFEE09300E71687 /* SettingsViewController.swift */,
-				CCD927972BEC9CF300B6822D /* Tab1ViewController.swift */,
 				CCB3BC582BFE92CA00ADD545 /* EditableCollectionViewCell.swift */,
+				CCC15A5F2C61706F002884CF /* NSDirectionalEdgeInsetsExtensions.swift */,
+				CCD927972BEC9CF300B6822D /* Tab1ViewController.swift */,
 				CCD927A12BEDE3F500B6822D /* Tab2ViewController.swift */,
 				CCD927A32BEDE41300B6822D /* Tab3ViewController.swift */,
+				CC55A5B72C0D8FD200235C1E /* Tab4ViewController.swift */,
 				CCD9279B2BECAA8800B6822D /* Item.swift */,
 				CCB3BC5A2BFEA38700ADD545 /* UIColorExtensions.swift */,
 				CCD927992BECA24A00B6822D /* EditableTableViewCell.swift */,
@@ -189,6 +198,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCB3BC592BFE92CA00ADD545 /* EditableCollectionViewCell.swift in Sources */,
+				CC50A96F2C121FA600C37A3F /* ChartsViewController.swift in Sources */,
+				CC55A5B82C0D8FD200235C1E /* Tab4ViewController.swift in Sources */,
 				CCCD2A362BDC3A5B0036D9DA /* LoginViewController.swift in Sources */,
 				CCB3BC5B2BFEA38700ADD545 /* UIColorExtensions.swift in Sources */,
 				CCD927A62BEDE7A600B6822D /* EditableCellDelegate.swift in Sources */,
@@ -200,6 +211,7 @@
 				CCD9279C2BECAA8800B6822D /* Item.swift in Sources */,
 				CCD927982BEC9CF300B6822D /* Tab1ViewController.swift in Sources */,
 				CCCD2A242BDC3A270036D9DA /* SceneDelegate.swift in Sources */,
+				CCC15A602C61706F002884CF /* NSDirectionalEdgeInsetsExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,7 +289,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -334,7 +346,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -357,9 +369,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WasteTrackr/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WasteTrackr;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16;
@@ -367,7 +381,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.6;
+				MARKETING_VERSION = 1.9.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.piotrjandura.WasteTrackr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -394,9 +408,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WasteTrackr/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WasteTrackr;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16;
@@ -404,7 +420,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.6;
+				MARKETING_VERSION = 1.9.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.piotrjandura.WasteTrackr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

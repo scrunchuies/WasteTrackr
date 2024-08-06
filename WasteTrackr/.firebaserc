@@ -1,6 +1,5 @@
 {
   "projects": {
-    "default": "eod-waste",
     "trackr": "eod-waste"
   },
   "targets": {},
