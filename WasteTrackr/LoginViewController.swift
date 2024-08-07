@@ -12,7 +12,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passTextField: UITextField!
     @IBOutlet weak var rememberMeCheckbox: UISwitch!
-    
+        
     var showHidePasswordButton: UIButton!
     
     override func viewWillAppear(_ animated: Bool) {
@@ -187,7 +187,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 }
                 return
             }
-            
             // Authentication was successful, now ensure the user profile exists
             self.ensureUserProfile { [weak self] in
                 // Assuming the method fetchAndStoreUserStoreId also uses completion handlers

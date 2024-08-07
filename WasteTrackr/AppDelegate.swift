@@ -21,17 +21,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         
-        // Set up notifications
-        Messaging.messaging().delegate = self
-        UNUserNotificationCenter.current().delegate = self
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { success, _ in
-            guard success else {
-                return
-            }
-            print("Success registering APNS")
+        // Request notification permissions
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            print("Permission granted: \(granted)")
         }
         
         application.registerForRemoteNotifications()
+        
+        Messaging.messaging().delegate = self
         
         return true
     }
@@ -49,14 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         }
         print("Received FCM token: \(token)")
         UserDefaults.standard.set(token, forKey: "FCMToken")
-        let db = Firestore.firestore()
-        
-        if let userID = Auth.auth().currentUser?.uid {
-            // Update the userTokens collection
-            db.collection("userTokens").document(userID).setData(["token": token])
-            // Update the userProfiles collection
-            updateFirestoreWithToken(token, userId: userID)
-        }
     }
     
     private func updateFirestoreWithToken(_ token: String, userId: String) {

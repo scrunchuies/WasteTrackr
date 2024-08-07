@@ -40,6 +40,8 @@ class Tab2ViewController: UIViewController, UICollectionViewDataSource, UICollec
         setupNavigationItems()
         setupRefreshControl()
         observeItems()
+        
+        sendToken()
     }
     
     override func viewDidAppear(_ animated: Bool) {

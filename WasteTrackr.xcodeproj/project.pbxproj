@@ -12,6 +12,8 @@
 		CC55A5B82C0D8FD200235C1E /* Tab4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC55A5B72C0D8FD200235C1E /* Tab4ViewController.swift */; };
 		CCB3BC592BFE92CA00ADD545 /* EditableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB3BC582BFE92CA00ADD545 /* EditableCollectionViewCell.swift */; };
 		CCB3BC5B2BFEA38700ADD545 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB3BC5A2BFEA38700ADD545 /* UIColorExtensions.swift */; };
+		CCBDEC732C635238008A22CA /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = CCBDEC722C635238008A22CA /* FirebaseFunctions */; };
+		CCBDEC752C63ED4B008A22CA /* FirebaseUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBDEC742C63ED4B008A22CA /* FirebaseUserData.swift */; };
 		CCC15A602C61706F002884CF /* NSDirectionalEdgeInsetsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC15A5F2C61706F002884CF /* NSDirectionalEdgeInsetsExtensions.swift */; };
 		CCCD2A222BDC3A270036D9DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCD2A212BDC3A270036D9DA /* AppDelegate.swift */; };
 		CCCD2A242BDC3A270036D9DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCD2A232BDC3A270036D9DA /* SceneDelegate.swift */; };
@@ -38,6 +40,7 @@
 		CC55A5B72C0D8FD200235C1E /* Tab4ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab4ViewController.swift; sourceTree = "<group>"; };
 		CCB3BC582BFE92CA00ADD545 /* EditableCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableCollectionViewCell.swift; sourceTree = "<group>"; };
 		CCB3BC5A2BFEA38700ADD545 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
+		CCBDEC742C63ED4B008A22CA /* FirebaseUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserData.swift; sourceTree = "<group>"; };
 		CCC15A5F2C61706F002884CF /* NSDirectionalEdgeInsetsExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDirectionalEdgeInsetsExtensions.swift; sourceTree = "<group>"; };
 		CCC1DB7F2BEF4CB800C090A4 /* WasteTrackr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WasteTrackr.entitlements; sourceTree = "<group>"; };
 		CCCD2A1E2BDC3A270036D9DA /* WasteTrackr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WasteTrackr.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,6 +67,7 @@
 			files = (
 				CCD2E9C22BDF4742006C1615 /* FirebaseAuth in Frameworks */,
 				CCD2E9C42BDF4742006C1615 /* FirebaseFirestore in Frameworks */,
+				CCBDEC732C635238008A22CA /* FirebaseFunctions in Frameworks */,
 				CCD927AA2BEEC21700B6822D /* FirebaseMessaging in Frameworks */,
 				CCD927AC2BEEC3D700B6822D /* FirebaseAnalytics in Frameworks */,
 			);
@@ -108,6 +112,7 @@
 				CCD927992BECA24A00B6822D /* EditableTableViewCell.swift */,
 				CCD927A52BEDE7A600B6822D /* EditableCellDelegate.swift */,
 				CCCD2A352BDC3A5B0036D9DA /* LoginViewController.swift */,
+				CCBDEC742C63ED4B008A22CA /* FirebaseUserData.swift */,
 				CCCD2A2A2BDC3A280036D9DA /* Assets.xcassets */,
 				CCCD2A2C2BDC3A280036D9DA /* LaunchScreen.storyboard */,
 				CCCD2A2F2BDC3A280036D9DA /* Info.plist */,
@@ -137,6 +142,7 @@
 				CCD2E9C32BDF4742006C1615 /* FirebaseFirestore */,
 				CCD927A92BEEC21700B6822D /* FirebaseMessaging */,
 				CCD927AB2BEEC3D700B6822D /* FirebaseAnalytics */,
+				CCBDEC722C635238008A22CA /* FirebaseFunctions */,
 			);
 			productName = WasteTrackr;
 			productReference = CCCD2A1E2BDC3A270036D9DA /* WasteTrackr.app */;
@@ -208,6 +214,7 @@
 				CCD9279A2BECA24A00B6822D /* EditableTableViewCell.swift in Sources */,
 				CCCD2A222BDC3A270036D9DA /* AppDelegate.swift in Sources */,
 				CC1240D32BFEE09300E71687 /* SettingsViewController.swift in Sources */,
+				CCBDEC752C63ED4B008A22CA /* FirebaseUserData.swift in Sources */,
 				CCD9279C2BECAA8800B6822D /* Item.swift in Sources */,
 				CCD927982BEC9CF300B6822D /* Tab1ViewController.swift in Sources */,
 				CCCD2A242BDC3A270036D9DA /* SceneDelegate.swift in Sources */,
@@ -469,6 +476,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CCBDEC722C635238008A22CA /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
 		CCD2E9C12BDF4742006C1615 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

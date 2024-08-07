@@ -386,17 +386,29 @@
                     <view key="view" contentMode="scaleToFill" id="1BC-DL-Yar">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bb4-Mw-Nxi">
+                                <rect key="frame" x="112" y="651" width="168" height="104"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Button"/>
+                                <connections>
+                                    <action selector="buttonTapped:" destination="chE-3d-3ab" eventType="touchUpInside" id="gjS-rP-frg"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="R4h-yS-aT2"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="gear" catalog="system" id="oHd-aC-jIZ"/>
                     <connections>
+                        <outlet property="myButton" destination="bb4-Mw-Nxi" id="tEi-o5-fnD"/>
                         <segue destination="Fso-NZ-Yhb" kind="presentation" identifier="logoutSwish" modalPresentationStyle="fullScreen" id="d48-TN-peI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5ah-Iq-Dn4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2172" y="-232"/>
+            <point key="canvasLocation" x="2171.7557251908397" y="-232.3943661971831"/>
         </scene>
         <!--Charts-->
         <scene sceneID="zPq-Ut-N1h">

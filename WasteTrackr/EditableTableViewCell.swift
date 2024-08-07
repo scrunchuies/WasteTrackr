@@ -81,7 +81,8 @@ class EditableTableViewCell: UITableViewCell, UITextFieldDelegate {
     @objc func stepperValueChanged() {
         guard let indexPath = indexPath, let delegate = delegate else { return }
         let newValue = Int(stepper.value)
-        delegate.didEditCell(at: indexPath, newValue: newValue)
+        countTextField.text = "\(newValue)" // Update the count text field
+        delegate.didEditCell(at: indexPath, newValue: newValue) // Notify the delegate
     }
     
     func setEditable(_ editable: Bool, keepStepperEnabled: Bool = false) {

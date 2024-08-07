@@ -17,7 +17,7 @@ struct Item {
     var imageName: String?
     var changeLog: [[String: Any]] // Added changeLog field
 
-    init(id: String, name: String, count: Int, color: UIColor, timestamp: Timestamp, imageName: String?, changeLog: [[String: Any]] = []) {
+    init(id: String, name: String, count: Int, color: UIColor, timestamp: Timestamp, imageName: String?, changeLog: [[String: Any]] = [], minimumThreshold: Int = 0) {
         self.id = id
         self.name = name
         self.count = count
@@ -53,6 +53,7 @@ struct Item {
 
         let imageName = data?["imageName"] as? String
         let changeLog = data?["changeLog"] as? [[String: Any]] ?? []
+        let minimumThreshold = data?["minimumThreshold"] as? Int ?? 0
 
         self.id = document.documentID
         self.name = name

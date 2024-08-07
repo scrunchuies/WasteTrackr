@@ -8,8 +8,44 @@
 import UIKit
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseFunctions
 
 class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, EditableCellDelegate {
+    lazy var functions = Functions.functions()
+    var notificationAccumulation: [String: (itemName: String, totalTaken: Int, amountLeft: Int)] = [:]
+    var notificationTimer: Timer?
+    
+    func sendPushNotification(itemName: String, amountTaken: Int, amountLeft: Int) {
+        guard let userStoreID = getUserStoreID() else {
+            print("UserStoreID not available")
+            return
+        }
+        
+        let data: [String: Any] = [
+            "title": "Item Updated",
+            "body": "Item: \(itemName), Amount Taken: \(amountTaken), Amount Left: \(amountLeft)",
+            "userStoreID": userStoreID
+        ]
+        
+        functions.httpsCallable("sendPushWithDeviceIds").call(data) { result, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+            if let response = result?.data as? [String: Any], let success = response["success"] as? Bool {
+                if success {
+                    print("Notification sent successfully")
+                } else {
+                    print("Failed to send notification")
+                }
+            }
+        }
+    }
+    
+    func getUserStoreID() -> String? {
+        // Replace with the logic to retrieve the userStoreID
+        return UserDefaults.standard.string(forKey: "UserStoreID")
+    }
     
     @IBOutlet weak var selectButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
@@ -17,7 +53,7 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var deleteButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     
-    var collectionSuffix = "ROM"
+    var collectionSuffix = "STORAGE"
     var refreshControl = UIRefreshControl()
     var listener: ListenerRegistration?
     var items: [Item] = []
@@ -35,6 +71,8 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         setupRefreshControl()
         observeItems()
         fetchCurrentUserName()
+        
+        sendToken()
     }
     
     @objc func dismissKeyboard() {
@@ -56,21 +94,6 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         addButton.action = #selector(addNewItem)
         editButton.target = self
         editButton.action = #selector(toggleEditingMode)
-    }
-    
-    @IBAction func logoutClicked(_ sender: Any) {
-        do {
-            try Auth.auth().signOut()
-            
-            // Clear user-specific data
-            UserDefaults.standard.removeObject(forKey: "UserStoreID")
-            UserDefaults.standard.synchronize()
-            
-            // Navigate back to Login View or update UI to reflect logged out state
-            performSegue(withIdentifier: "returnToLogin", sender: self)
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
-        }
     }
     
     @objc func toggleEditingMode() {
@@ -217,102 +240,81 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let documentID = items[indexPath.row].id
         let db = Firestore.firestore()
         let collectionId = collectionID(forSuffix: collectionSuffix)
-        db.collection(collectionId).document(documentID).delete { [weak self] err in
-            guard let self = self else { return }
-            if let err = err {
-                print("Error removing document: \(err)")
+        
+        db.collection(collectionId).document(documentID).delete() { error in
+            if let error = error {
+                print("Error removing document: \(error)")
             } else {
+                print("Document successfully removed!")
+                self.items.remove(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+        }
+    }
+    
+    func updateItemName(at indexPath: IndexPath, with newName: String) {
+        let documentID = items[indexPath.row].id
+        let db = Firestore.firestore()
+        let collectionId = collectionID(forSuffix: collectionSuffix)
+        
+        db.collection(collectionId).document(documentID).updateData(["name": newName]) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+            } else {
+                print("Document successfully updated!")
+                self.items[indexPath.row].name = newName
                 DispatchQueue.main.async {
-                    // Additional safety check before removing the item
-                    if indexPath.row < self.items.count {
-                        self.items.remove(at: indexPath.row)
-                        self.tableView.deleteRows(at: [indexPath], with: .fade)
-                    } else {
-                        print("Index out of range after document deletion.")
-                    }
+                    self.tableView.reloadRows(at: [indexPath], with: .none)
                 }
             }
         }
     }
     
-    func updateItem(at indexPath: IndexPath, with newValue: Int) {
-        var item = items[indexPath.row]
-        let changeAmount = newValue - item.count
-        item.count = newValue  // Update the local model
-        
-        // Update Firestore
+    func didEditCell(at indexPath: IndexPath, newValue: Int) {
+        let item = items[indexPath.row]
+        let oldValue = item.count
+        let amountTaken = oldValue - newValue
+        let amountLeft = newValue
         let documentID = item.id
-        let collectionId = collectionID(forSuffix: collectionSuffix)
         let db = Firestore.firestore()
+        let collectionId = collectionID(forSuffix: collectionSuffix)
         
-        db.collection(collectionId).document(documentID).updateData([
-            "count": newValue,
-            "name": item.name,  // Ensure name is updated as well
-            "color": item.color.toHexString(),  // Ensure color is updated as well
-            "timestamp": item.timestamp,
-            "imageName": item.imageName ?? ""
-        ]) { error in
+        db.collection(collectionId).document(documentID).updateData(["count": newValue]) { error in
             if let error = error {
                 print("Error updating document: \(error)")
             } else {
-                print("Successfully updated count to \(newValue) in document \(documentID)")
-                self.logChange(for: item, changeAmount: changeAmount)
+                print("Document successfully updated!")
+                self.items[indexPath.row].count = newValue
+                DispatchQueue.main.async {
+                    self.tableView.reloadRows(at: [indexPath], with: .none)
+                }
+                
+                // Only send the push notification if the count is decreased
+                if amountTaken > 0 {
+                    // Accumulate changes
+                    if let existing = self.notificationAccumulation[item.id] {
+                        self.notificationAccumulation[item.id] = (itemName: existing.itemName, totalTaken: existing.totalTaken + amountTaken, amountLeft: amountLeft)
+                    } else {
+                        self.notificationAccumulation[item.id] = (itemName: item.name, totalTaken: amountTaken, amountLeft: amountLeft)
+                    }
+                    
+                    // Reset the timer
+                    self.notificationTimer?.invalidate()
+                    self.notificationTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.sendAccumulatedNotifications), userInfo: nil, repeats: false)
+                }
             }
         }
-        
-        // Reload the specific row
-        tableView.reloadRows(at: [indexPath], with: .none)
     }
     
-    func updateItemName(at indexPath: IndexPath, with newName: String) {
-        var item = items[indexPath.row]
-        item.name = newName // Update the local model
-        
-        // Update Firestore
-        let documentID = item.id
-        let collectionId = collectionID(forSuffix: collectionSuffix)
-        let db = Firestore.firestore()
-        
-        db.collection(collectionId).document(documentID).updateData([
-            "name": newName,
-            "count": item.count,  // Ensure count is updated as well
-            "color": item.color.toHexString(),  // Ensure color is updated as well
-            "timestamp": item.timestamp,
-            "imageName": item.imageName ?? ""
-        ]) { error in
-            if let error = error {
-                print("Error updating document: \(error)")
-            } else {
-                print("Successfully updated name to \(newName) in document \(documentID)")
-            }
+    @objc func sendAccumulatedNotifications() {
+        for (_, value) in notificationAccumulation {
+            sendPushNotification(itemName: value.itemName, amountTaken: value.totalTaken, amountLeft: value.amountLeft)
         }
-        
-        // Reload the specific row
-        tableView.reloadRows(at: [indexPath], with: .none)
+        notificationAccumulation.removeAll()
     }
     
-    func logChange(for item: Item, changeAmount: Int) {
-        let db = Firestore.firestore()
-        let collectionId = collectionID(forSuffix: collectionSuffix)
-        let documentID = item.id
-        
-        // Create a new log entry
-        let logEntry: [String: Any] = [
-            "timestamp": Timestamp(),
-            "changeAmount": changeAmount,
-            "newCount": item.count
-        ]
-        
-        // Append the log entry to the changeLog array
-        db.collection(collectionId).document(documentID).updateData([
-            "changeLog": FieldValue.arrayUnion([logEntry])
-        ]) { error in
-            if let error = error {
-                print("Error logging change: \(error)")
-            } else {
-                print("Successfully logged change in document \(documentID)")
-            }
-        }
+    deinit {
+        listener?.remove()
     }
     
     func updateData(forDocumentID docID: String, collectionID: String, field: String, newValue: Any) {
@@ -321,30 +323,28 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if let error = error {
                 print("Error updating document: \(error)")
             } else {
-                print("Successfully updated \(field) to \(newValue) in document \(docID)")
+                print("Document successfully updated")
             }
         }
     }
     
-    func shouldEnableEditing() -> Bool {
-        return isEditingMode
+    func collectionID() -> String {
+        // Return the collection ID used in your Firestore database
+        return "yourCollectionID"
     }
     
-    func collectionID() -> String {
-        return collectionID(forSuffix: collectionSuffix)
+    func shouldEnableEditing() -> Bool {
+        // Return whether editing should be enabled or not
+        return true
+    }
+    
+    func updateItem(at indexPath: IndexPath, with newValue: Int) {
+        // Update the item at the given indexPath with the new value
+        // You might want to update your data source here
     }
     
     func presentEditMenu(for cell: EditableCollectionViewCell, at indexPath: IndexPath) {
-        // Implementation for presenting an edit menu (if needed)
-    }
-    
-    func didEditCell(at indexPath: IndexPath, newValue: Int) {
-        guard let userName = currentUserName else {
-            print("User name not found")
-            return
-        }
-        print("User \(userName) edited cell at index \(indexPath.row)")
-        updateItem(at: indexPath, with: newValue)
+        // Present the edit menu for the given cell at the specified indexPath
     }
 }
 
@@ -361,7 +361,7 @@ private extension UIColor {
         
         return String(format: "#%06x", rgb)
     }
-
+    
     static func random() -> UIColor {
         return UIColor(
             red: .random(in: 0...1),
@@ -370,21 +370,21 @@ private extension UIColor {
             alpha: 1.0
         )
     }
-
+    
     convenience init(hexString: String) {
         var hexString = hexString.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-
+        
         if hexString.hasPrefix("#") {
             hexString.remove(at: hexString.startIndex)
         }
-
+        
         var rgbValue: UInt64 = 0
         Scanner(string: hexString).scanHexInt64(&rgbValue)
-
+        
         let r = CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0
         let g = CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0
         let b = CGFloat(rgbValue & 0x0000FF) / 255.0
-
+        
         self.init(red: r, green: g, blue: b, alpha: 1.0)
     }
 }

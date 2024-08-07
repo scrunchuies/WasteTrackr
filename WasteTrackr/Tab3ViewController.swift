@@ -16,7 +16,7 @@ class Tab3ViewController: UIViewController, UICollectionViewDataSource, UICollec
     @IBOutlet weak var deleteButton: UIBarButtonItem!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var collectionSuffix = "BLK"
+    var collectionSuffix = "BULK"
     var refreshControl = UIRefreshControl()
     var listener: ListenerRegistration?
     
@@ -40,6 +40,8 @@ class Tab3ViewController: UIViewController, UICollectionViewDataSource, UICollec
         setupNavigationItems()
         setupRefreshControl()
         observeItems()
+        
+        sendToken()
     }
     
     override func viewDidAppear(_ animated: Bool) {
