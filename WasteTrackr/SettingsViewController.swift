@@ -9,44 +9,7 @@ import FirebaseFirestore
 import FirebaseAuth
 import FirebaseFunctions
 
-class SettingsViewController: UIViewController, UITextFieldDelegate {
-    
-    lazy var functions = Functions.functions()
-
-    @IBOutlet weak var myButton: UIButton!
-    
-    @IBAction func buttonTapped(_ sender: UIButton) {
-            sendPushNotification()
-        }
-
-    func sendPushNotification() {
-        guard let fcmToken = UserDefaults.standard.string(forKey: "FCMToken") else {
-            print("FCM token not available")
-            return
-        }
-        
-        let data: [String: Any] = [
-            "title": "Hello",
-            "body": "This is a push notification",
-            "token": "fn80XcdLbU1eolCjnPQ9QO:APA91bG37lUyC6ROwS2qcZfn7D1AftS9rwouyZ9FIXn_u-S0O4mVSWL15_28oW95NB8xV2YVWZwBUzZV16DbvPIk4N_45XUvlbLcSJ4QXpKmPDbtZceNaK6dxEm86HdLZjKx1tmKX7Ul"
-        ]
-        
-        functions.httpsCallable("sendPushWithDeviceId").call(data) { result, error in
-            if let error = error {
-                print("Error: \(error.localizedDescription)")
-                return
-            }
-            if let response = result?.data as? [String: Any], let success = response["success"] as? Bool {
-                if success {
-                    print("Notification sent successfully")
-                } else {
-                    print("Failed to send notification")
-                }
-            }
-        }
-    }
-    
-    
+class SettingsViewController: UIViewController, UITextFieldDelegate { 
     // User Profile Management Views
     var accountHolderNameLabel: UILabel!
     var nameTextField: UITextField!

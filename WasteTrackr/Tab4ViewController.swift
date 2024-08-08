@@ -22,8 +22,8 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         let data: [String: Any] = [
-            "title": "Item Updated",
-            "body": "Item: \(itemName), Amount Taken: \(amountTaken), Amount Left: \(amountLeft)",
+            "title": "\(collectionSuffix) Updated",
+            "body": "Item: \(itemName) \nAmount Taken: \(amountTaken) \nAmount Left: \(amountLeft) \nPerson: \(currentUserName ?? "No name")",
             "userStoreID": userStoreID
         ]
         
@@ -43,7 +43,6 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func getUserStoreID() -> String? {
-        // Replace with the logic to retrieve the userStoreID
         return UserDefaults.standard.string(forKey: "UserStoreID")
     }
     
@@ -111,9 +110,8 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if let storeId = UserDefaults.standard.string(forKey: "UserStoreID") {
             return "\(storeId)-\(suffix)"
         } else {
-            // Handle the case where store ID is not yet set
             print("Store ID not set, defaulting to a temporary value")
-            return "defaultStoreID-\(suffix)"  // Temporary value, adjust according to your app's needs
+            return "defaultStoreID-\(suffix)"
         }
     }
     
@@ -121,7 +119,6 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let collectionId = collectionID(forSuffix: collectionSuffix)
         let db = Firestore.firestore()
         
-        // Remove any existing listener before creating a new one
         listener?.remove()
         
         listener = db.collection(collectionId).order(by: "timestamp", descending: false).addSnapshotListener { [weak self] querySnapshot, error in
@@ -177,7 +174,6 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        // Detach the listener when the view disappears
         listener?.remove()
     }
     
@@ -216,8 +212,8 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self?.updateItemName(at: indexPath, with: newName)
         }
         cell.delegate = self
-        cell.indexPath = indexPath  // This helps track which cell is being edited
-        cell.setEditable(isEditingMode, keepStepperEnabled: true)  // Set the editability of the cell
+        cell.indexPath = indexPath
+        cell.setEditable(isEditingMode, keepStepperEnabled: true)
         return cell
     }
     
@@ -232,22 +228,35 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func deleteItem(at indexPath: IndexPath) {
-        guard indexPath.row < items.count else {
+        // Check if indexPath.row is within the bounds of the items array
+        guard indexPath.row >= 0 && indexPath.row < items.count else {
             print("Index out of range.")
             return
         }
         
         let documentID = items[indexPath.row].id
+        let itemName = items[indexPath.row].name // Get the name of the item to be deleted
         let db = Firestore.firestore()
         let collectionId = collectionID(forSuffix: collectionSuffix)
         
-        db.collection(collectionId).document(documentID).delete() { error in
-            if let error = error {
-                print("Error removing document: \(error)")
-            } else {
-                print("Document successfully removed!")
-                self.items.remove(at: indexPath.row)
-                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+        // Remove the item from the items array first
+        let removedItem = items.remove(at: indexPath.row)
+
+        // Update the tableView after removing the item from the array
+        self.tableView.performBatchUpdates({
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+        }) { [weak self] _ in
+            // After removing from the tableView, delete from Firestore
+            db.collection(collectionId).document(documentID).delete() { error in
+                if let error = error {
+                    print("Error removing document: \(error)")
+                    
+                    // Re-add the item to the array and tableView if there was an error
+                    self?.items.insert(removedItem, at: indexPath.row)
+                    self?.tableView.insertRows(at: [indexPath], with: .automatic)
+                } else {
+                    print("Document successfully removed!")
+                }
             }
         }
     }
@@ -310,6 +319,7 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         for (_, value) in notificationAccumulation {
             sendPushNotification(itemName: value.itemName, amountTaken: value.totalTaken, amountLeft: value.amountLeft)
         }
+        // Clear accumulated notifications after sending
         notificationAccumulation.removeAll()
     }
     
