@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CC1240D32BFEE09300E71687 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1240D22BFEE09300E71687 /* SettingsViewController.swift */; };
+		CC20C6832C66C83400ADF38B /* TPPDF in Frameworks */ = {isa = PBXBuildFile; productRef = CC20C6822C66C83400ADF38B /* TPPDF */; };
 		CC50A96F2C121FA600C37A3F /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC50A96E2C121FA600C37A3F /* ChartsViewController.swift */; };
 		CC55A5B82C0D8FD200235C1E /* Tab4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC55A5B72C0D8FD200235C1E /* Tab4ViewController.swift */; };
 		CCB3BC592BFE92CA00ADD545 /* EditableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB3BC582BFE92CA00ADD545 /* EditableCollectionViewCell.swift */; };
@@ -68,6 +69,7 @@
 				CCD2E9C22BDF4742006C1615 /* FirebaseAuth in Frameworks */,
 				CCD2E9C42BDF4742006C1615 /* FirebaseFirestore in Frameworks */,
 				CCBDEC732C635238008A22CA /* FirebaseFunctions in Frameworks */,
+				CC20C6832C66C83400ADF38B /* TPPDF in Frameworks */,
 				CCD927AA2BEEC21700B6822D /* FirebaseMessaging in Frameworks */,
 				CCD927AC2BEEC3D700B6822D /* FirebaseAnalytics in Frameworks */,
 			);
@@ -143,6 +145,7 @@
 				CCD927A92BEEC21700B6822D /* FirebaseMessaging */,
 				CCD927AB2BEEC3D700B6822D /* FirebaseAnalytics */,
 				CCBDEC722C635238008A22CA /* FirebaseFunctions */,
+				CC20C6822C66C83400ADF38B /* TPPDF */,
 			);
 			productName = WasteTrackr;
 			productReference = CCCD2A1E2BDC3A270036D9DA /* WasteTrackr.app */;
@@ -174,6 +177,7 @@
 			mainGroup = CCCD2A152BDC3A270036D9DA;
 			packageReferences = (
 				CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				CC20C6812C66C83400ADF38B /* XCRemoteSwiftPackageReference "TPPDF" */,
 			);
 			productRefGroup = CCCD2A1F2BDC3A270036D9DA /* Products */;
 			projectDirPath = "";
@@ -465,6 +469,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CC20C6812C66C83400ADF38B /* XCRemoteSwiftPackageReference "TPPDF" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/techprimate/TPPDF/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.0;
+			};
+		};
 		CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -476,6 +488,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CC20C6822C66C83400ADF38B /* TPPDF */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC20C6812C66C83400ADF38B /* XCRemoteSwiftPackageReference "TPPDF" */;
+			productName = TPPDF;
+		};
 		CCBDEC722C635238008A22CA /* FirebaseFunctions */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

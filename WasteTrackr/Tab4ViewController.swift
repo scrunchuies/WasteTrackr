@@ -9,6 +9,7 @@ import UIKit
 import FirebaseFirestore
 import FirebaseAuth
 import FirebaseFunctions
+import PDFKit
 
 class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, EditableCellDelegate {
     lazy var functions = Functions.functions()
@@ -95,6 +96,10 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         editButton.action = #selector(toggleEditingMode)
     }
     
+    @IBAction func exportMenu(_ sender: Any) {
+        
+    }
+    
     @objc func toggleEditingMode() {
         isEditingMode.toggle()
         tableView.setEditing(isEditingMode, animated: true)
@@ -112,6 +117,64 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         } else {
             print("Store ID not set, defaulting to a temporary value")
             return "defaultStoreID-\(suffix)"
+        }
+    }
+    
+    func logChange(type: String, itemName: String, description: String) {
+        guard let userStoreID = getUserStoreID(), let userName = currentUserName else {
+            print("UserStoreID or userName not available")
+            return
+        }
+
+        let db = Firestore.firestore()
+        let collectionId = "\(userStoreID)-\(collectionSuffix)"
+        let changelogDoc = db.collection(collectionId).document("changelog")
+        
+        let changeEntry: [String: Any] = [
+            "itemName": itemName,
+            "description": description,
+            "timestamp": Timestamp(date: Date()),
+            "userName": userName
+        ]
+
+        let fieldKey = (type == "nameChange") ? "nameChanges" : "countChanges"
+        
+        changelogDoc.updateData([
+            fieldKey: FieldValue.arrayUnion([changeEntry])
+        ]) { error in
+            if let error = error {
+                print("Error logging change: \(error)")
+            } else {
+                print("Change logged successfully")
+            }
+        }
+    }
+    
+    func fetchAndPrintCountChanges() {
+        let db = Firestore.firestore()
+        
+        // Reference to the document
+        let docRef = db.collection("02226-STORAGE").document("changelog")
+        
+        // Fetch the document
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                // Retrieve the countChanges array from the document
+                if let countChanges = document.data()?["countChanges"] as? [[String: Any]] {
+                    // Print each entry in the countChanges array to the console
+                    for change in countChanges {
+                        print("Item Name: \(change["itemName"] ?? "Unknown")")
+                        print("Description: \(change["description"] ?? "No Description")")
+                        print("Timestamp: \(change["timestamp"] ?? "No Timestamp")")
+                        print("User Name: \(change["userName"] ?? "Unknown User")")
+                        print("-----")
+                    }
+                } else {
+                    print("countChanges array not found")
+                }
+            } else {
+                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+            }
         }
     }
     
@@ -194,6 +257,7 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 print("Error adding document: \(err)")
             } else {
                 print("Successfully added document: \(newItem.id)")
+                self.logChange(type: "countChange", itemName: newItem.name, description: "Added new item with count 1")
             }
         }
     }
@@ -233,12 +297,12 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
             print("Index out of range.")
             return
         }
-        
+
         let documentID = items[indexPath.row].id
         let itemName = items[indexPath.row].name // Get the name of the item to be deleted
         let db = Firestore.firestore()
         let collectionId = collectionID(forSuffix: collectionSuffix)
-        
+
         // Remove the item from the items array first
         let removedItem = items.remove(at: indexPath.row)
 
@@ -256,6 +320,7 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     self?.tableView.insertRows(at: [indexPath], with: .automatic)
                 } else {
                     print("Document successfully removed!")
+                    self?.logChange(type: "countChange", itemName: itemName, description: "Deleted item")
                 }
             }
         }
@@ -263,9 +328,10 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func updateItemName(at indexPath: IndexPath, with newName: String) {
         let documentID = items[indexPath.row].id
+        let oldName = items[indexPath.row].name // Store old name for logging
         let db = Firestore.firestore()
         let collectionId = collectionID(forSuffix: collectionSuffix)
-        
+
         db.collection(collectionId).document(documentID).updateData(["name": newName]) { error in
             if let error = error {
                 print("Error updating document: \(error)")
@@ -275,6 +341,7 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 DispatchQueue.main.async {
                     self.tableView.reloadRows(at: [indexPath], with: .none)
                 }
+                self.logChange(type: "nameChange", itemName: oldName, description: "Renamed to \(newName)")
             }
         }
     }
@@ -287,7 +354,7 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let documentID = item.id
         let db = Firestore.firestore()
         let collectionId = collectionID(forSuffix: collectionSuffix)
-        
+
         db.collection(collectionId).document(documentID).updateData(["count": newValue]) { error in
             if let error = error {
                 print("Error updating document: \(error)")
@@ -297,6 +364,10 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 DispatchQueue.main.async {
                     self.tableView.reloadRows(at: [indexPath], with: .none)
                 }
+                
+                // Log the count change
+                let changeDescription = amountTaken > 0 ? "Decreased by \(amountTaken). Amount left: \(amountLeft)" : "Increased to \(newValue)"
+                self.logChange(type: "countChange", itemName: item.name, description: changeDescription)
                 
                 // Only send the push notification if the count is decreased
                 if amountTaken > 0 {
@@ -309,7 +380,7 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     
                     // Reset the timer
                     self.notificationTimer?.invalidate()
-                    self.notificationTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.sendAccumulatedNotifications), userInfo: nil, repeats: false)
+                    self.notificationTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.sendAccumulatedNotifications), userInfo: nil, repeats: false)
                 }
             }
         }
