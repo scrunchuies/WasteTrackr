@@ -97,7 +97,7 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @IBAction func exportMenu(_ sender: Any) {
-        
+        fetchAndExportCountChangesAsPDF()
     }
     
     @objc func toggleEditingMode() {
@@ -150,6 +150,105 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    func fetchAndExportCountChangesAsPDF() {
+        let db = Firestore.firestore()
+        let docRef = db.collection("02226-STORAGE").document("changelog")
+        
+        docRef.getDocument { [self] (document, error) in
+            if let document = document, document.exists {
+                if let countChanges = document.data()?["countChanges"] as? [[String: Any]] {
+                    let pdfData = createPDF(from: countChanges)
+                    savePDF(data: pdfData, fileName: "CountChangesReport.pdf", viewController: self)
+                } else {
+                    print("countChanges array not found")
+                }
+            } else {
+                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
+    }
+
+    func createPDF(from countChanges: [[String: Any]]) -> Data {
+        let pdfMetaData = [
+            kCGPDFContextCreator: "Piotr Jandura",
+            kCGPDFContextAuthor: currentUserName,
+            kCGPDFContextTitle: "Count Changes Report"
+        ]
+        let format = UIGraphicsPDFRendererFormat()
+        format.documentInfo = pdfMetaData as [String: Any]
+
+        let pageWidth = 8.5 * 72.0
+        let pageHeight = 11.0 * 72.0
+        let pageRect = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
+
+        let renderer = UIGraphicsPDFRenderer(bounds: pageRect, format: format)
+        let data = renderer.pdfData { (context) in
+            context.beginPage()
+            
+            let title = "Count Changes Report"
+            let titleAttributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.systemFont(ofSize: 18, weight: .bold)
+            ]
+            let titleSize = title.size(withAttributes: titleAttributes)
+            let titleRect = CGRect(x: (pageWidth - titleSize.width) / 2, y: 36, width: titleSize.width, height: titleSize.height)
+            title.draw(in: titleRect, withAttributes: titleAttributes)
+            
+            var yPosition = titleRect.maxY + 24
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .short
+            
+            for change in countChanges {
+                if yPosition > pageHeight - 100 {
+                    context.beginPage()
+                    yPosition = 36
+                }
+                
+                let itemName = "Item Name: \(change["itemName"] as? String ?? "Unknown")"
+                let description = "Description: \(change["description"] as? String ?? "No Description")"
+                
+                var timestampString = "No Timestamp"
+                if let timestamp = change["timestamp"] as? Timestamp {
+                    timestampString = dateFormatter.string(from: timestamp.dateValue())
+                } else if let timestamp = change["timestamp"] as? Date {
+                    timestampString = dateFormatter.string(from: timestamp)
+                }
+                
+                let timestamp = "Timestamp: \(timestampString)"
+                let userName = "User Name: \(change["userName"] as? String ?? "Unknown User")"
+                
+                let text = "\(itemName)\n\(description)\n\(timestamp)\n\(userName)\n\n"
+                let textAttributes: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.systemFont(ofSize: 12)
+                ]
+                
+                let textSize = text.size(withAttributes: textAttributes)
+                let textRect = CGRect(x: 36, y: yPosition, width: pageWidth - 72, height: textSize.height)
+                text.draw(in: textRect, withAttributes: textAttributes)
+                
+                yPosition += textRect.height + 12
+            }
+        }
+
+        return data
+    }
+
+    func savePDF(data: Data, fileName: String, viewController: UIViewController) {
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+        
+        do {
+            try data.write(to: tempURL)
+            
+            let documentPicker = UIDocumentPickerViewController(forExporting: [tempURL])
+            documentPicker.delegate = viewController as? UIDocumentPickerDelegate
+            viewController.present(documentPicker, animated: true, completion: nil)
+        } catch {
+            print("Could not save PDF file: \(error)")
+        }
+    }
+    
+    //DEBUG ... print document from count array
     func fetchAndPrintCountChanges() {
         let db = Firestore.firestore()
         
