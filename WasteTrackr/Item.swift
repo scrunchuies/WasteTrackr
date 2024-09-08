@@ -12,15 +12,17 @@ struct Item {
     var id: String
     var name: String
     var count: Int
+    var stockCount: Int
     var color: UIColor
     var timestamp: Timestamp
     var imageName: String?
     var changeLog: [[String: Any]] // Added changeLog field
 
-    init(id: String, name: String, count: Int, color: UIColor, timestamp: Timestamp, imageName: String?, changeLog: [[String: Any]] = [], minimumThreshold: Int = 0) {
+    init(id: String, name: String, count: Int, stockCount: Int, color: UIColor, timestamp: Timestamp, imageName: String?, changeLog: [[String: Any]] = [], minimumThreshold: Int = 0) {
         self.id = id
         self.name = name
         self.count = count
+        self.stockCount = stockCount
         self.color = color
         self.timestamp = timestamp
         self.imageName = imageName
@@ -40,6 +42,11 @@ struct Item {
             print("Error: Missing or invalid 'count' field in document: \(document.documentID)")
             return nil
         }
+        
+        guard let stockCount = data?["stockCount"] as? Int else {
+            print("Error: Missing or invalid 'stockCount' field in document: \(document.documentID)")
+            return nil
+        }
 
         guard let colorHex = data?["color"] as? String else {
             print("Error: Missing 'color' field in document: \(document.documentID)")
@@ -53,11 +60,11 @@ struct Item {
 
         let imageName = data?["imageName"] as? String
         let changeLog = data?["changeLog"] as? [[String: Any]] ?? []
-        let minimumThreshold = data?["minimumThreshold"] as? Int ?? 0
 
         self.id = document.documentID
         self.name = name
         self.count = count
+        self.stockCount = stockCount
         self.color = UIColor(hex: colorHex)
         self.timestamp = timestamp
         self.imageName = imageName
@@ -68,6 +75,7 @@ struct Item {
         return [
             "name": name,
             "count": count,
+            "stockCount": stockCount,
             "color": color.toHex(),
             "timestamp": timestamp,
             "imageName": imageName ?? "",
@@ -76,20 +84,16 @@ struct Item {
     }
 }
 
-private extension UIColor {
+public extension UIColor {
     func toHex() -> String {
-        guard let components = cgColor.components, components.count >= 3 else {
-            return "#000000"
-        }
-
-        let r = components[0]
-        let g = components[1]
-        let b = components[2]
-
-        return String(format: "#%02lX%02lX%02lX",
-                      lroundf(Float(r * 255)),
-                      lroundf(Float(g * 255)),
-                      lroundf(Float(b * 255)))
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        
+        self.getRed(&r, green: &g, blue: &b, alpha: &a)
+        
+        return String(format: "#%02lX%02lX%02lX", lroundf(Float(r * 255)), lroundf(Float(g * 255)), lroundf(Float(b * 255)))
     }
 
     convenience init(hex: String) {

@@ -106,7 +106,7 @@ class Tab2ViewController: UIViewController, UICollectionViewDataSource, UICollec
         editButton.title = isEditing ? "Done" : "Edit"
         
         for case let cell as EditableCollectionViewCell in collectionView.visibleCells {
-            cell.setEditable(isEditing)
+            //cell.setEditable(isEditing)
         }
     }
     
@@ -119,7 +119,7 @@ class Tab2ViewController: UIViewController, UICollectionViewDataSource, UICollec
         selectedItems.removeAll()
         
         for case let cell as EditableCollectionViewCell in collectionView.visibleCells {
-            cell.setSelectable(isSelectionMode)
+            //cell.setSelectable(isSelectionMode)
             cell.isSelected = false
         }
     }
@@ -173,6 +173,7 @@ class Tab2ViewController: UIViewController, UICollectionViewDataSource, UICollec
             id: UUID().uuidString,
             name: "New Item",
             count: 1,
+            stockCount: 0,  // You can set the initial stock count here
             color: UIColor.random(),
             timestamp: Timestamp(),
             imageName: "default background"
@@ -192,12 +193,12 @@ class Tab2ViewController: UIViewController, UICollectionViewDataSource, UICollec
         let collectionId = collectionID(forSuffix: collectionSuffix)
         print("Using collection ID: \(collectionId)")
         let db = Firestore.firestore()
-        
+
         listener?.remove()
-        
+
         listener = db.collection(collectionId).order(by: "timestamp", descending: false).addSnapshotListener { [weak self] querySnapshot, error in
             guard let self = self else { return }
-            
+
             if let error = error {
                 print("Error fetching snapshots: \(error)")
                 DispatchQueue.main.async {
@@ -205,7 +206,7 @@ class Tab2ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 }
                 return
             }
-            
+
             guard let snapshot = querySnapshot else {
                 print("No data found in collection: \(collectionId)")
                 DispatchQueue.main.async {
@@ -213,19 +214,37 @@ class Tab2ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 }
                 return
             }
-            
+
             print("Fetched \(snapshot.documents.count) documents")
+            
+            // Safely parse the documents
             self.items = snapshot.documents.compactMap { doc -> Item? in
-                let item = Item(document: doc)
-                if item == nil {
-                    print("Failed to parse document: \(doc.documentID)")
+                let data = doc.data()
+
+                // Safely unwrap required fields
+                guard
+                    let name = data["name"] as? String,
+                    let count = data["count"] as? Int,
+                    let stockCount = data["stockCount"] as? Int // Ensure stockCount exists
+                else {
+                    print("Missing or invalid fields in document: \(doc.documentID)")
+                    return nil // Skip this document if fields are missing
                 }
-                return item
+
+                // Optional fields with defaults
+                let id = doc.documentID
+                let color = UIColor(hex: data["color"] as? String ?? "#FFFFFF")
+                let timestamp = data["timestamp"] as? Timestamp ?? Timestamp(date: Date())
+                let imageName = data["imageName"] as? String
+
+                // Return the parsed item
+                return Item(id: id, name: name, count: count, stockCount: stockCount, color: color, timestamp: timestamp, imageName: imageName)
             }
-            
-            print("Parsed items: \(self.items)")
-            
+
+            print("Parsed items: \(self.items.map { $0.name })")
+
             DispatchQueue.main.async {
+                self.collectionView.reloadData()
                 self.refreshControl.endRefreshing()
             }
         }
@@ -281,22 +300,49 @@ class Tab2ViewController: UIViewController, UICollectionViewDataSource, UICollec
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
-    func updateItem(at indexPath: IndexPath, with newValue: Int) {
+    func updateItem(at indexPath: IndexPath, with newValue: Int, newStockCount: Int) {
         var item = items[indexPath.row]
         let changeAmount = newValue - item.count
         item.count = newValue
+        item.stockCount = newStockCount
         items[indexPath.row] = item
         
         let documentID = item.id
         let collectionId = collectionID(forSuffix: collectionSuffix)
         let db = Firestore.firestore()
         
-        db.collection(collectionId).document(documentID).updateData(["count": newValue]) { error in
+        let updateData: [String: Any] = [
+            "count": newValue,
+            "stockCount": newStockCount,
+            "color": item.color.toHex() // Ensure color updates as well
+        ]
+        
+        db.collection(collectionId).document(documentID).updateData(updateData) { error in
             if let error = error {
                 print("Error updating document: \(error)")
             } else {
-                print("Successfully updated count to \(newValue) in document \(documentID)")
+                print("Successfully updated count and stock count in document \(documentID)")
                 self.logChange(for: item, changeAmount: changeAmount)
+            }
+        }
+    }
+
+    
+    func didEditStockCount(at indexPath: IndexPath, newStockCount: Int) {
+        var item = items[indexPath.row]
+        item.stockCount = newStockCount
+        items[indexPath.row] = item
+        
+        let documentID = item.id
+        let collectionId = collectionID(forSuffix: collectionSuffix)
+        let db = Firestore.firestore()
+        
+        db.collection(collectionId).document(documentID).updateData(["stockCount": newStockCount]) { error in
+            if let error = error {
+                print("Error updating stock count: \(error)")
+            } else {
+                print("Successfully updated stock count to \(newStockCount) in document \(documentID)")
+                // Optionally log the change if needed
             }
         }
     }
@@ -388,13 +434,13 @@ class Tab2ViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func presentColorPicker(for cell: EditableCollectionViewCell, at indexPath: IndexPath) {
         // Implement color picker logic here
-        // For example:
         let colors: [UIColor] = [.red, .green, .blue, .yellow, .purple, .black, .orange, .brown]
         let alert = UIAlertController(title: "Choose Color", message: nil, preferredStyle: .actionSheet)
         
         for color in colors {
             alert.addAction(UIAlertAction(title: color.accessibilityName.capitalized, style: .default, handler: { _ in
-                cell.overlayView.backgroundColor = color.withAlphaComponent(0.9)
+                // Set the background color directly to the contentView of the cell
+                cell.contentView.backgroundColor = color.withAlphaComponent(0.9)
                 self.updateItemColor(at: indexPath, color: color)
             }))
         }
@@ -408,6 +454,7 @@ class Tab2ViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         present(alert, animated: true, completion: nil)
     }
+
     
     func presentImagePicker(for cell: EditableCollectionViewCell, at indexPath: IndexPath) {
         // Implement image picker logic here
@@ -477,8 +524,10 @@ class Tab2ViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     func didEditCell(at indexPath: IndexPath, newValue: Int) {
-        updateItem(at: indexPath, with: newValue)
+        let currentStockCount = items[indexPath.row].stockCount
+        updateItem(at: indexPath, with: newValue, newStockCount: currentStockCount)
     }
+
 
     private func logChange(for item: Item, changeAmount: Int) {
         let db = Firestore.firestore()
@@ -518,7 +567,7 @@ private extension UIColor {
         
         return String(format: "#%06x", rgb)
     }
-
+    
     static func random() -> UIColor {
         return UIColor(
             red: .random(in: 0...1),

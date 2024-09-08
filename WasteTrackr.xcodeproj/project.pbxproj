@@ -78,6 +78,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CC1F289A2C8D90FF0037B5D9 /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				CCD927A32BEDE41300B6822D /* Tab3ViewController.swift */,
+				CC50A96E2C121FA600C37A3F /* ChartsViewController.swift */,
+				CCB3BC5A2BFEA38700ADD545 /* UIColorExtensions.swift */,
+				CC1240D22BFEE09300E71687 /* SettingsViewController.swift */,
+			);
+			path = Projects;
+			sourceTree = "<group>";
+		};
 		CCCD2A152BDC3A270036D9DA = {
 			isa = PBXGroup;
 			children = (
@@ -97,20 +108,17 @@
 		CCCD2A202BDC3A270036D9DA /* WasteTrackr */ = {
 			isa = PBXGroup;
 			children = (
+				CC1F289A2C8D90FF0037B5D9 /* Projects */,
 				CCC1DB7F2BEF4CB800C090A4 /* WasteTrackr.entitlements */,
 				CCCD2A212BDC3A270036D9DA /* AppDelegate.swift */,
 				CCCD2A232BDC3A270036D9DA /* SceneDelegate.swift */,
 				CCCD2A272BDC3A270036D9DA /* Main.storyboard */,
-				CC50A96E2C121FA600C37A3F /* ChartsViewController.swift */,
-				CC1240D22BFEE09300E71687 /* SettingsViewController.swift */,
 				CCB3BC582BFE92CA00ADD545 /* EditableCollectionViewCell.swift */,
 				CCC15A5F2C61706F002884CF /* NSDirectionalEdgeInsetsExtensions.swift */,
 				CCD927972BEC9CF300B6822D /* Tab1ViewController.swift */,
 				CCD927A12BEDE3F500B6822D /* Tab2ViewController.swift */,
-				CCD927A32BEDE41300B6822D /* Tab3ViewController.swift */,
 				CC55A5B72C0D8FD200235C1E /* Tab4ViewController.swift */,
 				CCD9279B2BECAA8800B6822D /* Item.swift */,
-				CCB3BC5A2BFEA38700ADD545 /* UIColorExtensions.swift */,
 				CCD927992BECA24A00B6822D /* EditableTableViewCell.swift */,
 				CCD927A52BEDE7A600B6822D /* EditableCellDelegate.swift */,
 				CCCD2A352BDC3A5B0036D9DA /* LoginViewController.swift */,

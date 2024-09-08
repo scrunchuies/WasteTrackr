@@ -97,7 +97,7 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @IBAction func exportMenu(_ sender: Any) {
-        fetchAndExportCountChangesAsPDF()
+        exportItemListAsPDF()
     }
     
     @objc func toggleEditingMode() {
@@ -150,29 +150,21 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    func fetchAndExportCountChangesAsPDF() {
-        let db = Firestore.firestore()
-        let docRef = db.collection("02226-STORAGE").document("changelog")
-        
-        docRef.getDocument { [self] (document, error) in
-            if let document = document, document.exists {
-                if let countChanges = document.data()?["countChanges"] as? [[String: Any]] {
-                    let pdfData = createPDF(from: countChanges)
-                    savePDF(data: pdfData, fileName: "CountChangesReport.pdf", viewController: self)
-                } else {
-                    print("countChanges array not found")
-                }
-            } else {
-                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
-            }
-        }
+    func exportItemListAsPDF() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-yyyy_HH-mm-ss"
+        let currentDateTime = dateFormatter.string(from: Date())
+        let fileName = "ItemListReport_\(currentDateTime).pdf"
+
+        let pdfData = createPDF(from: self.items)
+        savePDF(data: pdfData, fileName: fileName, viewController: self)
     }
 
-    func createPDF(from countChanges: [[String: Any]]) -> Data {
+    func createPDF(from items: [Item]) -> Data {
         let pdfMetaData = [
             kCGPDFContextCreator: "Piotr Jandura",
-            kCGPDFContextAuthor: currentUserName,
-            kCGPDFContextTitle: "Count Changes Report"
+            kCGPDFContextAuthor: currentUserName ?? "No Name",
+            kCGPDFContextTitle: "Item Report"
         ]
         let format = UIGraphicsPDFRendererFormat()
         format.documentInfo = pdfMetaData as [String: Any]
@@ -184,50 +176,69 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let renderer = UIGraphicsPDFRenderer(bounds: pageRect, format: format)
         let data = renderer.pdfData { (context) in
             context.beginPage()
-            
-            let title = "Count Changes Report"
+
+            // Title for the PDF
+            let title = "Item Report"
             let titleAttributes: [NSAttributedString.Key: Any] = [
                 .font: UIFont.systemFont(ofSize: 18, weight: .bold)
             ]
             let titleSize = title.size(withAttributes: titleAttributes)
             let titleRect = CGRect(x: (pageWidth - titleSize.width) / 2, y: 36, width: titleSize.width, height: titleSize.height)
             title.draw(in: titleRect, withAttributes: titleAttributes)
-            
+
             var yPosition = titleRect.maxY + 24
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .medium
-            dateFormatter.timeStyle = .short
-            
-            for change in countChanges {
-                if yPosition > pageHeight - 100 {
+
+            // Table column headers
+            let headerAttributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.systemFont(ofSize: 14, weight: .bold)
+            ]
+
+            let itemNameHeader = "Item Name"
+            let itemCountHeader = "Count"
+            let stockToHeader = "Stock To"
+            let needHeader = "Need"
+            let headerSpacing: CGFloat = 36.0
+
+            let itemNameHeaderRect = CGRect(x: headerSpacing, y: yPosition, width: 150, height: 20)
+            let itemCountHeaderRect = CGRect(x: pageWidth - 300, y: yPosition, width: 50, height: 20)
+            let stockToHeaderRect = CGRect(x: pageWidth - 200, y: yPosition, width: 50, height: 20)
+            let needHeaderRect = CGRect(x: pageWidth - 100, y: yPosition, width: 50, height: 20)
+
+            itemNameHeader.draw(in: itemNameHeaderRect, withAttributes: headerAttributes)
+            itemCountHeader.draw(in: itemCountHeaderRect, withAttributes: headerAttributes)
+            stockToHeader.draw(in: stockToHeaderRect, withAttributes: headerAttributes)
+            needHeader.draw(in: needHeaderRect, withAttributes: headerAttributes)
+
+            yPosition += itemNameHeaderRect.height + 10
+
+            // Table content for each item
+            let itemAttributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.systemFont(ofSize: 12)
+            ]
+
+            for item in items {
+                if yPosition > pageHeight - 50 {
                     context.beginPage()
                     yPosition = 36
                 }
-                
-                let itemName = "Item Name: \(change["itemName"] as? String ?? "Unknown")"
-                let description = "Description: \(change["description"] as? String ?? "No Description")"
-                
-                var timestampString = "No Timestamp"
-                if let timestamp = change["timestamp"] as? Timestamp {
-                    timestampString = dateFormatter.string(from: timestamp.dateValue())
-                } else if let timestamp = change["timestamp"] as? Date {
-                    timestampString = dateFormatter.string(from: timestamp)
-                }
-                
-                let timestamp = "Timestamp: \(timestampString)"
-                let userName = "User Name: \(change["userName"] as? String ?? "Unknown User")"
-                
-                let text = "\(itemName)\n\(description)\n\(timestamp)\n\(userName)\n\n"
-                let textAttributes: [NSAttributedString.Key: Any] = [
-                    .font: UIFont.systemFont(ofSize: 12)
-                ]
-                
-                let textSize = text.size(withAttributes: textAttributes)
-                let textRect = CGRect(x: 36, y: yPosition, width: pageWidth - 72, height: textSize.height)
-                text.draw(in: textRect, withAttributes: textAttributes)
-                
-                yPosition += textRect.height + 12
+
+                let itemName = item.name
+                let itemCount = "\(item.count)"
+                let stockTo = "\(item.stockCount)"
+                let needValue = item.stockCount - item.count
+                let needText = needValue <= 0 ? "0" : "\(needValue)"
+
+                let itemNameRect = CGRect(x: headerSpacing, y: yPosition, width: 150, height: 20)
+                let itemCountRect = CGRect(x: pageWidth - 300, y: yPosition, width: 50, height: 20)
+                let stockToRect = CGRect(x: pageWidth - 200, y: yPosition, width: 50, height: 20)
+                let needRect = CGRect(x: pageWidth - 100, y: yPosition, width: 50, height: 20)
+
+                itemName.draw(in: itemNameRect, withAttributes: itemAttributes)
+                itemCount.draw(in: itemCountRect, withAttributes: itemAttributes)
+                stockTo.draw(in: stockToRect, withAttributes: itemAttributes)
+                needText.draw(in: needRect, withAttributes: itemAttributes)
+
+                yPosition += itemNameRect.height + 5
             }
         }
 
@@ -307,12 +318,21 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let id = doc.documentID
                 let name = data["name"] as? String ?? "No name"
                 let count = data["count"] as? Int ?? 0
+                let stockCount = data["stockCount"] as? Int ?? 0  // Fetch stock count
                 let color = UIColor(hexString: data["color"] as? String ?? "#FFFFFF")
                 let timestamp = data["timestamp"] as? Timestamp ?? Timestamp(date: Date())
                 let imageName = data["imageName"] as? String
                 
-                return Item(id: id, name: name, count: count, color: color, timestamp: timestamp, imageName: imageName)
+                return Item(id: id, name: name, count: count, stockCount: stockCount, color: color, timestamp: timestamp, imageName: imageName)
             }
+            
+            // Output all item names
+            /*
+            print("Item Names:")
+            for item in self.items {
+                print(item.name)
+            }
+             */
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -346,6 +366,7 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
             id: UUID().uuidString,
             name: "New Item",
             count: 1,
+            stockCount: 1,  // Set initial stock count
             color: .white,
             timestamp: Timestamp(),
             imageName: "default background"
@@ -485,6 +506,27 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    func didEditStockCount(at indexPath: IndexPath, newStockCount: Int) {
+        let item = items[indexPath.row]
+        let documentID = item.id
+        let db = Firestore.firestore()
+        let collectionId = collectionID(forSuffix: collectionSuffix)
+        
+        db.collection(collectionId).document(documentID).updateData([
+            "stockCount": newStockCount  // Update stock count in Firestore
+        ]) { error in
+            if let error = error {
+                print("Error updating stock count: \(error)")
+            } else {
+                print("Stock count successfully updated!")
+                self.items[indexPath.row].stockCount = newStockCount  // Update the local model
+                DispatchQueue.main.async {
+                    self.tableView.reloadRows(at: [indexPath], with: .none)
+                }
+            }
+        }
+    }
+    
     @objc func sendAccumulatedNotifications() {
         for (_, value) in notificationAccumulation {
             sendPushNotification(itemName: value.itemName, amountTaken: value.totalTaken, amountLeft: value.amountLeft)
@@ -522,6 +564,30 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Update the item at the given indexPath with the new value
         // You might want to update your data source here
     }
+    
+    func updateItem(at indexPath: IndexPath, with newValue: Int, newStockCount: Int) {
+        let item = items[indexPath.row]
+        let documentID = item.id
+        let db = Firestore.firestore()
+        let collectionId = collectionID(forSuffix: collectionSuffix)
+        
+        db.collection(collectionId).document(documentID).updateData([
+            "count": newValue,
+            "stockCount": newStockCount  // Update stock count in Firestore
+        ]) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+            } else {
+                print("Document successfully updated!")
+                self.items[indexPath.row].count = newValue
+                self.items[indexPath.row].stockCount = newStockCount
+                DispatchQueue.main.async {
+                    self.tableView.reloadRows(at: [indexPath], with: .none)
+                }
+            }
+        }
+    }
+
     
     func presentEditMenu(for cell: EditableCollectionViewCell, at indexPath: IndexPath) {
         // Present the edit menu for the given cell at the specified indexPath

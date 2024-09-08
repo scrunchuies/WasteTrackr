@@ -113,7 +113,7 @@
                                             <barButtonItem systemItem="trash" hidden="YES" id="mZ7-5J-8cQ"/>
                                         </leftBarButtonItems>
                                         <rightBarButtonItems>
-                                            <barButtonItem title="Select" image="checkmark.circle" catalog="system" id="I8Q-2s-rjR"/>
+                                            <barButtonItem title="Refresh" image="checkmark.circle" catalog="system" id="I8Q-2s-rjR"/>
                                             <barButtonItem systemItem="add" id="Inv-CU-pej"/>
                                         </rightBarButtonItems>
                                     </navigationItem>
