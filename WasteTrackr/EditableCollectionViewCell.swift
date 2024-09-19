@@ -24,7 +24,7 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     
     var nameBarView = UIView()
     var isSelectionModeEnabled = false
-
+    
     // Tracks if we are allowing textfield editing
     var isCountTextFieldEditable = false
     
@@ -50,8 +50,7 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         backgroundImageView.layer.masksToBounds = true
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(backgroundImageView)
-
-        // Remove the nameBarView (as you don't need a separate view for the background)
+        
         // Configure nameTextField directly without a background
         nameTextField.layer.borderWidth = 0
         nameTextField.placeholder = "Enter name"
@@ -60,10 +59,10 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         nameTextField.delegate = self
         nameTextField.font = UIFont.boldSystemFont(ofSize: 22)
         nameTextField.isEnabled = false
-        nameTextField.backgroundColor = .clear // No background color
+        nameTextField.backgroundColor = .clear
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(nameTextField)
-
+        
         // Configure countTextField
         countTextField.font = .systemFont(ofSize: 40)
         countTextField.placeholder = "Enter #"
@@ -74,9 +73,7 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         countTextField.backgroundColor = .clear
         countTextField.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(countTextField)
-
-        // Remove the customCountTextField as requested
-
+        
         // Configure countStepper
         countStepper.wraps = false
         countStepper.layer.cornerRadius = 8
@@ -88,33 +85,40 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         countStepper.translatesAutoresizingMaskIntoConstraints = false
         countStepper.tintColor = .white
         contentView.addSubview(countStepper)
-
-        // Update constraints after removing the customCountTextField
+        
+        // Setting the content hugging and compression resistance priorities
+        nameTextField.setContentHuggingPriority(.defaultLow, for: .vertical)
+        countTextField.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        countStepper.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        
+        countTextField.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        countStepper.setContentCompressionResistancePriority(.required, for: .vertical)
+        
+        // Update constraints
         NSLayoutConstraint.activate([
             // BackgroundImageView constraints
             backgroundImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             backgroundImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            backgroundImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.5),
+            backgroundImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.4),
             backgroundImageView.heightAnchor.constraint(equalTo: backgroundImageView.widthAnchor), // Circular aspect ratio
-
+            
             // NameTextField constraints
             nameTextField.topAnchor.constraint(equalTo: backgroundImageView.bottomAnchor, constant: 10),
-            nameTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
-            nameTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
-
+            nameTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            nameTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            
             // CountTextField constraints
             countTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 5),
-            countTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
-            countTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
-
+            countTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            countTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            
             // CountStepper constraints
             countStepper.topAnchor.constraint(equalTo: countTextField.bottomAnchor, constant: 10),
             countStepper.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            countStepper.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
+            countStepper.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -10)
         ])
     }
-
-
+    
     private func addGestureRecognizers() {
         // Swipe right to increment the count
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
@@ -152,11 +156,14 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         guard let indexPath = indexPath, let del = delegate else { return }
         del.updateItem(at: indexPath, with: newValue, newStockCount: 0)  // Update Firestore with the new count
     }
-
+    
     @objc private func stepperValueChanged(_ sender: UIStepper) {
-        countTextField.text = String(Int(sender.value))
+        let newValue = Int(sender.value)
+        countTextField.text = String(newValue)
+        // Update Firestore with the new count when the stepper value changes
+        updateCountInFirestore(newValue: newValue)
     }
-
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         countStepper.value = 0
@@ -164,13 +171,13 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         backgroundImageView.image = nil
         contentView.backgroundColor = .clear // Reset background color
     }
-
+    
     func configure(with item: Item, collectionSuffix: String) {
         documentID = item.id
         nameTextField.text = item.name
         countTextField.text = String(item.count)
         countStepper.value = Double(item.count)
-
+        
         // Set the background image
         if let imageName = item.imageName, let backgroundImage = UIImage(named: imageName) {
             backgroundImageView.image = backgroundImage
@@ -181,4 +188,20 @@ class EditableCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         // Update cell background color based on item color
         contentView.backgroundColor = item.color.withAlphaComponent(0.9)
     }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == countTextField, let newValue = Int(textField.text ?? "0") {
+            // Update Firestore when the countTextField finishes editing
+            updateCountInFirestore(newValue: newValue)
+        } else if textField == nameTextField, let newName = textField.text {
+            // Update Firestore when the nameTextField finishes editing
+            updateNameInFirestore(newName: newName)
+        }
+    }
+    private func updateNameInFirestore(newName: String) {
+        guard let indexPath = indexPath, let del = delegate else { return }
+        // Call delegate to update the name in Firestore
+        del.didEditName(at: indexPath, newName: newName)
+    }
+
 }

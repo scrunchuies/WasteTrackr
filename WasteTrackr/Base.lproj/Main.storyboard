@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fso-NZ-Yhb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fso-NZ-Yhb">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -96,7 +96,7 @@
             </objects>
             <point key="canvasLocation" x="-558" y="-232"/>
         </scene>
-        <!--Front of House-->
+        <!--Breakfast-->
         <scene sceneID="8KS-hf-Vap">
             <objects>
                 <viewController id="gX0-Yr-MNi" customClass="Tab1ViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
@@ -107,13 +107,18 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VeJ-BD-OfL">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
                                 <items>
-                                    <navigationItem title="Front of House" id="aBw-Bz-Fdu">
+                                    <navigationItem title="Breakfast" id="aBw-Bz-Fdu">
                                         <leftBarButtonItems>
                                             <barButtonItem title="Edit" id="5Co-qG-Y2T"/>
+                                            <barButtonItem image="1.square" catalog="system" id="qyr-QI-pwG">
+                                                <connections>
+                                                    <action selector="areaButtonClicked:" destination="gX0-Yr-MNi" id="QZE-JN-nLb"/>
+                                                </connections>
+                                            </barButtonItem>
                                             <barButtonItem systemItem="trash" hidden="YES" id="mZ7-5J-8cQ"/>
                                         </leftBarButtonItems>
                                         <rightBarButtonItems>
-                                            <barButtonItem title="Refresh" image="checkmark.circle" catalog="system" id="I8Q-2s-rjR"/>
+                                            <barButtonItem title="Resize" image="square.arrowtriangle.4.outward" catalog="system" id="I8Q-2s-rjR"/>
                                             <barButtonItem systemItem="add" id="Inv-CU-pej"/>
                                         </rightBarButtonItems>
                                     </navigationItem>
@@ -152,13 +157,15 @@
                             <constraint firstItem="hGj-9Z-teA" firstAttribute="top" secondItem="VeJ-BD-OfL" secondAttribute="bottom" id="zga-Mr-2zQ"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Front of House" image="house.lodge" catalog="system" id="aQ6-Pd-enI"/>
+                    <tabBarItem key="tabBarItem" title="Breakfast" image="cup.and.saucer" catalog="system" id="aQ6-Pd-enI"/>
                     <connections>
                         <outlet property="addButton" destination="Inv-CU-pej" id="hwr-a8-sR9"/>
+                        <outlet property="areaButton" destination="qyr-QI-pwG" id="vD9-be-WLs"/>
                         <outlet property="collectionView" destination="hGj-9Z-teA" id="WKz-Wj-3aX"/>
                         <outlet property="deleteButton" destination="mZ7-5J-8cQ" id="oJb-D1-qfD"/>
                         <outlet property="editButton" destination="5Co-qG-Y2T" id="Pa7-sW-Tcf"/>
                         <outlet property="selectButton" destination="I8Q-2s-rjR" id="Mli-7Q-8J5"/>
+                        <outlet property="titleBar" destination="aBw-Bz-Fdu" id="ppY-tR-vp8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fna-ca-eYb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -243,7 +250,7 @@
             </objects>
             <point key="canvasLocation" x="3181" y="-1539"/>
         </scene>
-        <!--Back of House-->
+        <!--Lunch/Dinner-->
         <scene sceneID="WZe-Nx-w07">
             <objects>
                 <viewController id="qHB-H0-htL" customClass="Tab2ViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
@@ -254,13 +261,18 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yVV-IC-iwI">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
                                 <items>
-                                    <navigationItem title="Back of House" id="lQG-ew-MmE">
+                                    <navigationItem title="Lunch/Dinner" id="lQG-ew-MmE">
                                         <leftBarButtonItems>
                                             <barButtonItem title="Edit" id="h01-9a-PQi"/>
+                                            <barButtonItem image="1.square" catalog="system" id="UL1-ju-xnA">
+                                                <connections>
+                                                    <action selector="areaButtonClicked:" destination="qHB-H0-htL" id="2f3-ZS-utj"/>
+                                                </connections>
+                                            </barButtonItem>
                                             <barButtonItem systemItem="trash" hidden="YES" id="vOp-Dd-z8f"/>
                                         </leftBarButtonItems>
                                         <rightBarButtonItems>
-                                            <barButtonItem title="Select" image="checkmark.circle" catalog="system" id="H6B-wZ-LfI"/>
+                                            <barButtonItem title="Select" image="square.arrowtriangle.4.outward" catalog="system" id="H6B-wZ-LfI"/>
                                             <barButtonItem systemItem="add" id="e8l-MM-cwf"/>
                                         </rightBarButtonItems>
                                     </navigationItem>
@@ -299,13 +311,15 @@
                             <constraint firstItem="yVV-IC-iwI" firstAttribute="trailing" secondItem="xv6-3f-7t4" secondAttribute="trailing" id="xca-uD-zhs"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Back of House" image="fork.knife" catalog="system" id="YHI-vW-5sd"/>
+                    <tabBarItem key="tabBarItem" title="Lunch/Dinner" image="fork.knife" catalog="system" id="YHI-vW-5sd"/>
                     <connections>
                         <outlet property="addButton" destination="e8l-MM-cwf" id="5gY-SM-ftL"/>
+                        <outlet property="areaButton" destination="UL1-ju-xnA" id="ZDz-Oa-e4C"/>
                         <outlet property="collectionView" destination="66p-uB-pDk" id="IUS-qw-Z7P"/>
                         <outlet property="deleteButton" destination="vOp-Dd-z8f" id="aw4-Z1-g3t"/>
                         <outlet property="editButton" destination="h01-9a-PQi" id="884-F8-89H"/>
                         <outlet property="selectButton" destination="H6B-wZ-LfI" id="Rz7-kd-1gR"/>
+                        <outlet property="titleBar" destination="lQG-ew-MmE" id="wZh-f1-64I"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vrW-A2-czj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -450,13 +464,15 @@
         </scene>
     </scenes>
     <resources>
+        <image name="1.square" catalog="system" width="128" height="114"/>
         <image name="chart.xyaxis.line" catalog="system" width="128" height="102"/>
         <image name="checkmark.circle" catalog="system" width="128" height="123"/>
         <image name="cube.box.fill" catalog="system" width="128" height="123"/>
+        <image name="cup.and.saucer" catalog="system" width="128" height="91"/>
         <image name="fork.knife" catalog="system" width="94" height="128"/>
         <image name="gear" catalog="system" width="128" height="122"/>
-        <image name="house.lodge" catalog="system" width="128" height="55"/>
-        <image name="square.and.arrow.up" catalog="system" width="108" height="128"/>
+        <image name="square.and.arrow.up" catalog="system" width="110" height="128"/>
+        <image name="square.arrowtriangle.4.outward" catalog="system" width="128" height="116"/>
         <image name="storefront.fill" catalog="system" width="128" height="116"/>
         <image name="wasteTrackrLogo" width="938" height="313"/>
         <systemColor name="systemBackgroundColor">

@@ -16,6 +16,7 @@
 		CCBDEC732C635238008A22CA /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = CCBDEC722C635238008A22CA /* FirebaseFunctions */; };
 		CCBDEC752C63ED4B008A22CA /* FirebaseUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBDEC742C63ED4B008A22CA /* FirebaseUserData.swift */; };
 		CCC15A602C61706F002884CF /* NSDirectionalEdgeInsetsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC15A5F2C61706F002884CF /* NSDirectionalEdgeInsetsExtensions.swift */; };
+		CCC999172C9A97CE006E6976 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = CCC999162C9A97CE006E6976 /* FirebaseStorage */; };
 		CCCD2A222BDC3A270036D9DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCD2A212BDC3A270036D9DA /* AppDelegate.swift */; };
 		CCCD2A242BDC3A270036D9DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCD2A232BDC3A270036D9DA /* SceneDelegate.swift */; };
 		CCCD2A292BDC3A270036D9DA /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CCCD2A282BDC3A270036D9DA /* Base */; };
@@ -70,6 +71,7 @@
 				CCD2E9C42BDF4742006C1615 /* FirebaseFirestore in Frameworks */,
 				CCBDEC732C635238008A22CA /* FirebaseFunctions in Frameworks */,
 				CC20C6832C66C83400ADF38B /* TPPDF in Frameworks */,
+				CCC999172C9A97CE006E6976 /* FirebaseStorage in Frameworks */,
 				CCD927AA2BEEC21700B6822D /* FirebaseMessaging in Frameworks */,
 				CCD927AC2BEEC3D700B6822D /* FirebaseAnalytics in Frameworks */,
 			);
@@ -81,6 +83,7 @@
 		CC1F289A2C8D90FF0037B5D9 /* Projects */ = {
 			isa = PBXGroup;
 			children = (
+				CCC15A5F2C61706F002884CF /* NSDirectionalEdgeInsetsExtensions.swift */,
 				CCD927A32BEDE41300B6822D /* Tab3ViewController.swift */,
 				CC50A96E2C121FA600C37A3F /* ChartsViewController.swift */,
 				CCB3BC5A2BFEA38700ADD545 /* UIColorExtensions.swift */,
@@ -89,10 +92,18 @@
 			path = Projects;
 			sourceTree = "<group>";
 		};
+		CCC999152C9A97CE006E6976 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CCCD2A152BDC3A270036D9DA = {
 			isa = PBXGroup;
 			children = (
 				CCCD2A202BDC3A270036D9DA /* WasteTrackr */,
+				CCC999152C9A97CE006E6976 /* Frameworks */,
 				CCCD2A1F2BDC3A270036D9DA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -114,7 +125,6 @@
 				CCCD2A232BDC3A270036D9DA /* SceneDelegate.swift */,
 				CCCD2A272BDC3A270036D9DA /* Main.storyboard */,
 				CCB3BC582BFE92CA00ADD545 /* EditableCollectionViewCell.swift */,
-				CCC15A5F2C61706F002884CF /* NSDirectionalEdgeInsetsExtensions.swift */,
 				CCD927972BEC9CF300B6822D /* Tab1ViewController.swift */,
 				CCD927A12BEDE3F500B6822D /* Tab2ViewController.swift */,
 				CC55A5B72C0D8FD200235C1E /* Tab4ViewController.swift */,
@@ -154,6 +164,7 @@
 				CCD927AB2BEEC3D700B6822D /* FirebaseAnalytics */,
 				CCBDEC722C635238008A22CA /* FirebaseFunctions */,
 				CC20C6822C66C83400ADF38B /* TPPDF */,
+				CCC999162C9A97CE006E6976 /* FirebaseStorage */,
 			);
 			productName = WasteTrackr;
 			productReference = CCCD2A1E2BDC3A270036D9DA /* WasteTrackr.app */;
@@ -400,7 +411,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10;
+				MARKETING_VERSION = 1.10.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.piotrjandura.WasteTrackr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -439,7 +450,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10;
+				MARKETING_VERSION = 1.10.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.piotrjandura.WasteTrackr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -505,6 +516,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFunctions;
+		};
+		CCC999162C9A97CE006E6976 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CCCD2A3C2BDC87A20036D9DA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 		CCD2E9C12BDF4742006C1615 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

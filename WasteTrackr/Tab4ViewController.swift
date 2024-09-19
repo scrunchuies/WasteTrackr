@@ -314,16 +314,59 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             
             self.items = snapshot.documents.compactMap { doc -> Item? in
-                let data = doc.data()
+                var data = doc.data()
                 let id = doc.documentID
+                var needsUpdate = false
+                
+                // Check and add missing fields with default values
+                if data["location"] == nil {
+                    data["location"] = "Unknown" // Default value for location
+                    needsUpdate = true
+                }
+                
+                if data["stockCount"] == nil {
+                    data["stockCount"] = 0 // Default stock count
+                    needsUpdate = true
+                }
+                
+                if data["color"] == nil {
+                    data["color"] = "#FFFFFF" // Default color in hex
+                    needsUpdate = true
+                }
+                
+                if data["timestamp"] == nil {
+                    data["timestamp"] = Timestamp() // Default timestamp
+                    needsUpdate = true
+                }
+                
+                if data["category"] == nil {
+                        data["category"] = "1" // Default category if missing
+                        needsUpdate = true
+                    }
+                
+                // If any field is missing, update the document
+                if needsUpdate {
+                    db.collection(collectionId).document(doc.documentID).updateData(data) { error in
+                        if let error = error {
+                            print("Error updating document \(doc.documentID): \(error)")
+                        } else {
+                            print("Document \(doc.documentID) updated with missing fields")
+                        }
+                    }
+                }
+
+                // Parse required fields to create an Item
                 let name = data["name"] as? String ?? "No name"
+                let location = data["location"] as? String ?? "Unknown"
                 let count = data["count"] as? Int ?? 0
-                let stockCount = data["stockCount"] as? Int ?? 0  // Fetch stock count
+                let stockCount = data["stockCount"] as? Int ?? 0
                 let color = UIColor(hexString: data["color"] as? String ?? "#FFFFFF")
                 let timestamp = data["timestamp"] as? Timestamp ?? Timestamp(date: Date())
                 let imageName = data["imageName"] as? String
+                let category = data["category"] as? String ?? "1"
                 
-                return Item(id: id, name: name, count: count, stockCount: stockCount, color: color, timestamp: timestamp, imageName: imageName)
+                // Return the parsed item
+                return Item(id: id, name: name, count: count, stockCount: stockCount, color: color, timestamp: timestamp, imageName: imageName, location: location, category: category)
             }
             
             // Output all item names
@@ -332,7 +375,7 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
             for item in self.items {
                 print(item.name)
             }
-             */
+            */
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -369,7 +412,9 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
             stockCount: 1,  // Set initial stock count
             color: .white,
             timestamp: Timestamp(),
-            imageName: "default background"
+            imageName: "default background",
+            location: "0",
+            category: "1"
         )
         
         db.collection(collectionId).document(newItem.id).setData(newItem.dictionary) { err in
@@ -565,6 +610,27 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // You might want to update your data source here
     }
     
+    func didEditLocation(at indexPath: IndexPath, newLocation: String) {
+        let item = items[indexPath.row]
+        let documentID = item.id
+        let db = Firestore.firestore()
+        let collectionId = collectionID(forSuffix: collectionSuffix)
+        
+        db.collection(collectionId).document(documentID).updateData([
+            "location": newLocation
+        ]) { error in
+            if let error = error {
+                print("Error updating location: \(error)")
+            } else {
+                print("Location successfully updated!")
+                self.items[indexPath.row].location = newLocation
+                DispatchQueue.main.async {
+                    self.tableView.reloadRows(at: [indexPath], with: .none)
+                }
+            }
+        }
+    }
+    
     func updateItem(at indexPath: IndexPath, with newValue: Int, newStockCount: Int) {
         let item = items[indexPath.row]
         let documentID = item.id
@@ -591,6 +657,10 @@ class Tab4ViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func presentEditMenu(for cell: EditableCollectionViewCell, at indexPath: IndexPath) {
         // Present the edit menu for the given cell at the specified indexPath
+    }
+    
+    func didEditName(at indexPath: IndexPath, newName: String) {
+        //
     }
 }
 
