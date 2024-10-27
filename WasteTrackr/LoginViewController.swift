@@ -202,8 +202,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     // Utility method to show error messages to the user, enhancing UX
     func showError(_ message: String) {
-        // Implementation depends on how you wish to show error messages
-        // E.g., using a UIAlertController to display alerts
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         self.present(alert, animated: true)

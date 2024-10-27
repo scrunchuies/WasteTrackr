@@ -17,12 +17,13 @@ class Tab2ViewController: UIViewController, UICollectionViewDataSource, UICollec
     @IBOutlet weak var areaButton: UIBarButtonItem!
     @IBOutlet weak var deleteButton: UIBarButtonItem!
     @IBOutlet weak var titleBar: UINavigationItem!
+    @IBOutlet weak var resetAllButton: UIBarButtonItem!
     @IBOutlet weak var collectionView: UICollectionView!
     
     var collectionSuffix = "BOH-PM"
     var refreshControl = UIRefreshControl()
     var listener: ListenerRegistration?
-    var cellsPerRow: CGFloat = 3
+    var cellsPerRow: CGFloat = 4
     
     var isSelectionMode = false
     var selectedItems: Set<IndexPath> = []
@@ -126,7 +127,7 @@ class Tab2ViewController: UIViewController, UICollectionViewDataSource, UICollec
             // Show confirmation alert to reset all values
             let alert = UIAlertController(title: "Reset All Values", message: "Are you sure you want to reset all item values to 0?", preferredStyle: .alert)
             
-            let resetAction = UIAlertAction(title: "Yes", style: .destructive) { _ in
+            let resetAction = UIAlertAction(title: "Reset", style: .destructive) { _ in
                 self.resetAllValues()
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -416,6 +417,25 @@ class Tab2ViewController: UIViewController, UICollectionViewDataSource, UICollec
                     self.refreshControl.endRefreshing()
                 }
             }
+    }
+    
+    @objc func handleResetButtonTap() {
+        // Show confirmation alert to reset all values
+        let alert = UIAlertController(title: "Reset All Values", message: "Are you sure you want to reset all item values to 0?", preferredStyle: .alert)
+        
+        let resetAction = UIAlertAction(title: "Reset", style: .destructive) { _ in
+            self.resetAllValues()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(resetAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func resetAllButton(_ sender: Any) {
+        handleResetButtonTap()
     }
     
     func resetAllValues() {

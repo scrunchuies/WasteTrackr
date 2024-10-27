@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fso-NZ-Yhb">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <device id="retina6_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
@@ -15,31 +15,31 @@
             <objects>
                 <viewController id="Fso-NZ-Yhb" customClass="LoginViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pIy-YA-V8N">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wasteTrackrLogo" translatesAutoresizingMaskIntoConstraints="NO" id="qe8-XQ-5Jn">
-                                <rect key="frame" x="57" y="48" width="279" height="200"/>
+                                <rect key="frame" x="57" y="48" width="326" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="zrN-r8-Me6"/>
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8lq-P0-qhF">
-                                <rect key="frame" x="87" y="373" width="219" height="34"/>
+                                <rect key="frame" x="87" y="373" width="266" height="34"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next" textContentType="username"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="io7-20-aze">
-                                <rect key="frame" x="87" y="412" width="219" height="34"/>
+                                <rect key="frame" x="87" y="412" width="266" height="34"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLf-hi-VdX">
-                                <rect key="frame" x="142" y="454" width="109" height="35"/>
+                                <rect key="frame" x="142" y="454" width="156" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="Login">
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -49,13 +49,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember me?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7G-B6-vEH">
-                                <rect key="frame" x="103" y="508" width="120" height="21"/>
+                                <rect key="frame" x="103" y="508" width="167" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BDd-N7-o7G">
-                                <rect key="frame" x="229" y="503" width="51" height="31"/>
+                                <rect key="frame" x="276" y="503" width="51" height="31"/>
                                 <connections>
                                     <action selector="rememberMeCheckboxToggled:" destination="Fso-NZ-Yhb" eventType="valueChanged" id="hJY-HN-ro2"/>
                                 </connections>
@@ -94,18 +94,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EBf-OP-3Ma" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-558" y="-232"/>
+            <point key="canvasLocation" x="-558.01526717557249" y="-232.3943661971831"/>
         </scene>
         <!--Breakfast-->
         <scene sceneID="8KS-hf-Vap">
             <objects>
                 <viewController id="gX0-Yr-MNi" customClass="Tab1ViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iX6-SP-Ilu">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VeJ-BD-OfL">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="440" height="44"/>
                                 <items>
                                     <navigationItem title="Breakfast" id="aBw-Bz-Fdu">
                                         <leftBarButtonItems>
@@ -118,6 +118,11 @@
                                             <barButtonItem systemItem="trash" hidden="YES" id="mZ7-5J-8cQ"/>
                                         </leftBarButtonItems>
                                         <rightBarButtonItems>
+                                            <barButtonItem systemItem="refresh" id="UIc-Tw-mFe">
+                                                <connections>
+                                                    <action selector="resetAllButton:" destination="gX0-Yr-MNi" id="yIc-sI-0oy"/>
+                                                </connections>
+                                            </barButtonItem>
                                             <barButtonItem title="Resize" image="square.arrowtriangle.4.outward" catalog="system" id="I8Q-2s-rjR"/>
                                             <barButtonItem systemItem="add" id="Inv-CU-pej"/>
                                         </rightBarButtonItems>
@@ -125,7 +130,7 @@
                                 </items>
                             </navigationBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hGj-9Z-teA">
-                                <rect key="frame" x="0.0" y="44" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="44" width="440" height="863"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qtu-hX-F7t">
                                     <size key="itemSize" width="128" height="128"/>
@@ -135,10 +140,10 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="EditableCell" id="mOI-tT-RoZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="mQt-ON-hix">
-                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionViewCellContentView>
                                     </collectionViewCell>
@@ -164,6 +169,7 @@
                         <outlet property="collectionView" destination="hGj-9Z-teA" id="WKz-Wj-3aX"/>
                         <outlet property="deleteButton" destination="mZ7-5J-8cQ" id="oJb-D1-qfD"/>
                         <outlet property="editButton" destination="5Co-qG-Y2T" id="Pa7-sW-Tcf"/>
+                        <outlet property="resetAllButton" destination="UIc-Tw-mFe" id="25E-lx-nOy"/>
                         <outlet property="selectButton" destination="I8Q-2s-rjR" id="Mli-7Q-8J5"/>
                         <outlet property="titleBar" destination="aBw-Bz-Fdu" id="ppY-tR-vp8"/>
                     </connections>
@@ -198,11 +204,11 @@
             <objects>
                 <viewController id="xnS-K0-v00" customClass="Tab4ViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WhP-6g-ESv">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ryr-CV-2Qh">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="440" height="44"/>
                                 <items>
                                     <navigationItem title="Sofie Storage" id="1gl-Ja-T54">
                                         <leftBarButtonItems>
@@ -221,7 +227,7 @@
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1fS-gY-efE">
-                                <rect key="frame" x="0.0" y="44" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="44" width="440" height="863"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -255,11 +261,11 @@
             <objects>
                 <viewController id="qHB-H0-htL" customClass="Tab2ViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2Eg-Xv-yDh">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yVV-IC-iwI">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="440" height="44"/>
                                 <items>
                                     <navigationItem title="Lunch/Dinner" id="lQG-ew-MmE">
                                         <leftBarButtonItems>
@@ -272,6 +278,11 @@
                                             <barButtonItem systemItem="trash" hidden="YES" id="vOp-Dd-z8f"/>
                                         </leftBarButtonItems>
                                         <rightBarButtonItems>
+                                            <barButtonItem systemItem="refresh" id="ZsK-OB-tUM">
+                                                <connections>
+                                                    <action selector="resetAllButton:" destination="qHB-H0-htL" id="m2c-T5-1cQ"/>
+                                                </connections>
+                                            </barButtonItem>
                                             <barButtonItem title="Select" image="square.arrowtriangle.4.outward" catalog="system" id="H6B-wZ-LfI"/>
                                             <barButtonItem systemItem="add" id="e8l-MM-cwf"/>
                                         </rightBarButtonItems>
@@ -279,7 +290,7 @@
                                 </items>
                             </navigationBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="66p-uB-pDk">
-                                <rect key="frame" x="0.0" y="44" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="44" width="440" height="863"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="e0A-Bd-g9g">
                                     <size key="itemSize" width="128" height="128"/>
@@ -289,10 +300,10 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ePf-fG-9nJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="xai-jz-eK8">
-                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionViewCellContentView>
                                     </collectionViewCell>
@@ -318,6 +329,7 @@
                         <outlet property="collectionView" destination="66p-uB-pDk" id="IUS-qw-Z7P"/>
                         <outlet property="deleteButton" destination="vOp-Dd-z8f" id="aw4-Z1-g3t"/>
                         <outlet property="editButton" destination="h01-9a-PQi" id="884-F8-89H"/>
+                        <outlet property="resetAllButton" destination="ZsK-OB-tUM" id="pop-g7-lwg"/>
                         <outlet property="selectButton" destination="H6B-wZ-LfI" id="Rz7-kd-1gR"/>
                         <outlet property="titleBar" destination="lQG-ew-MmE" id="wZh-f1-64I"/>
                     </connections>
@@ -331,11 +343,11 @@
             <objects>
                 <viewController id="CZe-7G-obD" customClass="Tab3ViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Te3-sr-DYc">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vUe-gE-d1P">
-                                <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                                <rect key="frame" x="0.0" y="62" width="440" height="44"/>
                                 <items>
                                     <navigationItem title="Bulk Waste" id="eyU-Ny-vnP">
                                         <leftBarButtonItems>
@@ -350,7 +362,7 @@
                                 </items>
                             </navigationBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fhz-ue-S55">
-                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <rect key="frame" x="0.0" y="106" width="440" height="816"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="LDy-52-Flv">
                                     <size key="itemSize" width="128" height="128"/>
@@ -360,10 +372,10 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ATJ-KI-eDj">
-                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Gg3-qb-PO9">
-                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionViewCellContentView>
                                     </collectionViewCell>
@@ -400,7 +412,7 @@
             <objects>
                 <viewController id="chE-3d-3ab" customClass="SettingsViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1BC-DL-Yar">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="R4h-yS-aT2"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -419,11 +431,11 @@
             <objects>
                 <viewController id="WE6-VB-a9d" customClass="ChartsViewController" customModule="WasteTrackr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yPU-3z-FXr">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="U2R-a9-Eyz">
-                                <rect key="frame" x="30.666666666666657" y="79" width="332" height="32"/>
+                                <rect key="frame" x="54" y="82" width="332" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="U2R-a9-Eyz" secondAttribute="height" multiplier="332:31" id="9YW-PZ-JH6"/>
                                 </constraints>
@@ -437,7 +449,7 @@
                                 </connections>
                             </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d61-9w-fMu">
-                                <rect key="frame" x="0.0" y="130" width="393" height="688"/>
+                                <rect key="frame" x="0.0" y="133" width="440" height="789"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                         </subviews>
