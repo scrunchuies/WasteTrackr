@@ -80,4 +80,4 @@ If you'd like to contribute to WasteTrackr, feel free to submit a pull request! 
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is proprietary and not licensed for use, modification, or distribution. All rights are reserved by the author.
