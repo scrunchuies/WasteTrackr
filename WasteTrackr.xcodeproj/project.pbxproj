@@ -45,6 +45,7 @@
 		CCBDEC742C63ED4B008A22CA /* FirebaseUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserData.swift; sourceTree = "<group>"; };
 		CCC15A5F2C61706F002884CF /* NSDirectionalEdgeInsetsExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDirectionalEdgeInsetsExtensions.swift; sourceTree = "<group>"; };
 		CCC1DB7F2BEF4CB800C090A4 /* WasteTrackr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WasteTrackr.entitlements; sourceTree = "<group>"; };
+		CCC3A6BD2CD00CFC00E29EF5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CCCD2A1E2BDC3A270036D9DA /* WasteTrackr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WasteTrackr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCCD2A212BDC3A270036D9DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CCCD2A232BDC3A270036D9DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +103,7 @@
 		CCCD2A152BDC3A270036D9DA = {
 			isa = PBXGroup;
 			children = (
+				CCC3A6BD2CD00CFC00E29EF5 /* README.md */,
 				CCCD2A202BDC3A270036D9DA /* WasteTrackr */,
 				CCC999152C9A97CE006E6976 /* Frameworks */,
 				CCCD2A1F2BDC3A270036D9DA /* Products */,

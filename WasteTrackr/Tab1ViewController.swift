@@ -127,7 +127,7 @@ class Tab1ViewController: UIViewController, UICollectionViewDataSource, UICollec
             // Show confirmation alert to reset all values
             let alert = UIAlertController(title: "Reset All Values", message: "Are you sure you want to reset all item values to 0?", preferredStyle: .alert)
             
-            let resetAction = UIAlertAction(title: "Reset", style: .destructive) { _ in
+            let resetAction = UIAlertAction(title: "Yes", style: .destructive) { _ in
                 self.resetAllValues()
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -419,23 +419,8 @@ class Tab1ViewController: UIViewController, UICollectionViewDataSource, UICollec
             }
     }
     
-    @objc func handleResetButtonTap() {
-        // Show confirmation alert to reset all values
-        let alert = UIAlertController(title: "Reset All Values", message: "Are you sure you want to reset all item values to 0?", preferredStyle: .alert)
-        
-        let resetAction = UIAlertAction(title: "Reset", style: .destructive) { _ in
-            self.resetAllValues()
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(resetAction)
-        alert.addAction(cancelAction)
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     @IBAction func resetAllButton(_ sender: Any) {
-        handleResetButtonTap()
+        resetAllValues()
     }
     
     func resetAllValues() {
